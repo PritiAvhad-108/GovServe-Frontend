@@ -1,0 +1,243 @@
+/* ===============================
+   PAGE CONTAINER
+================================ */
+.sla-days-container {
+  background: #e4ebef;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: visible;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.sla-days-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* ===============================
+   COUNT CARD (MATCHES ROLES / USERS)
+================================ */
+.sla-days-count-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ✅ ICON BACKGROUND – SAME AS ROLES */
+.sla-days-count-card .icon-bg {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✅ COUNT TEXT */
+.sla-days-count-card p {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+}
+
+.sla-days-count-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* ===============================
+   SEARCH + ACTION ROW
+================================ */
+.sla-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sla-search-row .form-control {
+  flex: 1;
+  height: 46px;
+  border-radius: 12px;
+}
+
+/* ===============================
+   TABLE
+================================ */
+.table-white {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.table-white th {
+  background: #f3f4f6;
+  font-weight: 600;
+  color: #334155;
+  padding: 14px;
+}
+
+.table-white td {
+  padding: 14px;
+  color: #334155;
+}
+
+.table-wrapper {
+  overflow: visible;
+}
+
+/* ===============================
+   SLA BADGE
+================================ */
+.sla-day-badge {
+  background: #e6f0ff;
+  color: #1e3a8a;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ===============================
+   ICONS
+================================ */
+.icon-edit {
+  color: #1e3a8a;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.icon-delete {
+  color: #dc2626;
+  cursor: pointer;
+}
+
+/* ===============================
+   MODAL
+================================ */
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow: visible;
+}
+
+.modal-card {
+  background: white;
+  padding: 24px;
+  width: 420px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  position: relative;
+  z-index: 1001;
+}
+
+/* ✅ Dropdown visibility fixes */
+.modal-card select {
+  position: relative;
+  z-index: 1002;
+  color: #1e293b !important;
+  background-color: #ffffff;
+}
+
+.modal-card select option {
+  color: #1e293b !important;
+  background-color: #ffffff;
+}
+
+select {
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+}
+
+/* ===============================
+   FORM CONTROLS
+================================ */
+.form-control {
+  height: 42px;
+  border-radius: 10px;
+}
+
+/* ===============================
+   MODAL ACTIONS
+================================ */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/*=================================
+Action icons
+=================================*/
+.actions-col .icon-edit,
+.actions-col .icon-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
+
+  margin: 0 6px;
+  border-radius: 6px;
+  cursor: pointer;
+
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+/* ===============================
+   EMPTY STATE (NO SEARCH RESULT)
+================================ */
+.empty-msg {
+  text-align: center;
+  padding: 32px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* ===============================
+   FORM VALIDATION
+================================ */
+.is-invalid {
+  border-color: #dc2626;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}

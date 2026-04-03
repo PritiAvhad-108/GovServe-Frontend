@@ -1,0 +1,80 @@
+.service-reports-container {
+  background: #e4ebef;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.reports-header {
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* Filter Card */
+.report-filter-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Meta Info */
+.report-meta {
+  margin-bottom: 20px;
+  color: #475569;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.metric-card p {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+}
+
+.metric-card h3 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Icon background */
+.icon-bg {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,196 @@
+/* =========================
+   PAGE CONTAINER
+========================= */
+.roles-container {
+  background: #e4ebef;
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+.roles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* =========================
+   STATS CARD
+========================= */
+.roles-stats-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.stats-icon {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.stats-label {
+  font-size: 14px;
+  color: #475569;
+}
+
+.stats-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* =========================
+   FILTER ROW
+========================= */
+.filter-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.create-btn {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background-color: #1e3a8a !important;
+  border-color: #1e3a8a !important;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table-white {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.table-white th {
+  background: #f3f4f6;
+  padding: 14px;
+}
+
+.table-white td {
+  padding: 14px;
+}
+
+.actions-col {
+  text-align: right;
+}
+
+/* =========================
+   ACTION ICONS
+========================= */
+.icon-edit {
+  cursor: pointer;
+  color: #1e3a8a;
+  margin-right: 12px;
+}
+
+.icon-delete {
+  cursor: pointer;
+  color: #1e3a8a;
+}
+
+/* =========================
+   EMPTY SEARCH MESSAGE
+========================= */
+.empty-msg {
+  text-align: center;
+  padding: 30px;
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* Validation error */
+.error-text {
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* Invalid input */
+.is-invalid {
+  border-color: #dc2626;
+}
+
+/* =========================
+   MODAL OVERLAY (NO BLUR ✅)
+========================= */
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* ✅ DARK BACKGROUND ONLY */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+/* =========================
+   MODAL CARD
+========================= */
+.modal-card {
+  background: white;
+  padding: 25px;
+  width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   MODAL ACTIONS
+========================= */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* =========================
+   PRIMARY BUTTON
+========================= */
+.btn-primary {
+  background-color: #1e3a8a !important;
+  border-color: #1e3a8a !important;
+}
+/* =========================
+   FIX ACTIONS COLUMN ALIGNMENT
+========================= */
+
+
+/* Center icons under "Actions" */
+.table-white tbody td:nth-child(3) {
+  text-align: center;
+}
+
+/* Ensure icons line up horizontally */
+.actions-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}

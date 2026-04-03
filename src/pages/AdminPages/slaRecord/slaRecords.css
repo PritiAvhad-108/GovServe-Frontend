@@ -1,0 +1,198 @@
+/* =============================
+   PAGE CONTAINER
+============================= */
+.sla-container {
+  background: #e4ebef;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* =============================
+   HEADER SECTION
+============================= */
+.sla-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* =============================
+   COUNT CARD
+============================= */
+.sla-count-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.sla-count-card p {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+}
+
+.sla-count-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #1e293b;
+}
+
+/* Icon wrapper */
+.icon-bg {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================
+   TOP-RIGHT ADD SLA BUTTON
+============================= */
+.sla-table-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.sla-table-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+/* =============================
+   FILTER ROW (NORMAL VIEW)
+============================= */
+.filter-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filter-row .form-control {
+  height: 42px;
+}
+
+.filter-row .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* =============================
+   PIE CHART CARD
+============================= */
+.sla-chart-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.sla-chart-wrapper {
+  max-width: 320px;
+  margin: auto;
+}
+
+/* =============================
+   TABLE STYLES
+============================= */
+.table-white {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.table-white thead {
+  background: #f3f4f6;
+}
+
+.table-white th {
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  text-align: left;
+}
+
+.table-white td {
+  padding: 14px;
+  font-size: 14px;
+  color: #334155;
+  vertical-align: middle;
+}
+
+/* =============================
+   STATUS BADGES
+============================= */
+
+/* On Time */
+.bg-success {
+  background: #dcfce7;
+  color: #f7fffa;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Breached / Assigned */
+.bg-danger {
+  background: #fee2e2;
+  color: #fcf4f4;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+
+
+/* =============================
+   ACTION ICONS
+============================= */
+.icon-delete {
+  color: #dc2626;
+  cursor: pointer;
+  transition: transform 0.1s ease, color 0.2s ease;
+}
+
+.icon-delete:hover {
+  transform: scale(1.1);
+  color: #b91c1c;
+}
+
+/* =============================
+   PAGINATION CLEANUP
+============================= */
+.pagination {
+  margin-top: 16px;
+}

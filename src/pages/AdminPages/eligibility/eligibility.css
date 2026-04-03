@@ -1,0 +1,61 @@
+/* Container */
+.eligibility-container {
+  background: #e4ebef;
+  min-height: 100vh;
+}
+
+/* Header */
+.eligibility-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 16px;
+}
+
+.eligibility-stats-card {
+  background: white;
+  padding: 14px 22px;
+  border-radius: 12px;
+  display: flex;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stats-icon {
+  background: #e6f0ff;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* Icons */
+.icon-edit {
+  color: #1e3a8a;
+  margin-right: 14px;
+  cursor: pointer;
+}
+
+.icon-delete {
+  color: #dc2626;
+  cursor: pointer;
+}
+
+/* ✅ EXPRESSION COLUMN FIX */
+.expr {
+  max-width: 420px;
+  white-space: normal;      /* allow wrapping */
+  word-break: break-word;   /* break long tokens */
+  line-height: 1.4;
+}
+
+/* Table wrapper */
+.table-wrapper {
+  margin-top: 16px;
+}
+
+/* Pagination center */
+.table-wrapper .pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

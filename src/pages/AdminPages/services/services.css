@@ -1,0 +1,129 @@
+.service-container {
+  background: #e4ebef;
+  min-height: 100vh;
+}
+
+/* Header */
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* Stats card */
+.service-stats-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stats-icon {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+/* ✅ FILTER ROW FIX */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filter-row .form-control {
+  height: 42px !important;
+  padding: 8px 12px !important;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-row .btn-primary {
+  height: 42px !important;
+  padding: 8px 18px !important;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Table */
+.table-wrapper {
+  width: 100%;
+}
+
+.table-white {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.table-white th {
+  background: #f3f4f6;
+  padding: 14px;
+}
+
+.table-white td {
+  padding: 14px;
+}
+
+/* Actions */
+.actions-col {
+  text-align: right;
+}
+
+.icon-edit {
+  color: #2563eb;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.icon-delete {
+  color: #dc2626;
+  cursor: pointer;
+}
+
+/* Modal */
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-card {
+  background: white;
+  padding: 25px;
+  width: 450px;
+  border-radius: 14px;
+}
+
+/* ✅ Center pagination */
+.table-wrapper .pagination-container {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 20px;
+}

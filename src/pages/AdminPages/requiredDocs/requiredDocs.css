@@ -1,0 +1,67 @@
+.reqdocs-container {
+  background:#e4ebef;
+  min-height: 100vh;
+}
+
+.reqdocs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.reqdocs-stats-card {
+  background: white;
+  padding: 15px 24px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stats-icon {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.filter-row .form-control {
+  height: 42px;
+}
+
+.create-btn {
+  height: 42px;
+}
+
+.table-white {
+  background: white;
+  border-radius: 10px;
+}
+
+.actions-col svg {
+  cursor: pointer;
+}
+
+.icon-edit {
+  color: #2563eb;
+  margin-right: 14px;
+}
+
+.icon-delete {
+  color: #dc2626;
+}
+
+/* Pagination center */
+.table-wrapper .pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

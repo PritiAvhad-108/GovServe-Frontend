@@ -1,0 +1,70 @@
+.dept-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Right stats card */
+.dept-stats-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.stats-icon {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.stats-label {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+}
+
+.stats-value {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+/* Empty search/filter message */
+.empty-msg {
+  text-align: center;
+  padding: 32px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Validation */
+.is-invalid {
+  border-color: #dc2626;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}

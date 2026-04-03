@@ -1,0 +1,163 @@
+/* ===============================
+   PAGE CONTAINER
+================================ */
+.workflow-container {
+  background: #e4ebef;
+  min-height: 100vh;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* ===============================
+   STATS CARD (MATCHES ROLES & USERS)
+================================ */
+.workflow-stats-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ✅ ICON BACKGROUND (SAME AS ROLES) */
+.workflow-stats-card .stats-icon {
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✅ TEXT STYLING */
+.stats-label {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+}
+
+.stats-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* ===============================
+   FILTER ROW
+================================ */
+.filter-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   TABLE
+================================ */
+.table-white {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.table-white th {
+  background: #f3f4f6;
+  padding: 14px;
+  color: #334155;
+}
+
+.table-white td {
+  padding: 14px;
+  color: #334155;
+}
+
+.actions-col {
+  text-align: right;
+}
+
+/* ===============================
+   ICONS
+================================ */
+.icon-edit {
+  cursor: pointer;
+  color: #2563eb;
+  margin-right: 12px;
+}
+
+.icon-delete {
+  cursor: pointer;
+  color: #dc2626;
+}
+
+.icon-reassign {
+  cursor: pointer;
+  color: #f59e0b;
+  margin: 0 10px;
+}
+
+/* ===============================
+   SLA BADGE
+================================ */
+.sla-badge {
+  background: #e6f0ff;
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ===============================
+   MODAL
+================================ */
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-card {
+  background: white;
+  padding: 25px;
+  width: 450px;
+  border-radius: 12px;
+}
+
+/* ===============================
+   ACTION ROW
+================================ */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

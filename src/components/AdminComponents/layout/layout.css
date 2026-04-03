@@ -1,0 +1,174 @@
+/* =========================
+   ROOT LAYOUT
+========================= */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f1f5f9;
+  font-family: "Inter", sans-serif;
+}
+
+/* =========================
+   SIDEBAR CONTAINER
+========================= */
+.sidebar {
+  width: 250px;
+  background: #e7f3f6; /* ✅ keep background */
+  border-right: 1px solid #dbeafe;
+  padding: 18px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* =========================
+   SIDEBAR BRAND
+========================= */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 18px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  border-bottom: 1px solid #dbeafe;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   NAV LIST
+========================= */
+.sidebar .nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 16px;
+  margin: 4px 14px;
+
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+
+  color: #1e3a8a; /* ✅ keep your blue text */
+  border-radius: 10px;
+
+  transition: background 0.15s ease, box-shadow 0.15s ease,
+              font-weight 0.15s ease;
+}
+
+/* Icon size consistency */
+.sidebar .nav-link svg {
+  font-size: 18px;
+}
+
+/* =========================
+   HOVER STATE (SUBTLE)
+========================= */
+.sidebar .nav-link:hover {
+  background: #dbeafe;
+  box-shadow: inset 3px 0 0 #1e3a8a;
+}
+
+/* =========================
+   ACTIVE STATE (CLEAN & PROFESSIONAL)
+========================= */
+.sidebar .nav-link.active {
+  background: #bfdbfe;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #1e3a8a;
+}
+
+/* =========================
+   LOGOUT SECTION
+========================= */
+.logout-section {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #dbeafe;
+}
+
+.logout-btn {
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  background: #fee2e2;
+  box-shadow: inset 3px 0 0 #dc2626;
+}
+
+/* =========================
+   RIGHT LAYOUT
+========================= */
+.main-layout {
+  margin-left: 250px; /* space for sidebar */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================
+   NAVBAR (RIGHT SIDE ONLY)
+========================= */
+.topbar {
+  height: 75px;
+  background: #1e3a8a; /* ✅ your color */
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+/* Navbar content */
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+/* =========================
+   NAVBAR ACTIONS (LEFT SIDE, WHITE)
+========================= */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-left: auto;    /* ✅ keeps it on LEFT side */
+  color: #ffffff;        /* ✅ makes text & icons white */
+}
+
+/* Icons (Bell & Profile) */
+.topbar-actions svg {
+  color: #ffffff;        /* ✅ force white icons */
+  font-size: 20px;
+}
+
+/* Admin User text */
+.topbar-actions span {
+  color: #ffffff;        /* ✅ white text */
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* =========================
+   PAGE CONTENT
+========================= */
+.page-content {
+  padding: 30px;
+  background: #e4ebef; /* ✅ your color */
+  flex: 1;
+}
