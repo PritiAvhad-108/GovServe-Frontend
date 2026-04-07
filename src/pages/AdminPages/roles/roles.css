@@ -1,20 +1,21 @@
-/* =========================
+/* ===============================
    PAGE CONTAINER
-========================= */
+================================ */
 .roles-container {
   background: #e4ebef;
   min-height: 100vh;
+  padding: 20px;
 }
 
-/* =========================
+/* ===============================
    HEADER
-========================= */
+================================ */
 .roles-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 25px;
-  margin-bottom: 25px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -27,11 +28,12 @@
 .page-subtitle {
   font-size: 15px;
   color: #64748b;
+  margin-top: 4px;
 }
 
-/* =========================
-   STATS CARD
-========================= */
+/* ===============================
+   STATS CARD (MATCH SERVICE)
+================================ */
 .roles-stats-card {
   display: flex;
   align-items: center;
@@ -50,147 +52,191 @@
 }
 
 .stats-label {
+  margin: 0;
   font-size: 14px;
   color: #475569;
 }
 
 .stats-value {
+  margin: 0;
   font-size: 28px;
   font-weight: 700;
   color: #1e293b;
 }
 
-/* =========================
+/* ===============================
    FILTER ROW
-========================= */
+================================ */
 .filter-row {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
+.filter-row .form-control {
+  height: 42px;
+  padding: 8px 14px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
 .create-btn {
+  height: 42px;
+  padding: 8px 18px;
+  border-radius: 10px;
   display: flex;
-  gap: 6px;
   align-items: center;
+  gap: 6px;
   background-color: #1e3a8a !important;
   border-color: #1e3a8a !important;
 }
 
-/* =========================
-   TABLE
-========================= */
+/* ===============================
+   TABLE (MATCH SERVICE)
+================================ */
 .table-white {
   width: 100%;
   background: white;
-  border-radius: 10px;
-  overflow: hidden;
+  border-radius: 12px;
+  border-collapse: collapse;
   border: 1px solid #e2e8f0;
+}
+
+.table-white th,
+.table-white td {
+  padding: 14px 16px;
+  font-size: 14px;
+  vertical-align: middle;
 }
 
 .table-white th {
   background: #f3f4f6;
-  padding: 14px;
+  font-weight: 600;
+  color: #111827;
+  text-align: left;
+}
+
+.table-white tbody tr {
+  border-top: 1px solid #e5e7eb;
 }
 
 .table-white td {
-  padding: 14px;
+  color: #1f2937;
 }
 
+/* ===============================
+   ACTION COLUMN
+================================ */
 .actions-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
   text-align: right;
 }
 
-/* =========================
-   ACTION ICONS
-========================= */
 .icon-edit {
+  color: #2563eb;
   cursor: pointer;
-  color: #1e3a8a;
-  margin-right: 12px;
 }
 
 .icon-delete {
+  color: #92400e;
   cursor: pointer;
-  color: #1e3a8a;
 }
 
-/* =========================
-   EMPTY SEARCH MESSAGE
-========================= */
+/* ===============================
+   EMPTY MESSAGE
+================================ */
 .empty-msg {
   text-align: center;
-  padding: 30px;
-  font-size: 15px;
+  padding: 32px;
+  font-size: 14px;
   color: #64748b;
 }
 
-/* Validation error */
-.error-text {
-  color: #dc2626;
-  font-size: 13px;
-  margin-top: 6px;
-}
-
-/* Invalid input */
-.is-invalid {
-  border-color: #dc2626;
-}
-
-/* =========================
-   MODAL OVERLAY (NO BLUR ✅)
-========================= */
+/* ===============================
+   MODAL
+================================ */
 .form-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* ✅ DARK BACKGROUND ONLY */
+  background: rgba(0,0,0,0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1100;
 }
 
-/* =========================
-   MODAL CARD
-========================= */
 .modal-card {
   background: white;
-  padding: 25px;
-  width: 450px;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  width: 460px;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-/* =========================
-   MODAL ACTIONS
-========================= */
+/* ===============================
+   FORM ELEMENTS
+================================ */
+.modal-card label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.modal-card input,
+.modal-card textarea,
+.modal-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 6px;
+}
+
+.modal-card textarea {
+  resize: vertical;
+}
+
+/* ===============================
+   VALIDATION
+================================ */
+.is-invalid {
+  border-color: #dc2626;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.text-muted {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ===============================
+   FORM ACTIONS
+================================ */
 .actions-row {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 14px;
 }
 
-/* =========================
+/* ===============================
    PRIMARY BUTTON
-========================= */
+================================ */
 .btn-primary {
   background-color: #1e3a8a !important;
   border-color: #1e3a8a !important;
-}
-/* =========================
-   FIX ACTIONS COLUMN ALIGNMENT
-========================= */
-
-
-/* Center icons under "Actions" */
-.table-white tbody td:nth-child(3) {
-  text-align: center;
-}
-
-/* Ensure icons line up horizontally */
-.actions-col {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
 }

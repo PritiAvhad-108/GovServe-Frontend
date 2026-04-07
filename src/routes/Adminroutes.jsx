@@ -2,22 +2,22 @@
 
 
 import { Routes, Route } from "react-router-dom";
-import AdminLayout from "./components/AdminComponents/layout/AdminLayout";
-import DepartmentPage from "./pages/AdminPages/departments/DepartmentPage";
-import RolesPage from "./pages/AdminPages/roles/RolesPage";
-import SLADaysPage from "./pages/AdminPages/slaDays/SLADaysPage";
-import ServicesPage from "./pages/AdminPages/services/ServicesPage";
-import ServiceDetailsPage from "./pages/AdminPages/services/ServiceDetailsPage";
-import EligibilityPage from "./pages/AdminPages/eligibility/EligibilityRulePage";
-import RequiredDocsPage from "./pages/AdminPages/requiredDocs/RequiredDocsPage";
-import WorkflowStagePage from "./pages/AdminPages/workflowStages/WorkflowStagePage";
-import SLARecordsPage from "./pages/AdminPages/slaRecord/SLARecordsPage";
-import UsersPage from "./pages/AdminPages/users/UserPage";
-import ServiceReportsPage from "./pages/AdminPages/serviceReports/ServiceReportsPage";
-import AdminDashboard from "./pages/AdminPages/dashboard/AdminDashboard";
+import AdminLayout from "../components/AdminComponents/layout/AdminLayout";
+import DepartmentPage from "../pages/AdminPages/departments/DepartmentPage";
+import RolesPage from "../pages/AdminPages/roles/RolesPage";
+import SLADaysPage from "../pages/AdminPages/slaDays/SLADaysPage";
+import ServicesPage from "../pages/AdminPages/services/ServicesPage";
+import ServiceDetailsPage from "../pages/AdminPages/services/ServiceDetailsPage";
+import EligibilityPage from "../pages/AdminPages/eligibility/EligibilityRulePage";
+import RequiredDocsPage from "../pages/AdminPages/requiredDocs/RequiredDocsPage";
+import WorkflowStagePage from "../pages/AdminPages/workflowStages/WorkflowStagePage";
+import SLARecordsPage from "../pages/AdminPages/slaRecord/SLARecordsPage";
+import UsersPage from "../pages/AdminPages/users/UserPage";
+import ServiceReportsPage from "../pages/AdminPages/serviceReports/ServiceReportsPage";
+import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
+import NotificationsPage from "../pages/AdminPages/notification/NotificationsPage";
 
-
-function App() {
+function AdminRoutes() {
   return (
     <AdminLayout>
       <Routes>
@@ -39,9 +39,11 @@ function App() {
        <Route path="/admin/sla-records"element={<SLARecordsPage />}/>
        <Route path="/admin/reports" element={<ServiceReportsPage />} />
        <Route path="/admin/users" element={<UsersPage />} /> 
+       <Route path="/notifications" element={<NotificationsPage />} />
 
       </Routes>
     </AdminLayout>
   );
 }
-export default App;
+
+export default AdminRoutes;

@@ -6,7 +6,6 @@ export default function RecentApplicationsTable({ applications }) {
   const itemsPerPage = 5;
 
   const totalPages = Math.ceil(applications.length / itemsPerPage);
-
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = applications.slice(
     startIndex,
@@ -17,31 +16,40 @@ export default function RecentApplicationsTable({ applications }) {
     <div className="panel">
       <h3>Recent Applications</h3>
 
-      <table className="table table-white">
+      <table className="table-white">
         <thead>
           <tr>
             <th>Application ID</th>
-            <th>UserID</th>
+            <th>User ID</th>
             <th>Service</th>
             <th>Status</th>
-            <th>Date</th>
+            <th>Submitted Date</th>
           </tr>
         </thead>
 
         <tbody>
-          {currentData.map(app => (
-            <tr key={app.applicationId}>
-              <td>App-{app.applicationNumber || app.applicationId}</td>
-              <td>{app.userId}</td>
-              <td>{app.serviceName}</td>
-              <td>{app.applicationStatus}</td>
-              <td>{new Date(app.submittedDate).toLocaleDateString()}</td>
+          {currentData.length === 0 ? (
+            <tr>
+              <td colSpan="5" className="empty-msg">
+                No recent applications available.
+              </td>
             </tr>
-          ))}
+          ) : (
+            currentData.map((app) => (
+              <tr key={app.applicationId}>
+                <td>App-{app.applicationNumber || app.applicationId}</td>
+                <td>{app.userId}</td>
+                <td>{app.serviceName}</td>
+                <td>{app.applicationStatus}</td>
+                <td>
+                  {new Date(app.submittedDate).toLocaleDateString()}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 
-      {/* ✅ PAGINATION */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

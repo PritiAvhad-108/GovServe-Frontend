@@ -26,33 +26,36 @@ export default function ServiceDetailsPage() {
     setLoading(true);
 
     try {
-      // ✅ Load Service
       const serviceRes = await api.get(`/Services/${serviceId}`);
       const serviceData = serviceRes.data;
       setService(serviceData);
 
       const serviceName = serviceData.serviceName;
 
-      // ✅ Load Eligibility Rules (handle empty state safely)
+      /* ✅ Eligibility Rules */
       try {
         const rulesRes = await api.get(
-          `/EligibilityRules/search?serviceName=${encodeURIComponent(serviceName)}`
+          `/EligibilityRules/search?serviceName=${encodeURIComponent(
+            serviceName
+          )}`
         );
         setRules(rulesRes.data);
         setRulesMessage("");
-      } catch (err) {
+      } catch {
         setRules([]);
         setRulesMessage("No eligibility rules defined for this service.");
       }
 
-      // ✅ Load Required Documents (handle empty state safely)
+      /* ✅ Required Documents */
       try {
         const docsRes = await api.get(
-          `/RequiredDocuments/search?serviceName=${encodeURIComponent(serviceName)}`
+          `/RequiredDocuments/search?serviceName=${encodeURIComponent(
+            serviceName
+          )}`
         );
         setDocuments(docsRes.data);
-        setDocsMessage("No required documents defined for this service.");
-      } catch (err) {
+        setDocsMessage("");
+      } catch {
         setDocuments([]);
         setDocsMessage("No required documents defined for this service.");
       }
@@ -64,22 +67,26 @@ export default function ServiceDetailsPage() {
   };
 
   if (loading) {
-    return <div style={{ padding: "20px" }}>Loading service details...</div>;
+    return <div style={{ padding: "24px" }}>Loading service details...</div>;
   }
 
   if (!service) {
-    return <div style={{ padding: "20px" }}>Service not found</div>;
+    return <div style={{ padding: "24px" }}>Service not found</div>;
   }
 
   return (
     <div className="service-details-container">
-      {/* ✅ Header */}
+      {/* ✅ HEADER */}
       <div className="details-header">
-        <ArrowLeft className="back-icon" onClick={() => navigate(-1)} />
+        <ArrowLeft
+          className="back-icon"
+          size={22}
+          onClick={() => navigate(-1)}
+        />
         <h2>{service.serviceName}</h2>
       </div>
 
-      {/* ✅ Tabs */}
+      {/* ✅ TABS */}
       <div className="tabs">
         <button
           className={activeTab === "rules" ? "active" : ""}
@@ -96,41 +103,34 @@ export default function ServiceDetailsPage() {
         </button>
       </div>
 
-      {/* ✅ Eligibility Rules Tab */}
+      {/* ✅ ELIGIBILITY RULES */}
       {activeTab === "rules" && (
         <div className="content">
           {rules.length === 0 ? (
             <p className="empty-message">{rulesMessage}</p>
           ) : (
-            rules.map((r) => (
+            rules.map(r => (
               <div key={r.ruleID} className="rule-card">
                 <div className="rule-desc">{r.ruleDescription}</div>
-                <pre className="rule-expr">{r.ruleExpression}</pre>
               </div>
             ))
           )}
         </div>
       )}
 
-      {/* ✅ Required Documents Tab */}
+      {/* ✅ REQUIRED DOCUMENTS */}
       {activeTab === "docs" && (
         <div className="content">
           {documents.length === 0 ? (
             <p className="empty-message">{docsMessage}</p>
           ) : (
-            documents.map((d) => (
+            documents.map(d => (
               <div key={d.documentID} className="doc-card">
                 <span>{d.documentName}</span>
-
-                {/* ✅ Yes → Mandatory | No → Optional */}
                 <span
-                  className={
-                    d.mandatory === "Yes" ? "mandatory" : "optional"
-                  }
+                  className={d.mandatory === "Yes" ? "mandatory" : "optional"}
                 >
-                  {d.mandatory === "Yes"
-                    ? "Mandatory"
-                    : "Optional"}
+                  {d.mandatory === "Yes" ? "Mandatory" : "Optional"}
                 </span>
               </div>
             ))

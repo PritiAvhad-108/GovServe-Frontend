@@ -120,62 +120,58 @@
   margin: auto;
 }
 
-/* =============================
-   TABLE STYLES
-============================= */
+/* ===============================
+   TABLE (MATCH SERVICE.CSS)
+================================ */
 .table-white {
   width: 100%;
   background: white;
   border-radius: 12px;
-  overflow: hidden;
   border: 1px solid #e2e8f0;
+  border-collapse: collapse;
+  overflow: hidden;
 }
 
-.table-white thead {
-  background: #f3f4f6;
-}
-
-.table-white th {
-  padding: 14px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #334155;
-  text-align: left;
-}
-
+/* Header */
+.table-white th,
 .table-white td {
-  padding: 14px;
+  padding: 14px 16px;
   font-size: 14px;
-  color: #334155;
   vertical-align: middle;
 }
 
-/* =============================
-   STATUS BADGES
-============================= */
-
-/* On Time */
-.bg-success {
-  background: #dcfce7;
-  color: #f7fffa;
-  padding: 4px 10px;
-  border-radius: 8px;
+.table-white th {
+  background: #f3f4f6;
   font-weight: 600;
-  font-size: 13px;
+  color: #111827;
+  text-align: left;
 }
 
-/* Breached / Assigned */
-.bg-danger {
-  background: #fee2e2;
-  color: #fcf4f4;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 13px;
+/* Row separation */
+.table-white tbody tr {
+  border-top: 1px solid #e5e7eb;
 }
 
+.table-white td {
+  color: #1f2937;
+}
 
+/* ===============================
+   ACTION COLUMN (RIGHT‑ALIGNED)
+================================ */
+.actions-col {
+  text-align: right;
+}
 
+/* Trash icon */
+.icon-delete {
+  color: #92400e;
+  cursor: pointer;
+}
+
+.icon-delete:hover {
+  color: #78350f;
+}
 /* =============================
    ACTION ICONS
 ============================= */
