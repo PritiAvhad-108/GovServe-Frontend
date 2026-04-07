@@ -11,7 +11,7 @@ export default function SupervisorNavbar() {
       <div className="topbar-inner">
         <div className="topbar-actions">
 
-          {/* ✅ Reports */}
+          {/*  Reports */}
           <FaChartBar
             size={18}
             className="notification-icon"
