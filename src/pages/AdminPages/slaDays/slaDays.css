@@ -241,3 +241,17 @@ Action icons
   margin-bottom: 8px;
   display: block;
 }
+
+/* ✅ FIXED (READ-ONLY) FIELDS */
+.fixed-field:disabled {
+  background-color: #f3f4f6;
+  color: #374151;
+  cursor: not-allowed;
+  border-color: #d1d5db;
+  opacity: 1;
+}
+
+/* Prevent error styles on disabled fields */
+.fixed-field.is-invalid {
+  border-color: #d1d5db !important;
+}

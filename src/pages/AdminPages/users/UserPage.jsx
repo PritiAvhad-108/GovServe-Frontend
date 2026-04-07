@@ -13,18 +13,23 @@ export default function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
+  /* ✅ LOAD USERS */
   const loadUsers = async () => {
-    const res = pendingOnly
-      ? await api.get("/User/pending-users")
-      : await api.get("/User/all");
-
-    setUsers(res.data);
+    try {
+      const res = pendingOnly
+        ? await api.get("/User/pending-users")
+        : await api.get("/User/all");
+      setUsers(res.data);
+    } catch {
+      toast.error("Failed to load users");
+    }
   };
 
   useEffect(() => {
     loadUsers();
   }, [pendingOnly]);
 
+  /* ✅ ACTIONS */
   const approveUser = async (id) => {
     await api.put(`/User/approve/${id}`);
     toast.success("User approved");
@@ -44,13 +49,15 @@ export default function UsersPage() {
     loadUsers();
   };
 
-  const filtered = users.filter(
-    u =>
-      u.fullName.toLowerCase().includes(search.toLowerCase()) ||
-      u.email.toLowerCase().includes(search.toLowerCase()) ||
-      u.roleName.toLowerCase().includes(search.toLowerCase())
+  /* ✅ FILTER */
+  const filtered = users.filter(u =>
+    [u.fullName, u.email, u.roleName]
+      .join(" ")
+      .toLowerCase()
+      .includes(search.toLowerCase())
   );
 
+  /* ✅ PAGINATION */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
@@ -60,7 +67,7 @@ export default function UsersPage() {
     <div className="users-container">
       <ToastContainer />
 
-      {/* HEADER */}
+      {/* ✅ HEADER */}
       <div className="users-header">
         <div>
           <h2 className="page-title">User Management</h2>
@@ -69,25 +76,24 @@ export default function UsersPage() {
           </p>
         </div>
 
-        {/* ✅ UPDATED LUCIDE ICON */}
         <div className="users-count-card">
-         <div className="icon-bg">
-             <UsersRound size={28} color="#2563eb" />
-         </div>
+          <div className="icon-bg">
+            <UsersRound size={28} color="#1e3a8a" />
+          </div>
           <div>
-             <p>Total Users</p>
+            <p>Total Users</p>
             <h3>{users.length}</h3>
-         </div>
+          </div>
         </div>
-        </div>
+      </div>
 
-      {/* FILTER */}
+      {/* ✅ FILTER ROW */}
       <div className="filter-row">
         <input
           className="form-control"
           placeholder="Search by name, email or role..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
         />
 
         <select
@@ -100,9 +106,9 @@ export default function UsersPage() {
         </select>
       </div>
 
-      {/* TABLE */}
+      {/* ✅ TABLE */}
       <div className="table-wrapper">
-        <table className="table table-white">
+        <table className="table-white">
           <thead>
             <tr>
               <th>Name</th>
@@ -110,51 +116,61 @@ export default function UsersPage() {
               <th>Role</th>
               <th>Department</th>
               <th>Status</th>
-              <th style={{ textAlign: "right" }}>Actions</th>
+              <th className="actions-col">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {currentData.map(user => (
-              <tr key={user.userId}>
-                <td>{user.fullName}</td>
-                <td>{user.email}</td>
-                <td>{user.roleName}</td>
-                <td>{user.departmentName || "-"}</td>
-                <td>
-                  <span
-                    className={`badge ${
+            {currentData.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="empty-msg">
+                  No users found.
+                </td>
+              </tr>
+            ) : (
+              currentData.map(user => (
+                <tr key={user.userId}>
+                  <td>{user.fullName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.roleName}</td>
+                  <td>{user.departmentName || "-"}</td>
+                  <td>
+                    <span className={`badge ${
                       user.status === "Approved"
                         ? "bg-success"
                         : user.status === "Pending"
                         ? "bg-warning"
                         : "bg-danger"
-                    }`}
-                  >
-                    {user.status}
-                  </span>
-                </td>
+                    }`}>
+                      {user.status}
+                    </span>
+                  </td>
 
-                <td className="actions-col">
-                  {user.status === "Pending" && (
-                    <>
-                      <Check
-                        className="icon-approve"
-                        onClick={() => approveUser(user.userId)}
-                      />
-                      <X
-                        className="icon-reject"
-                        onClick={() => rejectUser(user.userId)}
-                      />
-                    </>
-                  )}
-                  <Trash2
-                    className="icon-delete"
-                    onClick={() => deleteUser(user.userId)}
-                  />
-                </td>
-              </tr>
-            ))}
+                  {/* ✅ ACTIONS */}
+                  <td className="actions-col">
+                    {user.status === "Pending" && (
+                      <>
+                        <Check
+                          className="icon-approve"
+                          title="Approve"
+                          onClick={() => approveUser(user.userId)}
+                        />
+                        <X
+                          className="icon-reject"
+                          title="Reject"
+                          onClick={() => rejectUser(user.userId)}
+                        />
+                      </>
+                    )}
+                    <Trash2
+                      className="icon-delete"
+                      title="Delete"
+                      onClick={() => deleteUser(user.userId)}
+                    />
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
 

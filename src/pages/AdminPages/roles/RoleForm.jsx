@@ -10,11 +10,9 @@ export default function RoleForm({ role = {}, onClose, onSave }) {
   useEffect(() => {
     setRoleName(role.roleName || "");
     setError("");
-    document.body.classList.add("modal-open");
-    return () => document.body.classList.remove("modal-open");
   }, [role]);
 
-  /* ✅ VALIDATION FUNCTION */
+  /* ✅ VALIDATION */
   const validate = () => {
     if (!roleName.trim()) {
       return "Role name is required.";
@@ -59,8 +57,6 @@ export default function RoleForm({ role = {}, onClose, onSave }) {
     } catch (err) {
       if (err.response?.status === 409) {
         setError("Role already exists.");
-      } else if (!err.response) {
-        setError("Network error. Please try again.");
       } else {
         setError("Failed to save role.");
       }
@@ -83,7 +79,7 @@ export default function RoleForm({ role = {}, onClose, onSave }) {
             placeholder="Enter role name"
           />
 
-          {error && <div className="error-text">{error}</div>}
+          {error && <small className="error-text">{error}</small>}
 
           <div className="actions-row">
             <button

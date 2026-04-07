@@ -12,7 +12,6 @@ export default function RolesPage() {
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(null);
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -47,13 +46,11 @@ export default function RolesPage() {
     <div className="roles-container">
       <ToastContainer position="top-center" />
 
-      {/* Header */}
+      {/* ✅ HEADER */}
       <div className="roles-header">
         <div>
           <h2 className="page-title">Role Management</h2>
-          <p className="page-subtitle">
-            Manage user roles and access levels
-          </p>
+          <p className="page-subtitle">Manage user roles and access levels</p>
         </div>
 
         <div className="roles-stats-card">
@@ -67,7 +64,7 @@ export default function RolesPage() {
         </div>
       </div>
 
-      {/* Search + Add */}
+      {/* ✅ FILTER ROW */}
       <div className="filter-row">
         <input
           className="form-control"
@@ -84,8 +81,8 @@ export default function RolesPage() {
         </button>
       </div>
 
-      {/* Table */}
-      <table className="table table-white">
+      {/* ✅ TABLE */}
+      <table className="table-white">
         <thead>
           <tr>
             <th>ID</th>
@@ -107,28 +104,24 @@ export default function RolesPage() {
                 <td>{role.roleID}</td>
                 <td>{role.roleName}</td>
 
-                {/* ✅ WELL‑STRUCTURED ACTION COLUMN */}
+                {/* ✅ ACTIONS – matches CSS */}
                 <td className="actions-col">
-                  <div className="action-buttons">
-                    <Pencil
-                      size={18}
-                      className="icon-edit"
-                      title="Edit role"
-                      onClick={() => setShowForm(role)}
-                    />
-                    <Trash2
-                      size={18}
-                      className="icon-delete"
-                      title="Delete role"
-                      onClick={() => {
-                        if (window.confirm("Delete this role?")) {
-                          api
-                            .delete(`/Roles/${role.roleID}`)
-                            .then(loadData);
-                        }
-                      }}
-                    />
-                  </div>
+                  <Pencil
+                    size={18}
+                    className="icon-edit"
+                    title="Edit Role"
+                    onClick={() => setShowForm(role)}
+                  />
+                  <Trash2
+                    size={18}
+                    className="icon-delete"
+                    title="Delete Role"
+                    onClick={() => {
+                      if (window.confirm("Delete this role?")) {
+                        api.delete(`/Roles/${role.roleID}`).then(loadData);
+                      }
+                    }}
+                  />
                 </td>
               </tr>
             ))
@@ -136,14 +129,14 @@ export default function RolesPage() {
         </tbody>
       </table>
 
-      {/* Pagination */}
+      {/* ✅ PAGINATION */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
 
-      {/* Modal */}
+      {/* ✅ MODAL */}
       {showForm && (
         <RoleForm
           role={showForm}

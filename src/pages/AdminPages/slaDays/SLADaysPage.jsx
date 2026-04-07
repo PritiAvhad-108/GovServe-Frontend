@@ -15,13 +15,14 @@ export default function SLADaysPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  /* ✅ Load data */
   const loadData = async () => {
     try {
       const res = await api.get("/sladays");
       setSlaDays(res.data);
       setFiltered(res.data);
     } catch {
-      toast.error("Failed to load SLA Days");
+      toast.error("Failed to load SLA Days configuration.");
     }
   };
 
@@ -29,7 +30,7 @@ export default function SLADaysPage() {
     loadData();
   }, []);
 
-  /* ✅ SEARCH LOGIC */
+  /* ✅ Search */
   useEffect(() => {
     if (!search.trim()) {
       setFiltered(slaDays);
@@ -37,7 +38,7 @@ export default function SLADaysPage() {
       const value = search.toLowerCase();
       setFiltered(
         slaDays.filter(
-          s =>
+          (s) =>
             s.serviceName.toLowerCase().includes(value) ||
             s.roleName.toLowerCase().includes(value) ||
             String(s.days).includes(value)
@@ -47,24 +48,29 @@ export default function SLADaysPage() {
     setCurrentPage(1);
   }, [search, slaDays]);
 
-  /* Pagination */
+  /* ✅ Pagination */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
+  /* ✅ Delete */
   const deleteSlaDay = async (id) => {
     if (!window.confirm("Delete this SLA configuration?")) return;
-    await api.delete(`/sladays/${id}`);
-    toast.success("SLA Day deleted");
-    loadData();
+    try {
+      await api.delete(`/sladays/${id}`);
+      toast.success("SLA configuration deleted successfully.");
+      loadData();
+    } catch {
+      toast.error("Failed to delete SLA configuration.");
+    }
   };
 
   return (
     <div className="sla-days-container">
       <ToastContainer />
 
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
       <div className="sla-days-header">
         <div>
           <h2 className="page-title">SLA Days Configuration</h2>
@@ -75,7 +81,7 @@ export default function SLADaysPage() {
 
         <div className="sla-days-count-card">
           <div className="icon-bg">
-            <Timer size={28} color="#1e293b" />
+            <Timer size={26} color="#1e3a8a" />
           </div>
           <div>
             <p>Total SLA Entries</p>
@@ -84,11 +90,11 @@ export default function SLADaysPage() {
         </div>
       </div>
 
-      {/* SEARCH + ADD */}
+      {/* ================= SEARCH + ADD ================= */}
       <div className="sla-search-row">
         <input
           className="form-control"
-          placeholder="Search SLA days..."
+          placeholder="Search by service, role, or days..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -101,9 +107,9 @@ export default function SLADaysPage() {
         </button>
       </div>
 
-      {/* TABLE */}
+      {/* ================= TABLE ================= */}
       <div className="table-wrapper">
-        <table className="table table-white">
+        <table className="table-white">
           <thead>
             <tr>
               <th>ID</th>
@@ -134,13 +140,13 @@ export default function SLADaysPage() {
                   </td>
                   <td className="actions-col">
                     <Pencil
-                      size={18}
                       className="icon-edit"
+                      size={18}
                       onClick={() => setShowForm(s)}
                     />
                     <Trash2
-                      size={18}
                       className="icon-delete"
+                      size={18}
                       onClick={() => deleteSlaDay(s.slaDayID)}
                     />
                   </td>
@@ -157,6 +163,7 @@ export default function SLADaysPage() {
         />
       </div>
 
+      {/* ================= MODAL ================= */}
       {showForm && (
         <SLADayForm
           data={showForm}
