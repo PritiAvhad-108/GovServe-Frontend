@@ -56,7 +56,7 @@ export default function SupervisorSidebar() {
           </NavLink>
         </li>
 
-        {/* ✅ Reports */}
+        {/*  Reports */}
         <li>
           <NavLink to="/supervisor/reports" className="nav-link">
             <FaChartBar className="link-icon" /> Reports
@@ -71,7 +71,7 @@ export default function SupervisorSidebar() {
         </NavLink>
       </div>
 
-      {/* ✅ SIDEBAR CSS — RESTORED */}
+      {/* SIDEBAR CSS — RESTORED */}
       <style>{`
         .sidebar {
           width: 260px;
