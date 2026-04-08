@@ -31,4 +31,3 @@ export default function SLADistributionChart({ onTime, breached }) {
     </div>
   );
 }
-``

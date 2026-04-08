@@ -1,18 +1,35 @@
+/* ===============================
+   PAGE CONTAINER
+================================ */
 .service-container {
   background: #e4ebef;
   min-height: 100vh;
+  padding: 20px;
 }
 
-/* Header */
+/* ===============================
+   HEADER
+================================ */
 .service-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 25px;
-  margin-bottom: 25px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #e2e8f0;
 }
+/* Service name link styling */
+.service-link {
+  color: #2563eb;               /* Blue color */
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;   /* Optional – looks like link */
+}
 
+.service-link:hover {
+  color: #1d4ed8;               /* Darker blue on hover */
+  text-decoration: none;        /* Optional hover effect */
+}
 .page-title {
   font-size: 28px;
   font-weight: 700;
@@ -22,9 +39,12 @@
 .page-subtitle {
   font-size: 15px;
   color: #64748b;
+  margin-top: 4px;
 }
 
-/* Stats card */
+/* ===============================
+   STATS CARD (MATCH DEPARTMENT)
+================================ */
 .service-stats-card {
   display: flex;
   align-items: center;
@@ -33,7 +53,7 @@
   background: white;
   border-radius: 14px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .stats-icon {
@@ -42,7 +62,22 @@
   border-radius: 12px;
 }
 
-/* ✅ FILTER ROW FIX */
+.stats-label {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+}
+
+.stats-value {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ===============================
+   FILTER ROW
+================================ */
 .filter-row {
   display: flex;
   align-items: center;
@@ -51,44 +86,83 @@
 }
 
 .filter-row .form-control {
-  height: 42px !important;
-  padding: 8px 12px !important;
+  height: 42px;
+  padding: 8px 14px;
   background: #f9fafb;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
 }
 
 .filter-row .btn-primary {
-  height: 42px !important;
-  padding: 8px 18px !important;
+  height: 42px;
+  padding: 8px 18px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-/* Table */
-.table-wrapper {
-  width: 100%;
-}
-
+/* ===============================
+   TABLE
+   (IDENTICAL TO DEPARTMENT)
+================================ */
 .table-white {
   width: 100%;
   background: white;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #e2e8f0;
+  border-collapse: collapse;
+}
+
+.table-white th,
+.table-white td {
+  padding: 14px 16px;
+  font-size: 14px;
+  vertical-align: middle;
 }
 
 .table-white th {
   background: #f3f4f6;
-  padding: 14px;
+  font-weight: 600;
+  color: #111827;
+  text-align: left;
+}
+
+.table-white tbody tr {
+  border-top: 1px solid #e5e7eb;
 }
 
 .table-white td {
-  padding: 14px;
+  color: #1f2937;
 }
 
-/* Actions */
+/* ===============================
+   SERVICE LINK
+================================ */
+.service-link {
+  color: #1d4ed8;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.service-link:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   STATUS BADGE (SAME AS DEPT)
+================================ */
+.badge.bg-success {
+  background-color: #16a34a;
+}
+
+.badge.bg-secondary {
+  background-color: #9ca3af;
+}
+
+/* ===============================
+   ACTION COLUMN (MATCH DEPT)
+================================ */
 .actions-col {
   text-align: right;
 }
@@ -100,30 +174,101 @@
 }
 
 .icon-delete {
-  color: #dc2626;
+  color: #92400e;
   cursor: pointer;
 }
 
-/* Modal */
+/* ===============================
+   EMPTY SEARCH / FILTER MESSAGE
+================================ */
+.empty-msg {
+  text-align: center;
+  padding: 32px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* ===============================
+   PAGINATION
+================================ */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* ===============================
+   MODAL
+================================ */
 .form-modal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.4);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modal-card {
   background: white;
-  padding: 25px;
-  width: 450px;
+  width: 460px;
+  padding: 24px;
   border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-/* ✅ Center pagination */
-.table-wrapper .pagination-container {
-  display: flex !important;
-  justify-content: center !important;
-  margin-top: 20px;
+/* ===============================
+   FORM ELEMENTS
+================================ */
+.modal-card label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.modal-card input,
+.modal-card textarea,
+.modal-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 6px;
+}
+
+.modal-card textarea {
+  resize: vertical;
+}
+
+/* ===============================
+   VALIDATION 
+================================ */
+.is-invalid {
+  border-color: #dc2626;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.text-muted {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ===============================
+   FORM BUTTONS
+================================ */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 14px;
 }

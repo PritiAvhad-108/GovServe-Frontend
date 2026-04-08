@@ -2,24 +2,20 @@ import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import "./services.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import { Plus, Pencil, Trash2, FolderKanban } from "lucide-react";
-import Pagination from "../../../components/AdminComponents/common/Pagination";
 import ServiceForm from "./ServiceForm";
-import { useNavigate } from "react-router-dom";   // ✅ ADDED
+import Pagination from "../../../components/AdminComponents/common/Pagination";
+import { useNavigate } from "react-router-dom";
 
 export default function ServicesPage() {
-  const navigate = useNavigate();                 // ✅ ADDED
+  const navigate = useNavigate();
 
   const [services, setServices] = useState([]);
   const [filtered, setFiltered] = useState([]);
-
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showForm, setShowForm] = useState(null);
 
-  // ✅ Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -37,58 +33,44 @@ export default function ServicesPage() {
     loadData();
   }, []);
 
-  // ✅ Search + Status filter
   useEffect(() => {
     let data = services;
 
     if (search.trim()) {
       data = data.filter(
-        (s) =>
+        s =>
           s.serviceName.toLowerCase().includes(search.toLowerCase()) ||
           s.departmentName.toLowerCase().includes(search.toLowerCase())
       );
     }
 
     if (statusFilter !== "All") {
-      data = data.filter((s) => s.status === statusFilter);
+      data = data.filter(s => s.status === statusFilter);
     }
 
     setFiltered(data);
     setCurrentPage(1);
   }, [search, statusFilter, services]);
 
-  // ✅ Pagination logic
-  const indexOfLast = currentPage * itemsPerPage;
-  const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentData = filtered.slice(indexOfFirst, indexOfLast);
+  const indexLast = currentPage * itemsPerPage;
+  const indexFirst = indexLast - itemsPerPage;
+  const currentData = filtered.slice(indexFirst, indexLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
-
-  const deleteService = async (id) => {
-    if (!window.confirm("Delete this service?")) return;
-
-    try {
-      await api.delete(`/Services/${id}`);
-      toast.success("Service deleted successfully");
-      loadData();
-    } catch {
-      toast.error("Error deleting service");
-    }
-  };
 
   return (
     <div className="service-container">
       <ToastContainer />
 
-      {/* ✅ Header */}
+      {/* Header */}
       <div className="service-header">
         <div>
           <h2 className="page-title">Service Management</h2>
-          <p className="page-subtitle">Manage government services</p>
+          <p className="page-subtitle">Manage government services.</p>
         </div>
 
         <div className="service-stats-card">
           <div className="stats-icon">
-            <FolderKanban size={30} strokeWidth={2.5} color="#2563eb" />
+            <FolderKanban size={30} color="#1e3a8a" />
           </div>
           <div>
             <p className="stats-label">Total Services</p>
@@ -97,19 +79,19 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      {/* ✅ Filter Row */}
+      {/* Filters */}
       <div className="filter-row">
         <input
           className="form-control"
-          placeholder="Search services or department..."
+          placeholder="Search services or departments..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
         />
 
         <select
           className="form-control"
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+          onChange={e => setStatusFilter(e.target.value)}
         >
           <option value="All">All</option>
           <option value="Active">Active</option>
@@ -120,45 +102,46 @@ export default function ServicesPage() {
           className="btn btn-primary create-btn"
           onClick={() => setShowForm({})}
         >
-          <Plus size={18} color="white" /> Add Service
+          <Plus size={18} /> Add Service
         </button>
       </div>
 
-      {/* ✅ Table */}
-      <div className="table-wrapper">
-        <table className="table table-white">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Department</th>
-              <th>Service</th>
-              <th>Description</th>
-              <th>SLA Days</th>
-              <th>Status</th>
-              <th style={{ textAlign: "right" }}>Actions</th>
-            </tr>
-          </thead>
+      {/* Table */}
+      <table className="table-white">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Service</th>
+            <th>Description</th>
+            <th>SLA Days</th>
+            <th>Status</th>
+            <th style={{ textAlign: "right" }}>Actions</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {currentData.map((s) => (
+        <tbody>
+          {currentData.length === 0 ? (
+            <tr>
+              <td colSpan="7" className="empty-msg">
+                No services found.
+              </td>
+            </tr>
+          ) : (
+            currentData.map(s => (
               <tr key={s.serviceID}>
                 <td>{s.serviceID}</td>
                 <td>{s.departmentName}</td>
-
-                {/* ✅ CLICKABLE SERVICE NAME */}
                 <td
                   className="service-link"
-                  onClick={() => navigate(`/admin/services/${s.serviceID}`)}
-                  style={{ cursor: "pointer", color: "#2563eb" }}
+                  onClick={() =>
+                    navigate(`/admin/services/${s.serviceID}`)
+                  }
                 >
                   {s.serviceName}
                 </td>
-
                 <td>{s.description}</td>
-
-                {/* ✅ SLA FIELD PRESERVED */}
                 <td>{s.slA_Days}</td>
-
                 <td>
                   <span
                     className={`badge ${
@@ -170,7 +153,6 @@ export default function ServicesPage() {
                     {s.status}
                   </span>
                 </td>
-
                 <td className="actions-col">
                   <Pencil
                     size={18}
@@ -180,31 +162,30 @@ export default function ServicesPage() {
                   <Trash2
                     size={18}
                     className="icon-delete"
-                    onClick={() => deleteService(s.serviceID)}
+                    onClick={() => {
+                      if (window.confirm("Delete this service?")) {
+                        api.delete(`/Services/${s.serviceID}`).then(loadData);
+                      }
+                    }}
                   />
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            ))
+          )}
+        </tbody>
+      </table>
 
-        {/* ✅ Pagination */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={page => setCurrentPage(page)}
+      />
 
-      {/* ✅ Add / Edit Modal */}
       {showForm && (
         <ServiceForm
           service={showForm}
           onClose={() => setShowForm(null)}
-          onSave={async () => {
-            await loadData();
-            setShowForm(null);
-          }}
+          onSave={loadData}
         />
       )}
     </div>

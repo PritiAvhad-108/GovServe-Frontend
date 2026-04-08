@@ -35,6 +35,9 @@ export default function AdminDashboard() {
     pendingSlaCases: 0
   });
 
+  /* ✅ SOURCE OF TRUTH FOR PIE */
+  const [slaRecords, setSlaRecords] = useState([]);
+
   useEffect(() => {
     loadDashboardData();
   }, []);
@@ -48,8 +51,7 @@ export default function AdminDashboard() {
         pendingUserRes,
         appRes,
         caseRes,
-        onTimeRes,
-        breachedRes,
+        slaRecordsRes,
         pendingSlaRes
       ] = await Promise.all([
         api.get("/Department"),
@@ -58,35 +60,50 @@ export default function AdminDashboard() {
         api.get("/User/pending-users"),
         api.get("/Application/all"),
         api.get("/Case/all"),
-        api.get("/SLARecords/ontime"),
-        api.get("/SLARecords/breached"),
-        api.get("/SLARecords/pending-cases") // ✅ SOURCE OF TRUTH
+        api.get("/SLARecords"),              // ✅ ALL records
+        api.get("/SLARecords/pending-cases")
       ]);
 
-      /* KPI stats */
+      /* ✅ KPI stats */
       setStats({
         departments: deptRes.data.length,
         services: serviceRes.data.length,
         users: userRes.data.length,
         applications: appRes.data.length,
-        activeSLAs: onTimeRes.data.length,
-        breachedSLAs: breachedRes.data.length
+        activeSLAs: slaRecordsRes.data.filter(
+          r => r.status === "OnTime"
+        ).length,
+        breachedSLAs: slaRecordsRes.data.filter(
+          r => r.status === "Breached"
+        ).length
       });
 
       setApplications(appRes.data);
       setCases(caseRes.data);
+      setSlaRecords(slaRecordsRes.data);
 
-      /* ✅ Admin Attention counts (NO manual SLA logic) */
+      /* ✅ Admin Attention */
       setAttention({
         pendingUsers: pendingUserRes.data.length,
-        breachedSLAs: breachedRes.data.length,
-        pendingSlaCases: pendingSlaRes.data.length // ✅ FIXED
+        breachedSLAs: slaRecordsRes.data.filter(
+          r => r.status === "Breached"
+        ).length,
+        pendingSlaCases: pendingSlaRes.data.length
       });
 
     } catch (err) {
       console.error("Dashboard load failed", err);
     }
   };
+
+  /* ✅ SAME PIE LOGIC AS SLA RECORDS PAGE */
+  const onTimeCount = slaRecords.filter(
+    r => r.status === "OnTime"
+  ).length;
+
+  const breachedCount = slaRecords.filter(
+    r => r.status === "Breached"
+  ).length;
 
   return (
     <div className="dashboard-container">
@@ -111,8 +128,8 @@ export default function AdminDashboard() {
       {/* SLA + ADMIN ATTENTION */}
       <div className="dashboard-row">
         <SLADistributionChart
-          onTime={stats.activeSLAs}
-          breached={stats.breachedSLAs}
+          onTime={onTimeCount}
+          breached={breachedCount}
         />
 
         <AdminAttentionPanel
@@ -123,13 +140,12 @@ export default function AdminDashboard() {
       </div>
 
       {/* TABLES */}
-
-       <div className="panel table-panel">
-          <RecentCasesTable cases={cases} />
-      </div>
-
       <div className="panel table-panel">
-           <RecentApplicationsTable applications={applications} />
+        <RecentCasesTable cases={cases} />
+      </div>
+      <br/>
+      <div className="panel table-panel">
+        <RecentApplicationsTable applications={applications} />
       </div>
     </div>
   );

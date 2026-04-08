@@ -37,9 +37,15 @@
   padding: 16px;
   display: flex;
   gap: 14px;
-  color:#1e3a8a;
+  color: #1e3a8a;
   align-items: center;
   border: 1px solid #e2e8f0;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.stat-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .stat-icon {
@@ -49,14 +55,14 @@
 }
 
 /* ===============================
-   ROW LAYOUT (KEY FIX ✅)
+   ROW LAYOUT
 ================================ */
 .dashboard-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin-bottom: 20px;
-  align-items: stretch; /* ✅ forces equal height */
+  align-items: stretch;
 }
 
 /* ===============================
@@ -69,13 +75,18 @@
   border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 /* ===============================
-   ATTENTION PANEL (FIXED ✅)
+   ATTENTION PANEL
 ================================ */
 .attention-panel {
-  height: 100%; /* ✅ matches SLA card height */
+  height: 100%;
 }
 
 .attention-panel h3 {
@@ -95,7 +106,7 @@
   border: 1px solid #e2e8f0;
   margin-bottom: 14px;
   background: #ffffff;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .attention-item span {
@@ -113,32 +124,75 @@
 
 .attention-item:hover {
   background: #f8fafc;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateX(2px);
 }
 
-/* ===============================
+/* =======================================================
    TABLE STYLES
-================================ */
+======================================================= */
+.table-white {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.table-white th,
+.table-white td {
+  padding: 14px 16px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
 .table-white th {
   background: #f3f4f6;
+  font-weight: 600;
+  color: #111827;
+  text-align: left;
 }
+
+.table-white tbody tr {
+  border-top: 1px solid #e5e7eb;
+  transition: background-color 0.15s ease;
+}
+
+/* ✅ PROFESSIONAL ROW HOVER */
+.table-white tbody tr:hover {
+  background: #f8fafc;
+}
+
 .table-white td {
-  padding: 14px;
+  color: #1f2937;
 }
+
+/* ✅ EMPTY TABLE STATE */
+.empty-msg {
+  text-align: center;
+  padding: 32px;
+  font-size: 14px;
+  color: #64748b;
+}
+
 /* ✅ FULL WIDTH TABLES */
 .dashboard-row .table-panel,
 .dashboard-row .panel.full-width {
   grid-column: 1 / -1;
 }
+
 /* ===============================
    CASE STATUS
 ================================ */
 .case-status {
   padding: 4px 10px;
-  border-radius: 8px;
+  border-radius: 999px;
   font-weight: 600;
   font-size: 13px;
+  transition: filter 0.15s ease;
 }
+
 .case-status.assigned {
   background: #e0f2fe;
   color: #0369a1;
@@ -156,3 +210,7 @@
   color: #166534;
 }
 
+/* ✅ Subtle emphasis on hover */
+.table-white tbody tr:hover .case-status {
+  filter: brightness(0.95);
+}
