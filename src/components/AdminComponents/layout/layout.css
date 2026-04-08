@@ -3,7 +3,8 @@
 ========================= */
 .app-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;          /* ✅ lock full viewport */
+  overflow: hidden;       /* ✅ prevent body scroll */
   background: #f1f5f9;
   font-family: "Inter", sans-serif;
 }
@@ -13,10 +14,10 @@
 ========================= */
 .sidebar {
   width: 250px;
-  background: #e7f3f6; /* ✅ keep background */
+  background: #e7f3f6;
   border-right: 1px solid #dbeafe;
   padding: 18px 0;
-  position: fixed;
+  position: fixed;        /* ✅ fixed sidebar */
   top: 0;
   left: 0;
   height: 100vh;
@@ -54,46 +55,35 @@
   display: flex;
   align-items: center;
   gap: 12px;
-
   padding: 10px 16px;
   margin: 4px 14px;
-
   font-size: 14.5px;
   font-weight: 500;
   text-decoration: none;
-
-  color: #1e3a8a; /* ✅ keep your blue text */
+  color: #1e3a8a;
   border-radius: 10px;
-
   transition: background 0.15s ease, box-shadow 0.15s ease,
               font-weight 0.15s ease;
 }
 
-/* Icon size consistency */
 .sidebar .nav-link svg {
   font-size: 18px;
 }
 
-/* =========================
-   HOVER STATE (SUBTLE)
-========================= */
+/* Hover */
 .sidebar .nav-link:hover {
   background: #dbeafe;
   box-shadow: inset 3px 0 0 #1e3a8a;
 }
 
-/* =========================
-   ACTIVE STATE (CLEAN & PROFESSIONAL)
-========================= */
+/* Active */
 .sidebar .nav-link.active {
   background: #bfdbfe;
   font-weight: 600;
   box-shadow: inset 3px 0 0 #1e3a8a;
 }
 
-/* =========================
-   LOGOUT SECTION
-========================= */
+/* Logout */
 .logout-section {
   margin-top: 18px;
   padding-top: 12px;
@@ -114,66 +104,69 @@
    RIGHT LAYOUT
 ========================= */
 .main-layout {
-  margin-left: 250px; /* space for sidebar */
+  margin-left: 250px;     /* ✅ space for fixed sidebar */
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 /* =========================
-   NAVBAR (RIGHT SIDE ONLY)
+   ✅ FIXED NAVBAR
 ========================= */
 .topbar {
+  position: sticky;       /* ✅ THIS FIXES NAVBAR */
+  top: 0;
+  z-index: 1000;
   height: 75px;
-  background: #1e3a8a; /* ✅ your color */
+  background: #1e3a8a;
   display: flex;
   align-items: center;
   padding: 0 24px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 
-/* Navbar content */
+/* Navbar inner */
 .topbar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-/* =========================
-   NAVBAR ACTIONS (LEFT SIDE, WHITE)
-========================= */
+
+/* Navbar actions */
 .topbar-actions {
   display: flex;
   align-items: center;
   gap: 16px;
-
-  margin-left: auto;    /* ✅ keeps it on LEFT side */
-  color: #ffffff;        /* ✅ makes text & icons white */
+  margin-left: auto;
+  color: #ffffff;
 }
 
-/* Icons (Bell & Profile) */
 .topbar-actions svg {
-  color: #ffffff;        /* ✅ force white icons */
+  color: #ffffff;
   font-size: 20px;
 }
 
-/* Admin User text */
 .topbar-actions span {
-  color: #ffffff;        /* ✅ white text */
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
 }
 
 /* =========================
-   PAGE CONTENT
+   ✅ SCROLLABLE PAGE CONTENT
 ========================= */
 .page-content {
-  padding: 30px;
-  background: #e4ebef; /* ✅ your color */
   flex: 1;
+  overflow-y: auto;       /* ✅ ONLY CONTENT SCROLLS */
+  padding: 30px;
+  background: #e4ebef;
 }
 
-
+/* =========================
+   NOTIFICATIONS
+========================= */
 .notification-bell {
   position: relative;
   cursor: pointer;
@@ -196,7 +189,6 @@
   z-index: 10;
 }
 
-/* ✅ Subtle visual alert */
 .notification-bell.has-alert {
   animation: bell-pulse 1.2s infinite;
 }
@@ -205,4 +197,28 @@
   0% { transform: scale(1); }
   50% { transform: scale(1.12); }
   100% { transform: scale(1); }
+}
+
+/* =========================
+   USER INFO
+========================= */
+.user-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.user-info .avatar {
+  width: 32px;
+  height: 32px;
+  background: #7b61ff;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
