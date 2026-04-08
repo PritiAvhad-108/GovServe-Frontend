@@ -1,10 +1,16 @@
 import SupervisorRoutes from "./routes/Supervisorroutes";
 
+
+
 function App() {
   
-     return <SupervisorRoutes />;
-   
-
+     return (
+          <>
+     <SupervisorRoutes />
+     <AdminRoutes/>
+     </>
+     );
+     
 
   
 }
