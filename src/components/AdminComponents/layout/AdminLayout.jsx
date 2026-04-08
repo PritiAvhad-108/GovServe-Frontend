@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import "./layout.css";
 
-export default function AdminLayout({ children }) {
+export default function AdminLayout() {
   return (
     <div className="app-layout">
       {/* Sidebar stays at left */}
@@ -12,8 +13,9 @@ export default function AdminLayout({ children }) {
       <div className="main-layout">
         <Navbar />
 
+        {/* ✅ REQUIRED FOR ROUTER v6 */}
         <div className="page-content">
-          {children}
+          <Outlet />
         </div>
       </div>
     </div>

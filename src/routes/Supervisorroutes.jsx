@@ -1,10 +1,5 @@
-import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
-// Layout
 import SupervisorLayout from "../components/SupervisorComponents/layout/SupervisorLayout";
-
-// Pages
 import SupervisorDashboard from "../pages/Supervisor/Dashboard/SupervisorDashboard";
 import Cases from "../pages/Supervisor/Cases/Cases";
 import CaseDetails from "../pages/Supervisor/Cases/CaseDetails";
@@ -16,9 +11,14 @@ import Reports from "../pages/Supervisor/Reports/Reports";
 const SupervisorRoutes = () => {
   return (
     <Routes>
-      <Route path="/supervisor" element={<SupervisorLayout />}>
+      <Route element={<SupervisorLayout />}>
+        {/* ✅ Default Redirect */}
         <Route index element={<Navigate to="dashboard" />} />
+
+        {/* ✅ Dashboard */}
         <Route path="dashboard" element={<SupervisorDashboard />} />
+
+        {/* ✅ All other supervisor routes */}
         <Route path="cases" element={<Cases />} />
         <Route path="case-details/:caseId" element={<CaseDetails />} />
         <Route path="escalations" element={<Escalations />} />

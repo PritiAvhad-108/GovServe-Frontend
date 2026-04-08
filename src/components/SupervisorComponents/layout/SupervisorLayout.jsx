@@ -13,8 +13,8 @@ export default function SupervisorLayout() {
       <div className="main-layout">
         <SupervisorNavbar />
 
+        {/* Outlet is REQUIRED for nested routes */}
         <div className="page-content">
-          {/* Nested supervisor routes will render here */}
           <Outlet />
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function SupervisorLayout() {
 
         /* Sidebar width is 260px, so we offset the main layout */
         .main-layout {
-          margin-left: 260px; 
+          margin-left: 260px;
           flex: 1;
           display: flex;
           flex-direction: column;
