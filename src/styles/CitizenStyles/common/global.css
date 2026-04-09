@@ -16,7 +16,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px; 
+  height: 90px; 
   background-color: #1e3a8a;
   color: white;
   padding: 0 25px;
@@ -149,9 +149,9 @@ hr {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 88vh;
+  height: 86vh;
   overflow: hidden;
-  margin-top: 70px; 
+  margin-top: 82px; 
 }
 
 .content-area {

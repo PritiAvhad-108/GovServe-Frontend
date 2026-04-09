@@ -15,7 +15,7 @@
 }
 
 .header-banner {
-    background: #2563eb;
+    background: #1e3a8a;
     height: 100px;
     position: relative;
 }
@@ -70,7 +70,7 @@
     width: 40px;
     height: 40px;
     background: #eff6ff;
-    color: #2563eb;
+    color: #1e3a8a;
     border-radius: 10px;
     display: flex;
     align-items: center;
