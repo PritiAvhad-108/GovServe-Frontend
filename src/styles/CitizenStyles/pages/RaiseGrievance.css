@@ -1,0 +1,105 @@
+/* 🔥 Overlay covers full screen */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3000; /* Navbar/Sidebar पेक्षा जास्त */
+}
+
+/* 🔥 Modal box */
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 450px;              /* fixed width */
+  max-width: 95%;            /* responsive */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  animation: fadeIn 0.3s ease-in-out;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Header */
+.modal-header {
+  width: 100%;
+  background: #1e3a8a;
+  padding: 14px 18px;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Form layout */
+.grievance-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+.grievance-form input,
+.grievance-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.grievance-form input:focus,
+.grievance-form textarea:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+}
+
+/* Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  background: #1e3a8a;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #ef4444;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
