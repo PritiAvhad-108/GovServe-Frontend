@@ -18,8 +18,8 @@ function AdminRoutes() {
   return (
     <Routes>
       <Route element={<AdminLayout />}>
-        {/* ✅ Default Redirect */}
-        <Route index element={<Navigate to="dashboard" />} />
+        {/* ✅ Default Redirect
+        <Route index element={<Navigate to="dashboard" />} /> */}
  
         {/* ✅ Dashboard */}
         <Route path="dashboard" element={<AdminDashboard />} />

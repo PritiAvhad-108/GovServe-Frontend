@@ -72,7 +72,7 @@ export default function Navbar() {
           {/* 🔔 Notification Bell */}
           <div
             className={`notification-bell ${unreadCount > 0 ? "has-alert" : ""}`}
-            onClick={() => navigate("/notifications")}
+            onClick={() => navigate("/admin/notifications")}
           >
             <FiBell size={22} />
             {unreadCount > 0 && (

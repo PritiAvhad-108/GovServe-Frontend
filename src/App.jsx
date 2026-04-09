@@ -11,8 +11,8 @@ function App() {
       {/* Admin */}
       <Route path="/admin/*" element={<AdminRoutes />} />
  
-      {/* Default */}
-      <Route path="*" element={<Navigate to="/supervisor/dashboard" />} />
+      {/* Default
+      <Route path="*" element={<Navigate to="/supervisor/dashboard" />} /> */}
     </Routes>
   );
 }
