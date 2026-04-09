@@ -38,6 +38,7 @@ export const markNotificationRead = (notificationId) =>API.put(`/Notification/ma
 export const reassignEscalatedCase = (caseId, newOfficerId) =>API.post("/Case/reassign-escalated", null, {params: { caseId, newOfficerId },});
 export const autoEscalateCases = () =>API.post("/Escalation/auto-escalate");
 export const getAllUsers = () => { return API.get("/User/all");};
+export const getRoles = () => api.get("/Roles");
 export const getServices = () => {return axios.get(`${BASE_URL}/Services`);};
 
 

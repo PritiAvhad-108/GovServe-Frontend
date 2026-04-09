@@ -14,11 +14,11 @@ import {
   getApplications,
   getAllCases
 } from "../../../api/api";
-import { useNavigate, useLocation } from "react-router-dom"; // ✅ added useLocation
+import { useNavigate, useLocation } from "react-router-dom"; 
 
 const SupervisorDashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ added
+  const location = useLocation(); 
 
   const [stats, setStats] = useState({
     total: 0,
@@ -39,7 +39,7 @@ const SupervisorDashboard = () => {
   const itemsPerPage = 5;
   const slaItemsPerPage = 5;
 
-  // ✅ CHANGED: re-load dashboard whenever route changes
+  // CHANGED: re-load dashboard whenever route changes
   useEffect(() => {
     loadDashboardStats();
     loadRecentApplications();

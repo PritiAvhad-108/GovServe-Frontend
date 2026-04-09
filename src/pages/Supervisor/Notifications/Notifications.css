@@ -117,3 +117,50 @@
   color: #6b7280;
   font-size: 14px;
 }
+
+/* ================= CENTER SEND CARD ================= */
+
+.centered-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form width + centering */
+.send-form-wrapper {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* Improve textarea spacing */
+.send-form-wrapper textarea {
+  margin-top: 8px;
+}
+
+/* Make send card content wide & centered */
+.send-form-wrapper.wide {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Success + error banners */
+.success-banner {
+  margin-top: 14px;
+  padding: 12px;
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #166534;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.error-banner {
+  margin-top: 14px;
+  padding: 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  border-radius: 8px;
+  text-align: center;
+}

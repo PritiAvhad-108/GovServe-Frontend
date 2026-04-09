@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Notifications.css";
+import api from "../../../api/api";
 import {
   sendNotification,
   getNotificationsByUser,
@@ -12,27 +13,36 @@ const Notifications = () => {
 
   const [notifications, setNotifications] = useState([]);
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [selectedRole, setSelectedRole] = useState("");
 
   const [form, setForm] = useState({
-    userId: "",
     message: "",
     category: "General"
   });
 
   const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /* =========================
+     LOAD DATA
+  ========================= */
+
   useEffect(() => {
-    fetchNotifications();
+    if (supervisorId && !isNaN(supervisorId)) {
+      fetchNotifications();
+    }
     fetchUsers();
-  }, []);
+    fetchRoles();
+  }, [supervisorId]);
 
   const fetchNotifications = async () => {
     try {
       const res = await getNotificationsByUser(supervisorId);
       setNotifications(res.data);
     } catch (err) {
-      console.error("Failed to load notifications", err);
+      console.error("Failed to fetch notifications", err);
     }
   };
 
@@ -41,106 +51,138 @@ const Notifications = () => {
       const res = await getAllUsers();
       setUsers(res.data);
     } catch (err) {
-      console.error("Failed to load users", err);
+      console.error("Failed to fetch users", err);
     }
   };
 
+  const fetchRoles = async () => {
+    try {
+      const res = await api.get("/Roles");
+      setRoles(res.data); // [{ roleID, roleName }]
+    } catch (err) {
+      console.error("Failed to fetch roles", err);
+    }
+  };
+
+  /* =========================
+     SEND NOTIFICATION
+  ========================= */
+
   const handleSendNotification = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setSuccessMsg("");
+    setErrorMsg("");
+
+    if (!selectedRole || !form.message.trim()) {
+      setErrorMsg("⚠️ Please select a role and enter a message");
+      return;
+    }
+
+    setLoading(true);
 
     try {
-      await sendNotification({
-        userId: Number(form.userId),
-        message: form.message,
-        category: form.category
-      });
+      const roleUsers = users.filter(
+        u => u.roleName?.toLowerCase() === selectedRole.toLowerCase()
+      );
 
-      setSuccessMsg("✅ Notification sent successfully");
+      if (roleUsers.length === 0) {
+        setErrorMsg("⚠️ No users found for selected role");
+        return;
+      }
 
-      setForm({
-        userId: "",
-        message: "",
-        category: "General"
-      });
+      for (const user of roleUsers) {
+        await sendNotification({
+          userId: user.userId,
+          message: form.message,
+          category: form.category
+        });
+      }
+
+      setSuccessMsg(`✅ Notification sent successfully to ${selectedRole}`);
+      setForm({ message: "", category: "General" });
+      setSelectedRole("");
 
       fetchNotifications();
+
     } catch (err) {
-      console.error("Failed to send notification", err);
+      console.error("Send notification error", err);
+      setErrorMsg("❌ Failed to send notification");
     } finally {
       setLoading(false);
     }
   };
 
+  /* =========================
+     MARK AS READ
+  ========================= */
+
   const handleMarkRead = async (id) => {
-    try {
-      await markNotificationRead(id);
-      fetchNotifications();
-    } catch (err) {
-      console.error("Failed to mark notification as read", err);
-    }
+    await markNotificationRead(id);
+    fetchNotifications();
   };
+
+  /* =========================
+     UI
+  ========================= */
 
   return (
     <div className="notifications-container">
       <h2 className="page-title">Notifications</h2>
 
-      {/* Send Notification */}
-      <div className="notification-card send-box">
+      {/* SEND CARD */}
+      <div className="notification-card send-box centered-card">
         <h3>Send Notification</h3>
 
-        <form onSubmit={handleSendNotification}>
-          <div className="form-row">
+        <div className="send-form-wrapper wide">
+          <form onSubmit={handleSendNotification}>
             <select
-              value={form.userId}
-              onChange={(e) =>
-                setForm({ ...form, userId: e.target.value })
-              }
+              value={selectedRole}
+              onChange={(e) => setSelectedRole(e.target.value)}
               required
             >
-              <option value="">Select Recipient</option>
-              {users.map((u) => (
-                <option key={u.userId} value={u.userId}>
-                  {u.fullName} ({u.roleName})
+              <option value="">Select Role</option>
+              {roles.map((r) => (
+                <option key={r.roleID} value={r.roleName}>
+                  {r.roleName}
                 </option>
               ))}
             </select>
-          </div>
 
-          <textarea
-            placeholder="Notification message"
-            value={form.message}
-            onChange={(e) =>
-              setForm({ ...form, message: e.target.value })
-            }
-            required
-          />
-
-          <div className="form-row">
-            <select
-              value={form.category}
+            <textarea
+              placeholder="Notification message"
+              value={form.message}
               onChange={(e) =>
-                setForm({ ...form, category: e.target.value })
+                setForm({ ...form, message: e.target.value })
               }
-            >
-              <option value="General">General</option>
-              <option value="Assignment">Assignment</option>
-              <option value="Escalation">Escalation</option>
-              <option value="SLA">SLA</option>
-              <option value="Update">Update</option>
-            </select>
+              required
+            />
 
-            <button type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Send"}
-            </button>
-          </div>
-        </form>
+            <div className="form-row">
+              <select
+                value={form.category}
+                onChange={(e) =>
+                  setForm({ ...form, category: e.target.value })
+                }
+              >
+                <option>General</option>
+                <option>Assignment</option>
+                <option>Escalation</option>
+                <option>SLA</option>
+                <option>Update</option>
+              </select>
 
-        {successMsg && <p className="success-msg">{successMsg}</p>}
+              <button type="submit" disabled={loading}>
+                {loading ? "Sending..." : "Send"}
+              </button>
+            </div>
+          </form>
+
+          {successMsg && <div className="success-banner">{successMsg}</div>}
+          {errorMsg && <div className="error-banner">{errorMsg}</div>}
+        </div>
       </div>
 
-      {/* My Notifications */}
+      {/* MY NOTIFICATIONS */}
       <div className="notification-card list-box">
         <h3>My Notifications</h3>
 
@@ -150,9 +192,7 @@ const Notifications = () => {
           notifications.map((n) => (
             <div
               key={n.notificationId}
-              className={`notification-item ${
-                n.status === "Unread" ? "unread" : ""
-              }`}
+              className={`notification-item ${!n.isRead ? "unread" : ""}`}
             >
               <div className="notification-content">
                 <p className="notification-message">{n.message}</p>
@@ -161,7 +201,7 @@ const Notifications = () => {
                 </p>
               </div>
 
-              {n.status === "Unread" && (
+              {!n.isRead && (
                 <button
                   className="read-btn"
                   onClick={() => handleMarkRead(n.notificationId)}

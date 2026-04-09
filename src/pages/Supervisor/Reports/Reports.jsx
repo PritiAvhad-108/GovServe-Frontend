@@ -2,15 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Reports.css";
 import { Pie, Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement
-} from "chart.js";
+import {Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,LinearScale, BarElement} from "chart.js";
 
 ChartJS.register(
   ArcElement,
@@ -43,14 +35,14 @@ const Reports = () => {
     return acc;
   }, {});
 
-  /* ✅ Status → Color mapping */
+  /*  Status → Color mapping */
   const statusColors = {
     Approved: "#16a34a",   // green
     Assigned: "#3b82f6",   // blue
     Escalated: "#9333ea",  // purple
     Rejected: "#f59e0b",   // orange
     Breached: "#dc2626",   // red
-    Pending: "#9ca3af"     // gray (fallback)
+    Pending: "#9ca3af"     // gray 
   };
 
   const pieLabels = Object.keys(statusCount);
