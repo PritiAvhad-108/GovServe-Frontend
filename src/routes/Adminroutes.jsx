@@ -13,17 +13,17 @@ import SLARecordsPage from "../pages/AdminPages/slaRecord/SLARecordsPage";
 import UsersPage from "../pages/AdminPages/users/UserPage";
 import ServiceReportsPage from "../pages/AdminPages/serviceReports/ServiceReportsPage";
 import NotificationsPage from "../pages/AdminPages/notification/NotificationsPage";
-
+ 
 function AdminRoutes() {
   return (
     <Routes>
       <Route element={<AdminLayout />}>
-        {/* ✅ Default Redirect */}
-        <Route index element={<Navigate to="dashboard" />} />
-
+        {/* ✅ Default Redirect
+        <Route index element={<Navigate to="dashboard" />} /> */}
+ 
         {/* ✅ Dashboard */}
         <Route path="dashboard" element={<AdminDashboard />} />
-
+ 
         {/* ✅ All other admin routes */}
         <Route path="departments" element={<DepartmentPage />} />
         <Route path="roles" element={<RolesPage />} />
@@ -41,5 +41,5 @@ function AdminRoutes() {
     </Routes>
   );
 }
-
+ 
 export default AdminRoutes;
