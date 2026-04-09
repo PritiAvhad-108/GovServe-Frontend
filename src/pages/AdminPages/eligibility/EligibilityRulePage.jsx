@@ -31,20 +31,26 @@ export default function EligibilityRulesPage() {
 
   useEffect(() => {
     let data = rules;
+
     if (search.trim()) {
-      data = data.filter(r =>
+      data = data.filter((r) =>
         r.serviceName.toLowerCase().includes(search.toLowerCase())
       );
     }
+
     setFiltered(data);
     setCurrentPage(1);
   }, [search, rules]);
 
   const deleteRule = async (id) => {
-    if (!window.confirm("Delete this rule?")) return;
-    await api.delete(`/EligibilityRules/${id}`);
-    toast.success("Rule deleted");
-    loadData();
+    if (!window.confirm("Are you sure you want to delete this rule?")) return;
+    try {
+      await api.delete(`/EligibilityRules/${id}`);
+      toast.success("Eligibility rule deleted successfully");
+      loadData();
+    } catch {
+      toast.error("Failed to delete eligibility rule");
+    }
   };
 
   const indexLast = currentPage * itemsPerPage;
@@ -60,7 +66,9 @@ export default function EligibilityRulesPage() {
       <div className="eligibility-header">
         <div>
           <h2 className="page-title">Eligibility Rules</h2>
-          <p className="page-subtitle">Manage eligibility rules per service</p>
+          <p className="page-subtitle">
+            Manage eligibility rules for government services.
+          </p>
         </div>
 
         <div className="eligibility-stats-card">
@@ -68,8 +76,8 @@ export default function EligibilityRulesPage() {
             <ShieldCheck size={28} color="#1e3a8a" />
           </div>
           <div>
-            <p>Total Rules</p>
-            <h3>{rules.length}</h3>
+            <p className="stats-label">Total Rules</p>
+            <h3 className="stats-value">{rules.length}</h3>
           </div>
         </div>
       </div>
@@ -87,59 +95,64 @@ export default function EligibilityRulesPage() {
           className="btn btn-primary create-btn"
           onClick={() => setShowForm({})}
         >
-          <Plus size={16} color="white" /> Add Rule
+          <Plus size={16} /> Add Rule
         </button>
       </div>
 
       {/* Table */}
-      <div className="table-wrapper">
-        <table className="table table-white">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Service</th>
-              <th>Description</th>
-              <th style={{ textAlign: "right" }}>Actions</th>
-            </tr>
-          </thead>
+      <table className="table-white">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Service</th>
+            <th>Description</th>
+            <th style={{ textAlign: "right" }}>Actions</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {currentData.map((r) => (
+        <tbody>
+          {currentData.length === 0 ? (
+            <tr>
+              <td colSpan="4" className="empty-msg">
+                No eligibility rules found matching your search.
+              </td>
+            </tr>
+          ) : (
+            currentData.map((r) => (
               <tr key={r.ruleID}>
                 <td>{r.ruleID}</td>
                 <td>{r.serviceName}</td>
-                <td>{r.ruleDescription}</td>
-
-
+                <td className="expr">{r.ruleDescription}</td>
                 <td className="actions-col">
                   <Pencil
-                    className="icon-edit"
                     size={18}
+                    className="icon-edit"
                     onClick={() => setShowForm(r)}
                   />
                   <Trash2
-                    className="icon-delete"
                     size={18}
+                    className="icon-delete"
                     onClick={() => deleteRule(r.ruleID)}
                   />
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            ))
+          )}
+        </tbody>
+      </table>
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
 
       {showForm && (
         <EligibilityRuleForm
           rule={showForm}
           onClose={() => setShowForm(null)}
           onSave={loadData}
+          
         />
       )}
     </div>

@@ -26,19 +26,21 @@ export default function DepartmentsPage() {
     }
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   useEffect(() => {
     let data = departments;
 
     if (search.trim()) {
-      data = data.filter(d =>
+      data = data.filter((d) =>
         d.departmentName.toLowerCase().includes(search.toLowerCase())
       );
     }
 
     if (statusFilter !== "All") {
-      data = data.filter(d => d.status === statusFilter);
+      data = data.filter((d) => d.status === statusFilter);
     }
 
     setFiltered(data);
@@ -86,18 +88,21 @@ export default function DepartmentsPage() {
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
-          <option value="All">All</option>
+          <option value="All">All Status</option>
           <option value="Active">Active</option>
-          <option value="InActive">InActive</option>
+          <option value="InActive">Inactive</option>
         </select>
 
-        <button className="btn btn-primary create-btn" onClick={() => setShowForm({})}>
+        <button
+          className="btn btn-primary create-btn"
+          onClick={() => setShowForm({})}
+        >
           <Plus size={18} /> Add Department
         </button>
       </div>
 
       {/* Table */}
-      <table className="table table-white">
+      <table className="table-white">
         <thead>
           <tr>
             <th>ID</th>
@@ -116,23 +121,43 @@ export default function DepartmentsPage() {
               </td>
             </tr>
           ) : (
-            currentData.map(d => (
+            currentData.map((d) => (
               <tr key={d.departmentID}>
                 <td>{d.departmentID}</td>
                 <td>{d.departmentName}</td>
                 <td>{d.description}</td>
                 <td>
-                  <span className={`badge ${d.status === "Active" ? "bg-success" : "bg-secondary"}`}>
+                  <span
+                    className={`badge ${
+                      d.status === "Active"
+                        ? "bg-success"
+                        : "bg-secondary"
+                    }`}
+                  >
                     {d.status}
                   </span>
                 </td>
                 <td className="actions-col">
-                  <Pencil size={18} className="icon-edit" onClick={() => setShowForm(d)} />
-                  <Trash2 size={18} className="icon-delete" onClick={() => {
-                    if (window.confirm("Delete this department?")) {
-                      api.delete(`/Department/${d.departmentID}`).then(loadData);
-                    }
-                  }} />
+                  <Pencil
+                    size={18}
+                    className="icon-edit"
+                    onClick={() => setShowForm(d)}
+                  />
+                  <Trash2
+                    size={18}
+                    className="icon-delete"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this department?"
+                        )
+                      ) {
+                        api
+                          .delete(`/Department/${d.departmentID}`)
+                          .then(loadData);
+                      }
+                    }}
+                  />
                 </td>
               </tr>
             ))
@@ -143,7 +168,7 @@ export default function DepartmentsPage() {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={page => setCurrentPage(page)}
+        onPageChange={(page) => setCurrentPage(page)}
       />
 
       {showForm && (

@@ -14,7 +14,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function SLARecordsPage() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const isPendingView = location.state?.view === "pending";
 
   const [records, setRecords] = useState([]);
@@ -28,8 +27,7 @@ export default function SLARecordsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  /* ========== LOADERS ========== */
-
+  /* ========= LOAD DATA ========= */
   const loadAll = async () => {
     try {
       const res = await api.get("/SLARecords");
@@ -55,8 +53,7 @@ export default function SLARecordsPage() {
     isPendingView ? loadPendingCases() : loadAll();
   }, [isPendingView]);
 
-  /* ========== FILTER (NORMAL VIEW ONLY) ========== */
-
+  /* ========= FILTER ========= */
   useEffect(() => {
     if (isPendingView) return;
 
@@ -76,8 +73,7 @@ export default function SLARecordsPage() {
     setCurrentPage(1);
   }, [search, statusFilter, records, isPendingView]);
 
-  /* ========== PIE (NORMAL VIEW ONLY) ========== */
-
+  /* ========= PIE ========= */
   const onTimeCount = records.filter(r => r.status === "OnTime").length;
   const breachedCount = records.filter(r => r.status === "Breached").length;
 
@@ -86,24 +82,20 @@ export default function SLARecordsPage() {
     datasets: [
       {
         data: [onTimeCount, breachedCount],
-        backgroundColor: ["#22c55e", "#ef4444"]
+        backgroundColor: ["#16a34a", "#dc2626"]
       }
     ]
   };
 
-  /* ========== PAGINATION ========== */
-
+  /* ========= PAGINATION ========= */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
-  /* ========== DELETE ========== */
-
+  /* ========= DELETE ========= */
   const deleteRecord = async (id) => {
-    if (!id) return;
     if (!window.confirm("Delete SLA record?")) return;
-
     try {
       await api.delete(`/SLARecords/${id}`);
       toast.success("SLA record deleted");
@@ -130,10 +122,9 @@ export default function SLARecordsPage() {
           </p>
         </div>
 
-        {/* ✅ COUNT CARD */}
         <div className="sla-count-card">
           <div className="icon-bg">
-            <Timer size={28} color="#2563eb" />
+            <Timer size={28} color="#1e3a8a" />
           </div>
           <div>
             <p>{isPendingView ? "Pending SLA Cases" : "Total SLA Records"}</p>
@@ -142,7 +133,7 @@ export default function SLARecordsPage() {
         </div>
       </div>
 
-      {/* ✅ ADD SLA RECORD BUTTON — TOP RIGHT (PENDING VIEW ONLY) */}
+      {/* ADD BUTTON (PENDING) */}
       {isPendingView && (
         <div className="sla-table-actions">
           <button
@@ -154,7 +145,7 @@ export default function SLARecordsPage() {
         </div>
       )}
 
-      {/* PIE + FILTERS — NORMAL VIEW ONLY */}
+      {/* PIE + FILTER */}
       {!isPendingView && (
         <>
           <div className="sla-chart-card">
@@ -189,8 +180,8 @@ export default function SLARecordsPage() {
         </>
       )}
 
-      {/* ✅ TABLE */}
-      <table className="table table-white">
+      {/* ✅ SERVICE-STYLE TABLE */}
+      <table className="table-white">
         <thead>
           <tr>
             {isPendingView ? (
@@ -211,57 +202,65 @@ export default function SLARecordsPage() {
                 <th>Start</th>
                 <th>End</th>
                 <th>SLA Status</th>
-                <th style={{ textAlign: "right" }}>Action</th>
+                <th className="actions-col">Action</th>
               </>
             )}
           </tr>
         </thead>
 
         <tbody>
-          {currentData.map((item, index) =>
-            isPendingView ? (
-              <tr key={`pending-${item.caseId}-${index}`}>
-                <td>{item.caseId}</td>
-                <td>{item.applicationNumber}</td>
-                <td>{item.serviceName}</td>
-                <td>{item.departmentName}</td>
-                <td> {item.officerName}{item.officerDepartment && (
-                 <div style={{ fontSize: "12px", color: "#64748b" }}>
-                      ({item.officerDepartment}) 
-                  </div>
+          {currentData.length === 0 ? (
+            <tr>
+              <td colSpan={isPendingView ? 7 : 7} className="empty-msg">
+                No SLA records found.
+              </td>
+            </tr>
+          ) : (
+            currentData.map(item =>
+              isPendingView ? (
+                <tr key={item.caseId}>
+                  <td>{item.caseId}</td>
+                  <td>{item.applicationNumber}</td>
+                  <td>{item.serviceName}</td>
+                  <td>{item.departmentName}</td>
+                  <td>
+                    {item.officerName}
+                    {item.officerDepartment && (
+                      <div style={{ fontSize: "12px", color: "#64748b" }}>
+                        ({item.officerDepartment})
+                      </div>
                     )}
-                </td>
-
-                <td>
-                  <span className="badge bg-danger">{item.status}</span>
-                </td>
-                <td>{new Date(item.lastUpdated).toLocaleDateString()}</td>
-              </tr>
-            ) : (
-              <tr key={item.slaRecordID}>
-                <td>{item.slaRecordID}</td>
-                <td>CASE-{item.caseID}</td>
-                <td>{item.stageID}</td>
-                <td>{new Date(item.startDate).toLocaleDateString()}</td>
-                <td>{new Date(item.endDate).toLocaleDateString()}</td>
-                <td>
-                  <span
-                    className={`badge ${
-                      item.status === "OnTime" ? "bg-success" : "bg-danger"
-                    }`}
-                  >
-                    {item.status}
-                  </span>
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <Trash2
-                    size={18}
-                    className="icon-delete"
-                    role="button"
-                    onClick={() => deleteRecord(item.slaRecordID)}
-                  />
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    <span className="badge bg-danger">{item.status}</span>
+                  </td>
+                  <td>{new Date(item.lastUpdated).toLocaleDateString()}</td>
+                </tr>
+              ) : (
+                <tr key={item.slaRecordID}>
+                  <td>{item.slaRecordID}</td>
+                  <td>CASE-{item.caseID}</td>
+                  <td>{item.stageID}</td>
+                  <td>{new Date(item.startDate).toLocaleDateString()}</td>
+                  <td>{new Date(item.endDate).toLocaleDateString()}</td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        item.status === "OnTime" ? "bg-success" : "bg-danger"
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+                  </td>
+                  <td className="actions-col">
+                    <Trash2
+                      size={18}
+                      className="icon-delete"
+                      onClick={() => deleteRecord(item.slaRecordID)}
+                    />
+                  </td>
+                </tr>
+              )
             )
           )}
         </tbody>

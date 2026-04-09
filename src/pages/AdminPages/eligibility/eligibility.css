@@ -1,38 +1,148 @@
-/* Container */
+/* ===============================
+   PAGE CONTAINER
+================================ */
 .eligibility-container {
   background: #e4ebef;
   min-height: 100vh;
+  padding: 20px;
 }
 
-/* Header */
+/* ===============================
+   HEADER
+================================ */
 .eligibility-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 16px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ===============================
+   STATS CARD (MATCH SERVICE / DEPT)
+================================ */
 .eligibility-stats-card {
-  background: white;
-  padding: 14px 22px;
-  border-radius: 12px;
   display: flex;
-  gap: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .stats-icon {
   background: #e6f0ff;
-  border-radius: 12px;
   padding: 10px;
+  border-radius: 12px;
 }
 
-/* Icons */
+.stats-label {
+  font-size: 14px;
+  color: #475569;
+}
+
+.stats-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ===============================
+   FILTER ROW
+================================ */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filter-row .form-control {
+  height: 42px;
+  padding: 8px 14px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-row .btn-primary {
+  height: 42px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===============================
+   TABLE (MATCH SERVICE / DEPT)
+================================ */
+.table-white {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  border-collapse: collapse;
+}
+
+.table-white th,
+.table-white td {
+  padding: 14px 16px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.table-white th {
+  background: #f3f4f6;
+  font-weight: 600;
+  color: #111827;
+  text-align: left;
+}
+
+.table-white tbody tr {
+  border-top: 1px solid #e5e7eb;
+}
+
+.table-white td {
+  color: #1f2937;
+}
+
+/* ===============================
+   EXPRESSION / DESCRIPTION COLUMN
+================================ */
+.expr {
+  max-width: 420px;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+/* ===============================
+   ACTION COLUMN
+================================ */
+.actions-col {
+  text-align: right;
+}
+
 .icon-edit {
-  color: #1e3a8a;
-  margin-right: 14px;
+  color: #2563eb;
   cursor: pointer;
+  margin-right: 12px;
 }
 
 .icon-delete {
@@ -40,22 +150,97 @@
   cursor: pointer;
 }
 
-/* ✅ EXPRESSION COLUMN FIX */
-.expr {
-  max-width: 420px;
-  white-space: normal;      /* allow wrapping */
-  word-break: break-word;   /* break long tokens */
-  line-height: 1.4;
+/* ===============================
+   EMPTY SEARCH MESSAGE
+================================ */
+.empty-msg {
+  text-align: center;
+  padding: 32px;
+  font-size: 14px;
+  color: #64748b;
 }
 
-/* Table wrapper */
-.table-wrapper {
-  margin-top: 16px;
-}
-
-/* Pagination center */
-.table-wrapper .pagination-container {
+/* ===============================
+   PAGINATION
+================================ */
+.pagination-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+/* ===============================
+   MODAL
+================================ */
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: white;
+  width: 460px;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* ===============================
+   FORM ELEMENTS
+================================ */
+.modal-card label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.modal-card input,
+.modal-card textarea,
+.modal-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 6px;
+}
+
+.modal-card textarea {
+  resize: vertical;
+}
+
+/* ===============================
+   VALIDATION (MATCH SERVICE / DEPT)
+================================ */
+.is-invalid {
+  border-color: #dc2626;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.text-muted {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ===============================
+   FORM ACTION BUTTONS
+================================ */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 14px;
 }

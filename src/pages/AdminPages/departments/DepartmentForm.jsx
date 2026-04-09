@@ -8,20 +8,21 @@ export default function DepartmentForm({ department, onClose, onSave }) {
   const [form, setForm] = useState({
     departmentName: department.departmentName || "",
     description: department.description || "",
-    status: department.status || "Active"
+    status: department.status || "Active",
   });
 
   const validateForm = () => {
     const newErrors = {};
 
     if (!form.departmentName.trim()) {
-      newErrors.departmentName = "Department name is required";
+      newErrors.departmentName = "Department name is required.";
     } else if (form.departmentName.trim().length < 3) {
-      newErrors.departmentName = "Name must be at least 3 characters";
+      newErrors.departmentName =
+        "Department name must contain at least 3 characters.";
     }
 
     if (!form.status) {
-      newErrors.status = "Status is required";
+      newErrors.status = "Status is required.";
     }
 
     setErrors(newErrors);
@@ -35,27 +36,29 @@ export default function DepartmentForm({ department, onClose, onSave }) {
     const payload = {
       departmentName: form.departmentName.trim(),
       description: form.description.trim(),
-      status: form.status
+      status: form.status,
     };
 
     try {
       if (department.departmentID) {
         await api.put(`/Department/${department.departmentID}`, payload);
-        toast.success("Department updated successfully");
+        toast.success("Department updated successfully.");
       } else {
-        await api.post(`/Department`, payload);
-        toast.success("Department created successfully");
+        await api.post("/Department", payload);
+        toast.success("Department created successfully.");
       }
       onSave();
-    } catch (err) {
-      toast.error("Department with this name already exists");
+    } catch {
+      toast.error("Department with this name already exists.");
     }
   };
 
   return (
     <div className="form-modal">
       <div className="modal-card">
-        <h4>{department.departmentID ? "Edit Department" : "Create Department"}</h4>
+        <h4>
+          {department.departmentID ? "Edit Department" : "Create Department"}
+        </h4>
 
         <form onSubmit={handleSubmit}>
           {/* Department Name */}
@@ -69,7 +72,9 @@ export default function DepartmentForm({ department, onClose, onSave }) {
             />
           ) : (
             <input
-              className={`form-control ${errors.departmentName ? "is-invalid" : ""}`}
+              className={`form-control ${
+                errors.departmentName ? "is-invalid" : ""
+              }`}
               value={form.departmentName}
               onChange={(e) =>
                 setForm({ ...form, departmentName: e.target.value })
@@ -105,12 +110,18 @@ export default function DepartmentForm({ department, onClose, onSave }) {
             }
           >
             <option value="Active">Active</option>
-            <option value="InActive">InActive</option>
+            <option value="InActive">Inactive</option>
           </select>
-          {errors.status && <small className="error-text">{errors.status}</small>}
+          {errors.status && (
+            <small className="error-text">{errors.status}</small>
+          )}
 
           <div className="actions-row">
-            <button className="btn btn-secondary" type="button" onClick={onClose}>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button className="btn btn-primary" type="submit">

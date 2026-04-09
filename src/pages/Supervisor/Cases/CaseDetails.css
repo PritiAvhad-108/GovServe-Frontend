@@ -1,0 +1,25 @@
+.case-details-page {
+  padding: 24px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.details-card {
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
