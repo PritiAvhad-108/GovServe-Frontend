@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MessageSquareWarning, Scale, Loader2 } from "lucide-react"; // Loader2 जोडला आहे
+import { MessageSquareWarning, Scale, Loader2 } from "lucide-react"; 
 import "../../styles/CitizenStyles/pages/Grievance.css";
 import RaiseGrievance from "./RaiseGrievance";
 import FileAppeal from "./FileAppeal";
@@ -8,7 +8,7 @@ import GrievanceAndAppealDetails from "./GrievanceAndAppealDetails";
 function GrievanceDashboard() {
   const [grievances, setGrievances] = useState([]);
   const [appeals, setAppeals] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state जोडला
+  const [loading, setLoading] = useState(true); 
   const [showGrievanceForm, setShowGrievanceForm] = useState(false);
   const [showAppealForm, setShowAppealForm] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);

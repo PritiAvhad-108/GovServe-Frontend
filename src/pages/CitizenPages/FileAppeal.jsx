@@ -10,7 +10,7 @@ function FileAppeal({ onClose }) {
     description: ""
   });
 
-  const userId = 1;
+  // const userId = 1;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,17 +19,22 @@ function FileAppeal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = { ...formData, userId: userId };
+    const storedUserId = localStorage.getItem("userId");
+    const token = localStorage.getItem("jwtToken");
+
+    const payload = { ...formData, userId: storedUserId };
 
     try {
       const res = await fetch("https://localhost:7027/api/Appeal", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
         body: JSON.stringify(payload),
       });
 
       if (res.ok) {
-        
         Swal.fire({
           title: "Success!",
           text: "Your appeal has been submitted successfully.",
@@ -37,13 +42,13 @@ function FileAppeal({ onClose }) {
           confirmButtonColor: "#1e3a8a", 
           timer: 3000 
         });
-
         onClose(); 
       } else {
-      
+        const errorData = await res.text();
+        console.error("Appeal Error:", errorData);
         Swal.fire({
           title: "Error!",
-          text: "Something went wrong. Please try again.",
+          text: "Failed to submit. Status: " + res.status,
           icon: "error",
           confirmButtonColor: "#d33"
         });

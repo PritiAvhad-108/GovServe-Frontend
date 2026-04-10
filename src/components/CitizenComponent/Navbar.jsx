@@ -42,7 +42,7 @@ function Navbar({ toggleSidebar }) {
         </div>
       </div>
 
-      {/* RIGHT: Actions */}
+      
       <div className="nav-right">
         <div className="nav-action-item" onClick={() => navigate("/")} title="Home">
           <Home size={20} />

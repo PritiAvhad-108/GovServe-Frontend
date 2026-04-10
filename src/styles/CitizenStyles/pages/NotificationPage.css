@@ -1,4 +1,4 @@
-/* Layout consistency */
+
 .app-container {
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
 .content-area {
     flex: 1;
     overflow-y: auto;
-    background-color: #f4f7fe; /* ग्रीवन्स पेज सारखा बॅकग्राउंड */
+    background-color: #f4f7fe; 
     padding: 25px 0;
 }
 
@@ -36,7 +36,7 @@
     margin-bottom: 25px;
 }
 
-/* Summary Cards */
+
 .summary-boxes {
     display: flex;
     gap: 20px;
@@ -54,7 +54,7 @@
     border: 1px solid #e2e8f0;
 }
 
-/* Tabs & Actions */
+
 .notification-actions {
     display: flex;
     justify-content: space-between;
@@ -89,7 +89,7 @@
     font-weight: 600;
 }
 
-/* Notification List & Cards */
+
 .notification-list {
     display: flex;
     flex-direction: column;

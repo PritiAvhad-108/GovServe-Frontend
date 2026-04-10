@@ -14,7 +14,7 @@ const MyApplications = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // localStorage मधून डेटा घेताना 'userId' स्पेलिंग लॉगिनशी मॅच होत असल्याची खात्री कर
+  
   const currentUserId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
 

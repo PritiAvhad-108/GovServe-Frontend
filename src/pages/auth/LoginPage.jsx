@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; 
+import Swal from "sweetalert2"; 
 import { Mail, Lock, LogIn } from "lucide-react"; 
 import "../../styles/LandingStyle/AuthStyle.css";
 import Navbar from "../../components/Landing/layout/Navbar";
@@ -9,7 +10,6 @@ import Footer from "../../components/Landing/layout/Footer";
 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [statusMessage, setStatusMessage] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate(); 
 
@@ -33,37 +33,52 @@ function LoginPage() {
       const response = await axios.post("https://localhost:7027/api/Auth/login", formData);
       const { token, message } = response.data;
       
-      
       localStorage.setItem("jwtToken", token);
       localStorage.setItem("userEmail", formData.email);
       
-    
       const decodedToken = jwtDecode(token);
-      
-  
-      const userId = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/nameid"] || 
-                     decodedToken.nameid || 
-                     decodedToken.sub;
 
-      localStorage.setItem("userId", userId); 
+      const userId = 
+        decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || 
+        decodedToken["UserId"] || 
+        decodedToken["nameid"] || 
+        decodedToken["sub"];
+
+      if (userId) {
+        localStorage.setItem("userId", userId.toString()); 
+      }
 
       const userRole = 
         decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || 
         decodedToken.role;
 
-      setStatusMessage(message || "Login Successful");
+    
+      Swal.fire({
+        title: "Login Successful!",
+        text: "Redirecting to your dashboard...",
+        icon: "success",
+        confirmButtonColor: "#1e3a8a",
+        timer: 2000,
+        showConfirmButton: false
+      });
 
-      if (userRole === "Citizen") navigate("/citizen");
-      else if (userRole === "Admin") navigate("/admin");
-      else if (userRole === "Officer") navigate("/officer");
-      else navigate("/"); 
+
+      setTimeout(() => {
+        if (userRole === "Citizen") navigate("/citizen");
+        else if (userRole === "Admin") navigate("/admin");
+        else if (userRole === "Officer") navigate("/officer");
+        else navigate("/");
+      }, 1000);
 
     } catch (error) {
-      if (error.response) {
-        setStatusMessage(error.response.data || "Invalid email or password.");
-      } else {
-        setStatusMessage("Network error. Please try again.");
-      }
+      
+      const errorMsg = error.response?.data || "Invalid email or password.";
+      Swal.fire({
+        title: "Login Failed",
+        text: errorMsg,
+        icon: "error",
+        confirmButtonColor: "#dc3545"
+      });
     }
   }
 
@@ -103,15 +118,13 @@ function LoginPage() {
                 className={`form-control ${errors.password ? "is-invalid" : ""}`}
               />
               {errors.password && <span className="error-text">{errors.password}</span>}
+              
+              <div className="forget-password-link">
+                <Link to="/forget-password">Forget Password?</Link>
+              </div>
             </div>
 
             <button type="submit" className="auth-btn">Login</button>
-
-            {statusMessage && (
-              <div style={{ textAlign: 'center', marginTop: '10px', color: statusMessage.includes("Successful") ? 'green' : '#dc3545' }}>
-                {statusMessage}
-              </div>
-            )}
           </form>
 
           <div className="auth-footer">

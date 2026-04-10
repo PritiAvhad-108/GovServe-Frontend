@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // AuthContext वापरण्यासाठी
+import { useAuth } from "../context/AuthContext"; 
 import Profile from "../pages/Profile";
 // Pages
 import Dashboard from "../pages/CitizenPages/Dashboard";
