@@ -28,4 +28,5 @@
 .page-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  color: black;
 }

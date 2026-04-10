@@ -9,6 +9,8 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage"; 
 import RoleGuard from "./components/Guards/RoleGuard";
 import Citizenroutes from "./routes/Citizenroutes";
+import AdminRoutes from "./routes/Adminroutes";
+import Supervisorroutes from "./routes/Supervisorroutes";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -32,6 +34,28 @@ function App() {
             </RoleGuard>
           }
         />
+
+         {/* Protected Admin Routes */}
+         <Route path="/admin/*"
+          element={
+            <RoleGuard allowedRoles={["Admin"]}>
+              <AdminRoutes />
+            </RoleGuard>
+          }
+           />
+
+
+             {/* Protected Citizen Routes */}
+        <Route
+          path="/supervisor/*"
+          element={
+            <RoleGuard allowedRoles={["Supervisor"]}>
+              <Supervisorroutes />
+            </RoleGuard>
+          }
+        />
+ 
+          
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />

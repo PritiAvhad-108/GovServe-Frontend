@@ -15,14 +15,21 @@ import {
   MdLogout
 } from "react-icons/md";
 import "./layout.css";
+import logo from "../../../assets/landing/logo.png";
 
 export default function Sidebar() {
   return (
     <div className="sidebar">
 
-      <div className="sidebar-logo">
-        <MdApartment size={22} />
-        GoServe
+      <div className="sidebar-brand-wrapper">
+        <div >
+          <img src={logo} alt="GovServe Logo" className="sidebar-logo" />
+        </div>
+
+        <div className="brand-info">
+          <h3>GovServe</h3>
+          <small>Government Services</small>
+        </div>
       </div>
 
       <ul className="nav flex-column">
