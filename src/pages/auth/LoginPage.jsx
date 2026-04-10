@@ -62,11 +62,11 @@ function LoginPage() {
         showConfirmButton: false
       });
 
-
       setTimeout(() => {
         if (userRole === "Citizen") navigate("/citizen");
         else if (userRole === "Admin") navigate("/admin");
         else if (userRole === "Officer") navigate("/officer");
+         else if (userRole === "Supervisor") navigate("/supervisor");
         else navigate("/");
       }, 1000);
 
