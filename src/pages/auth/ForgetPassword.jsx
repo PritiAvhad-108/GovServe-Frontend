@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Mail, Lock, KeyRound } from "lucide-react"; 
 import "../../styles/LandingStyle/AuthStyle.css";
-import Navbar from "../../components/Landing/layout/LandingNavbar";
+import Navbar from "../../components/Landing/layout/Navbar";
 import Footer from "../../components/Landing/layout/Footer";
 
 function ForgetPassword() {
@@ -55,7 +55,7 @@ function ForgetPassword() {
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form" noValidate>
-            {/* Email Field */}
+            {/* Email  */}
             <div className="form-group">
               <label><Mail size={16} /> Email Address *</label>
               <input
@@ -69,7 +69,7 @@ function ForgetPassword() {
               {errors.email && <span className="error-text">{errors.email}</span>}
             </div>
 
-            {/* New Password Field */}
+            {/* New Password  */}
             <div className="form-group">
               <label><Lock size={16} /> New Password *</label>
               <input
@@ -85,8 +85,7 @@ function ForgetPassword() {
 
             <button type="submit" className="auth-btn">Reset Password</button>
 
-            {/* Status Messages */}
-            {statusMessage && (
+                        {statusMessage && (
               <div 
                 className={`error-text ${statusMessage.includes("successfully") ? "text-success" : ""}`} 
                 style={{ 

@@ -12,25 +12,15 @@ body {
    NAVBAR #1e3a8a 
 ========================= */
 /* NAVBAR BASE */
-.navbar {
+.app-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 90px; 
-  background-color: #1e3a8a;
-  color: white;
-  padding: 0 25px;
- 
-  position: fixed; 
-  top: 0;
-  left: 0; 
-  width: 100%;
-  z-index: 2000; 
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  box-sizing: border-box; 
+  flex-direction: column;
+  height: 100vh; 
+  overflow: hidden;
+  margin-top: 90px; 
 }
 
-/* LEFT SIDE */
+
 .nav-left {
   display: flex;
   align-items: center;
@@ -66,7 +56,7 @@ body {
   opacity: 0.8;
 }
 
-/* RIGHT SIDE */
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -88,7 +78,6 @@ body {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* PROFILE BADGE */
 .profile-badge {
   display: flex;
   align-items: center;
@@ -101,7 +90,7 @@ body {
   border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* DROPDOWN */
+
 .profile-container {
   position: relative;
 }
@@ -143,7 +132,7 @@ hr {
   border-top: 1px solid #e2e8f0;
 }
  /* ==========================================
-   1. LAYOUT STRUCTURE 
+  LAYOUT STRUCTURE 
    ========================================== */
 
 .app-container {
@@ -168,7 +157,15 @@ hr {
   overflow: hidden;
 }
 
-
+.main {
+  display: flex;
+  min-height: 100vh;
+}
+ 
+.content {
+  flex: 1;
+  padding: 25px;
+}
 
 .content-wrapper {
   max-width: 100%;
@@ -176,7 +173,7 @@ hr {
   padding: 0 30px;
 }
 
-/* ================= CONTENT ================= */
+
 .content-wrapper h1 {
   font-size: 1.8rem;
   font-weight: 700;
@@ -185,7 +182,7 @@ hr {
   text-align: center;
 }
 
-/* ================= CARDS ================= */
+
 .cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -206,7 +203,7 @@ hr {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* Gradient top border */
+
 .card::before {
   content: "";
   position: absolute;
@@ -217,27 +214,27 @@ hr {
   border-radius: 16px 16px 0 0;
 }
 
-/* Hover */
+
 .card:hover {
   transform: translateY(-6px) scale(1.02);
   background: #f9fbff;
 }
 
-/* Glow */
+
 .card.green:hover { border-color: #22c55e; box-shadow: 0 0 15px #22c55e66; }
 .card.blue:hover { border-color: #1e3a8a; box-shadow: 0 0 15px #3b82f666; }
 .card.orange:hover { border-color: #f59e0b; box-shadow: 0 0 15px #f59e0b66; }
 .card.red:hover { border-color: #ef4444; box-shadow: 0 0 15px #ef444466; }
 
-/* ================= ICON ================= */
+
 .icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 60px;       /* मोठं icon */
+  font-size: 60px;       
   padding: 20px;
   border-radius: 50%;
-  margin: 0 auto 20px;   /* center मध्ये आणण्यासाठी */
+  margin: 0 auto 20px;   
 }
 
 .green .icon { color: #22c55e; background: #22c55e22; }
@@ -245,7 +242,7 @@ hr {
 .orange .icon { color: #f59e0b; background: #f59e0b22; }
 .red .icon { color: #ef4444; background: #ef444422; }
 
-/* ================= TEXT ================= */
+
 .card h3 {
   margin: 10px 0 5px;
   font-size: 18px;
@@ -253,7 +250,7 @@ hr {
   text-align: center;
 }
 
-/* ================= FOOTER ================= */
+
 .card-footer {
   position: absolute;
   bottom: 15px;
@@ -264,7 +261,6 @@ hr {
   align-items: center;
 }
 
-/* Divider line above footer */
 .footer-line {
   position: absolute;
   top: -8px;
@@ -287,7 +283,7 @@ hr {
   margin-left: 10px;
 }
 
-/* ================= RIPPLE ================= */
+
 .ripple {
   position: absolute;
   border-radius: 50%;
@@ -299,12 +295,11 @@ hr {
   to { transform: scale(4); opacity: 0; }
 }
 
-/* Notification */
 .notification {
   cursor: pointer;
 }
  
-/* Profile */
+
 .profile {
   position: relative;
   display: flex;
@@ -313,7 +308,7 @@ hr {
   cursor: pointer;
 }
  
-/* Compact Dropdown (updated) */
+
 .dropdown {
   position: absolute;
   top: 40px;
@@ -327,7 +322,7 @@ hr {
   z-index: 10;
 }
  
-/* Dropdown item */
+
 .dropdown p {
   padding: 6px 10px;
   font-size: 14px;
@@ -340,7 +335,7 @@ hr {
   background: #f3f4f6;
 }
  
-/* Optional arrow */
+
 .dropdown::before {
   content: "";
   position: absolute;
@@ -352,7 +347,7 @@ hr {
   transform: rotate(45deg);
 }
  
-/* Logout */
+
 .logout {
   cursor: pointer;
   display: flex;
@@ -372,26 +367,27 @@ hr {
 .sidebar {
   background: #e7f3f6;
   transition: 0.3s;
+  margin-top: 70px;
 }
  
-/* Open */
+
 .sidebar.open {
   width: 220px;
   padding: 20px;
 }
  
-/* Closed */
+
 .sidebar.closed {
   width: 0;
   overflow: hidden;
 }
  
-/* Links */
+
 .link {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 11px;
   text-decoration: none;
   color: black;
   border-radius: 6px;
@@ -403,24 +399,11 @@ hr {
 }
  
 .link.active {
-  background: #1e3a8a;
-  color: white;
+ background: #dbeafe;
+  box-shadow: inset 3px 3px 3px #1e3a8a;
 }
  
- 
- 
-/* =========================
-   LAYOUT
-========================= */
-.main {
-  display: flex;
-  min-height: 100vh;
-}
- 
-.content {
-  flex: 1;
-  padding: 25px;
-}
+
  
  
 

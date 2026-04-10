@@ -143,7 +143,7 @@ const ApplicationForm = () => {
 
         {apiError && <div className="api-error-alert fade-in"><XCircle size={14}/> {apiError}</div>}
 
-        {/* STEP 1: PREVIEW */}
+        {/* STEP 1:Service Details*/}
         {step === 1 && serviceData && (
           <div className="step-card fade-in">
             <div className="card-title"><Building2 size={16}/> <h3>Service Information</h3></div>

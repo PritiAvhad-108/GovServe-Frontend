@@ -16,18 +16,36 @@ const ApplicationDetails = () => {
 
   useEffect(() => {
     const fetchFullDetails = async () => {
+     
+      const token = localStorage.getItem("jwtToken");
+
+    
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
       try {
         setLoading(true);
-        const res = await axios.get(`https://localhost:7027/api/Application/${id}`);
+      
+        const res = await axios.get(`https://localhost:7027/api/Application/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setApp(res.data);
       } catch (err) {
         console.error("Error loading application data:", err);
+    
+        if (err.response && err.response.status === 401) {
+          navigate("/login");
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchFullDetails();
-  }, [id]);
+  }, [id, navigate]); 
 
   if (loading) return (
     <div className="loader-container">
@@ -42,7 +60,6 @@ const ApplicationDetails = () => {
     <div className="content-wrapper">
       <div className="details-wrapper">
         
-        {/* --- HEADER BAR --- */}
         <div className="back-button-bar">
           <button onClick={() => navigate(-1)} className="bar-back-btn" title="Go Back">
             <ArrowLeft size={20} />
@@ -51,12 +68,12 @@ const ApplicationDetails = () => {
           <div className="placeholder-right"></div>
         </div>
 
-        {/* --- ID AREA --- */}
+       
         <div className="case-id-area">
             <span className="case-id">Application ID: {app.applicationId}</span>
         </div>
 
-        {/* --- CONTENT SECTIONS --- */}
+        
         <div className="sections-vertical-stack">
           
           {/* Service Overview */}

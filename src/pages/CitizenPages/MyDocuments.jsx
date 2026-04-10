@@ -27,7 +27,7 @@ const MyDocuments = () => {
       try {
         setLoading(true);
         
-        // Authorization Header 
+     
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
@@ -37,7 +37,7 @@ const MyDocuments = () => {
           config
         );
         
-        // Grouping logic based on ApplicationID
+    
         if (res.data && Array.isArray(res.data)) {
             const groups = res.data.reduce((acc, doc) => {
               const key = doc.applicationID;
@@ -108,7 +108,7 @@ const MyDocuments = () => {
                           <span className={`status-pill ${doc.verificationStatus?.toLowerCase() || 'pending'}`}>
                             {doc.verificationStatus}
                           </span>
-                          {/* ✅ फाईल URL जर बरोबर असेल तरच व्ह्यू बटन चालेल */}
+                          
                           <a 
                             href={`https://localhost:7027/${doc.documentUrl}`} 
                             target="_blank" 

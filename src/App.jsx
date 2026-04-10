@@ -9,21 +9,31 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage"; 
 import RoleGuard from "./components/Guards/RoleGuard";
 import Citizenroutes from "./routes/Citizenroutes";
+import Adminroutes from "./routes/Adminroutes"; 
+import Supervisorroutes from "./routes/Supervisorroutes"; 
+import ForgetPassword from "./pages/auth/ForgetPassword";
 
 function App() {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, userRole, loading } = useAuth(); 
 
   if (loading) return null; 
+
+  const getRedirectPath = () => {
+    if (userRole === "Admin") return "/admin";
+    if (userRole === "Supervisor") return "/supervisor";
+    return "/citizen";
+  };
 
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
-        <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/citizen" />} />
-        <Route path="/register" element={!isAuthenticated ? <RegisterPage /> : <Navigate to="/citizen" />} />
+        
+        <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to={getRedirectPath()} />} />
+        <Route path="/register" element={!isAuthenticated ? <RegisterPage /> : <Navigate to={getRedirectPath()} />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
 
-        {/* Protected Citizen Routes */}
+        {/* Citizen Routes */}
         <Route
           path="/citizen/*"
           element={
@@ -33,11 +43,30 @@ function App() {
           }
         />
 
-        {/* Fallback */}
+        {/* Admin Routes */}
+        <Route
+          path="/admin/*"
+          element={
+            <RoleGuard allowedRoles={["Admin"]}>
+              <Adminroutes />
+            </RoleGuard>
+          }
+        />
+
+        {/* Supervisor Routes */}
+        <Route
+          path="/supervisor/*"
+          element={
+            <RoleGuard allowedRoles={["Supervisor"]}>
+              <Supervisorroutes />
+            </RoleGuard>
+          }
+        />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
 }
- 
+
 export default App;

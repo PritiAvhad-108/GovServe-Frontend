@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FileText, ClipboardList, AlignLeft } from "lucide-react"; // User icon removed as field is gone
+import Swal from "sweetalert2";
+import { FileText, ClipboardList, AlignLeft } from "lucide-react"; 
 import "../../styles/CitizenStyles/pages/RaiseGrievance.css";
 
 function RaiseGrievance({ onClose }) {
@@ -10,8 +11,6 @@ function RaiseGrievance({ onClose }) {
     description: ""
   });
 
-  const userId = 1;
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -19,29 +18,54 @@ function RaiseGrievance({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
- 
+    const storedUserId = localStorage.getItem("userId");
+    const token = localStorage.getItem("jwtToken");
+
     const payload = {
       ...formData,
-      userId: userId // hardcoded 1 
+      userId: storedUserId || 1 
     };
 
     try {
       const res = await fetch("https://localhost:7027/api/Grievance", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload), // payload 
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
-        alert("Grievance submitted successfully!");
-        console.log("Grievance submitted:", await res.json());
+     
+        Swal.fire({
+          title: "Success!",
+          text: "Grievance submitted successfully!",
+          icon: "success",
+          confirmButtonColor: "#1e3a8a",
+          timer: 3000
+        });
         onClose(); 
       } else {
-        alert("Failed to submit grievance");
-        console.error("Failed to submit grievance");
+        const errorData = await res.text();
+        console.error("Server Response:", errorData);
+        
+       
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to submit grievance. Status: " + res.status,
+          icon: "error",
+          confirmButtonColor: "#d33"
+        });
       }
     } catch (err) {
       console.error("Error occurred while submitting grievance:", err);
+    
+      Swal.fire({
+        title: "Server Error",
+        text: "Could not connect to the server.",
+        icon: "warning"
+      });
     }
   };
 
@@ -53,7 +77,6 @@ function RaiseGrievance({ onClose }) {
         </div>
 
         <form onSubmit={handleSubmit} className="grievance-form">
-          {/* Application ID Field */}
           <label>
             <div className="field-label">
               <FileText size={18} /> Application ID
@@ -67,7 +90,7 @@ function RaiseGrievance({ onClose }) {
               required
             />
           </label>
-          {/* Reason Field */}
+
           <label>
             <div className="field-label">
               <ClipboardList size={18} /> Reason
@@ -82,7 +105,6 @@ function RaiseGrievance({ onClose }) {
             />
           </label>
 
-          {/* Description Field */}
           <label>
             <div className="field-label">
               <AlignLeft size={18} /> Description
