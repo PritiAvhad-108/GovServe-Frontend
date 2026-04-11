@@ -9,7 +9,11 @@ import {
 } from "../../../api/api";
 
 const Notifications = () => {
-  const supervisorId = Number(localStorage.getItem("userId"));
+  const storedUserId = Number(localStorage.getItem("userId"));
+
+  // ✅ FALLBACK LOGIC
+  const effectiveUserId =
+    storedUserId && !isNaN(storedUserId) ? storedUserId : 2;
 
   const [notifications, setNotifications] = useState([]);
   const [users, setUsers] = useState([]);
@@ -30,17 +34,17 @@ const Notifications = () => {
   ========================= */
 
   useEffect(() => {
-    if (supervisorId && !isNaN(supervisorId)) {
-      fetchNotifications();
-    }
+    if (!effectiveUserId) return;
+
+    fetchNotifications();
     fetchUsers();
     fetchRoles();
-  }, [supervisorId]);
+  }, [effectiveUserId]);
 
   const fetchNotifications = async () => {
     try {
-      const res = await getNotificationsByUser(supervisorId);
-      setNotifications(res.data);
+      const res = await getNotificationsByUser(effectiveUserId);
+      setNotifications(res.data || []);
     } catch (err) {
       console.error("Failed to fetch notifications", err);
     }
@@ -49,7 +53,7 @@ const Notifications = () => {
   const fetchUsers = async () => {
     try {
       const res = await getAllUsers();
-      setUsers(res.data);
+      setUsers(res.data || []);
     } catch (err) {
       console.error("Failed to fetch users", err);
     }
@@ -58,7 +62,13 @@ const Notifications = () => {
   const fetchRoles = async () => {
     try {
       const res = await api.get("/Roles");
-      setRoles(res.data); // [{ roleID, roleName }]
+
+      // ✅ FILTER OUT SUPERVISOR ROLE
+      const filteredRoles = (res.data || []).filter(
+        r => r.roleName !== "Supervisor"
+      );
+
+      setRoles(filteredRoles);
     } catch (err) {
       console.error("Failed to fetch roles", err);
     }
@@ -81,8 +91,14 @@ const Notifications = () => {
     setLoading(true);
 
     try {
+      // ✅ FILTER USERS:
+      // - remove Supervisor
+      // - remove logged-in user (self)
       const roleUsers = users.filter(
-        u => u.roleName?.toLowerCase() === selectedRole.toLowerCase()
+        u =>
+          u.roleName?.toLowerCase() === selectedRole.toLowerCase() &&
+          u.roleName !== "Supervisor" &&
+          u.userId !== effectiveUserId
       );
 
       if (roleUsers.length === 0) {
@@ -93,6 +109,7 @@ const Notifications = () => {
       for (const user of roleUsers) {
         await sendNotification({
           userId: user.userId,
+          senderId: effectiveUserId, // ✅ self copy handled in backend
           message: form.message,
           category: form.category
         });
@@ -102,7 +119,9 @@ const Notifications = () => {
       setForm({ message: "", category: "General" });
       setSelectedRole("");
 
-      fetchNotifications();
+      setTimeout(() => {
+        fetchNotifications();
+      }, 300);
 
     } catch (err) {
       console.error("Send notification error", err);
@@ -141,7 +160,7 @@ const Notifications = () => {
               required
             >
               <option value="">Select Role</option>
-              {roles.map((r) => (
+              {roles.map(r => (
                 <option key={r.roleID} value={r.roleName}>
                   {r.roleName}
                 </option>
@@ -189,7 +208,7 @@ const Notifications = () => {
         {notifications.length === 0 ? (
           <p className="empty-text">No notifications available</p>
         ) : (
-          notifications.map((n) => (
+          notifications.map(n => (
             <div
               key={n.notificationId}
               className={`notification-item ${!n.isRead ? "unread" : ""}`}
@@ -197,7 +216,10 @@ const Notifications = () => {
               <div className="notification-content">
                 <p className="notification-message">{n.message}</p>
                 <p className="notification-meta">
-                  {n.category} • {new Date(n.createdDate).toLocaleString()}
+                  {n.category} •{" "}
+                  {n.createdDate
+                    ? new Date(n.createdDate).toLocaleString()
+                    : ""}
                 </p>
               </div>
 

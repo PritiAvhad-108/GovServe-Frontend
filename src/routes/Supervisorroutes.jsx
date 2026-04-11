@@ -7,18 +7,15 @@ import Escalations from "../pages/Supervisor/Escalations/Escalations";
 import Notifications from "../pages/Supervisor/Notifications/Notifications";
 import Officers from "../pages/Supervisor/Officers/Officers";
 import Reports from "../pages/Supervisor/Reports/Reports";
- 
+import Profile from "../pages/Profile";
+
 const SupervisorRoutes = () => {
   return (
     <Routes>
-      <Route element={<SupervisorLayout />}>
-        {/* ✅ Default Redirect */}
+      <Route path="/" element={<SupervisorLayout />}>
         <Route index element={<Navigate to="dashboard" />} />
- 
-        {/* ✅ Dashboard */}
         <Route path="dashboard" element={<SupervisorDashboard />} />
- 
-        {/* ✅ All other supervisor routes */}
+        <Route path="profile" element={<Profile />} />
         <Route path="cases" element={<Cases />} />
         <Route path="case-details/:caseId" element={<CaseDetails />} />
         <Route path="escalations" element={<Escalations />} />
@@ -29,5 +26,5 @@ const SupervisorRoutes = () => {
     </Routes>
   );
 };
- 
+
 export default SupervisorRoutes;
