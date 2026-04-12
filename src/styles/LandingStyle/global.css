@@ -6,7 +6,7 @@ body {
 }
 
 /* Navbar */
-/* NAVBAR */
+
 .navbar {
     position: fixed;   
     top: 0;
@@ -31,7 +31,7 @@ body {
   gap: 20px;                      
 }
 
-/* BRAND TEXT */
+
 .navbar-left h3 {
   margin: 0;
   font-size: 26px;                
@@ -56,14 +56,13 @@ body {
   color: #fbbf24; 
 }
 
-/* Auth Buttons Container */
 .auth-nav-buttons {
   display: flex;
   gap: 10px;
   margin-left: 10px;
 }
 
-/* Base Button Style */
+
 .nav-btn {
   text-decoration: none;
   padding: 8px 20px;
@@ -73,7 +72,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Login Button (Outline style) */
 .login-btn {
   color: white;
   border: 1.5px solid white;
@@ -84,7 +82,7 @@ body {
   color: #1e3a8a;
 }
 
-/* Register Button (Filled style) */
+
 .register-btn {
   background: #fbbf24; 
   color: #1e3a8a;
@@ -97,7 +95,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* */
+
 /* NAV LINKS */
 .navbar-right {
   display: flex;
@@ -256,7 +254,7 @@ body {
   cursor: pointer;
 }
 
-/* Right Side Placeholder */
+
 .hero-right {
   width: 450px;
   height: 260px;

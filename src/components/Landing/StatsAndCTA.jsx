@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"; // 1. Import Link from react-router-dom
 const StatsAndCTA = () => {
   return (
     <>
-      {/* STATS BAR */}
+  
       <section className="stats-section">
         <div className="stat-item">
           <h2>50K+</h2>
@@ -27,7 +27,6 @@ const StatsAndCTA = () => {
         </div>
       </section>
 
-      {/* CALL TO ACTION */}
       <section className="cta-section">
         <h2>Ready to Get Started?</h2>
         <p>
@@ -36,7 +35,7 @@ const StatsAndCTA = () => {
         </p>
 
         <div className="cta-buttons">
-          {/* 2. Replaced <button> with <Link> for navigation */}
+          
           <Link to="/register" className="primary-btn">
             Create Account
           </Link>

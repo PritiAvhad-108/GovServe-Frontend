@@ -1,11 +1,10 @@
-/* Container adjustments */
+
 .docs-compact-wrapper {
     padding: 1.5rem;
     max-width: 850px;
     margin: 0 auto;
 }
 
-/* Slim professional header */
 .compact-header {
     background: #1e3a8a;
     color: white;
@@ -37,7 +36,6 @@
     color: #e0f2fef1;
 }
 
-/* Static Section Wrapper */
 .static-app-section {
     background: white;
     border: 1px solid #e2e8f0;
@@ -46,7 +44,6 @@
     overflow: hidden;
 }
 
-/* Static Header (Grey background to distinguish from list) */
 .static-app-header {
     padding: 10px 20px;
     background: #f8fafc;
@@ -60,7 +57,7 @@
 .app-id-val { font-weight: 700; color: #1e293b; font-size: 14px; }
 .file-count { font-size: 11px; color: #94a3b8; }
 
-/* Compact Document Rows */
+
 .compact-doc-row {
     display: flex;
     justify-content: space-between;
@@ -78,7 +75,7 @@
 
 .doc-actions { display: flex; align-items: center; gap: 15px; }
 
-/* Status pill styling */
+
 .status-pill {
     font-size: 9px;
     font-weight: 800;
@@ -99,7 +96,7 @@
     font-weight: 700;
 }
 
-/* Loader utilities */
+
 .loader-box { text-align: center; padding: 40px; }
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

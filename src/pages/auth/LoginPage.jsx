@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode"; 
-import { Mail, Lock, LogIn } from "lucide-react"; 
+import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
+import { Mail, Lock, LogIn } from "lucide-react";
 import "../../styles/LandingStyle/AuthStyle.css";
 import Navbar from "../../components/Landing/layout/Navbar";
 import Footer from "../../components/Landing/layout/Footer";
+import { useAuth } from "../../context/AuthContext";
 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [statusMessage, setStatusMessage] = useState("");
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  const { isAuthenticated, userRole, login } = useAuth();
 
   function validateForm() {
     const newErrors = {};
@@ -30,51 +33,95 @@ function LoginPage() {
     if (!validateForm()) return;
 
     try {
-      const response = await axios.post("https://localhost:7027/api/Auth/login", formData);
-      const { token, message } = response.data;
-      
-      
-      localStorage.setItem("jwtToken", token);
-      localStorage.setItem("userEmail", formData.email);
-      
-    
+      const response = await axios.post(
+        "https://localhost:7027/api/Auth/login",
+        formData
+      );
+
+      const { token } = response.data;
+
+      // ✅ DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
-      
-  
-      const userId = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/nameid"] || 
-                     decodedToken.nameid || 
-                     decodedToken.sub;
 
-      localStorage.setItem("userId", userId); 
+      const userId =
+        decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] ||
+        decodedToken["UserId"] ||
+        decodedToken["nameid"] ||
+        decodedToken["sub"];
 
-      const userRole = 
-        decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || 
+      const userRoleFromToken =
+        decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
         decodedToken.role;
 
-      setStatusMessage(message || "Login Successful");
+      // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
+      login({
+        token,
+        roleName: userRoleFromToken,
+        userId,
+        email: formData.email,
+      });
 
-      if (userRole === "Citizen") navigate("/citizen");
-      else if (userRole === "Admin") navigate("/admin");
-      else if (userRole === "Officer") navigate("/officer");
-      else navigate("/"); 
+      Swal.fire({
+        title: "Login Successful!",
+        text: "Redirecting to your dashboard...",
+        icon: "success",
+        confirmButtonColor: "#1e3a8a",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      setTimeout(() => {
+        if (userRoleFromToken === "Admin") navigate("/admin/dashboard");
+        else if (userRoleFromToken === "Citizen") navigate("/citizen");
+        else if (userRoleFromToken === "Supervisor") navigate("/supervisor");
+        else navigate("/");
+      }, 1000);
 
     } catch (error) {
-      if (error.response) {
-        setStatusMessage(error.response.data || "Invalid email or password.");
-      } else {
-        setStatusMessage("Network error. Please try again.");
-      }
+      Swal.fire({
+        title: "Login Failed",
+        text: "Invalid email or password. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#dc3545",
+      });
     }
   }
 
   return (
     <>
       <Navbar />
+
+      {/* ✅ ALREADY LOGGED IN BANNER */}
+      {isAuthenticated && (
+        <div className="info-banner">
+          You are already logged in.
+          <Link
+            to={
+              userRole === "Admin"
+                ? "/admin/dashboard"
+                : userRole === "Citizen"
+                ? "/citizen"
+                : userRole === "Supervisor"
+                ? "/supervisor"
+                : "/"
+            }
+          >
+            {" "}Go to Dashboard
+          </Link>
+        </div>
+      )}
+
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-               <LogIn size={40} color="#1e3a8a" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <LogIn size={40} color="#1e3a8a" />
             </div>
             <h2>Welcome Back</h2>
             <p>Login to access your GovServe account</p>
@@ -82,36 +129,56 @@ function LoginPage() {
 
           <form onSubmit={handleSubmit} className="auth-form" noValidate>
             <div className="form-group">
-              <label><Mail size={16} /> Email Address *</label>
+              <label>
+                <Mail size={16} /> Email Address *
+              </label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className={`form-control ${
+                  errors.email ? "is-invalid" : ""
+                }`}
               />
-              {errors.email && <span className="error-text">{errors.email}</span>}
+              {errors.email && (
+                <span className="error-text">{errors.email}</span>
+              )}
             </div>
 
             <div className="form-group">
-              <label><Lock size={16} /> Password *</label>
+              <label>
+                <Lock size={16} /> Password *
+              </label>
               <input
                 type="password"
                 placeholder="Enter password"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                className={`form-control ${
+                  errors.password ? "is-invalid" : ""
+                }`}
               />
-              {errors.password && <span className="error-text">{errors.password}</span>}
+              {errors.password && (
+                <span className="error-text">{errors.password}</span>
+              )}
+
+              <div className="forget-password-link">
+                <Link to="/forget-password">Forget Password?</Link>
+              </div>
             </div>
 
-            <button type="submit" className="auth-btn">Login</button>
-
-            {statusMessage && (
-              <div style={{ textAlign: 'center', marginTop: '10px', color: statusMessage.includes("Successful") ? 'green' : '#dc3545' }}>
-                {statusMessage}
-              </div>
-            )}
+            <button
+              type="submit"
+              className="auth-btn"
+              disabled={isAuthenticated}
+            >
+              Login
+            </button>
           </form>
 
           <div className="auth-footer">
@@ -119,6 +186,7 @@ function LoginPage() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

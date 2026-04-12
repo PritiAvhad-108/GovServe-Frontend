@@ -1,5 +1,5 @@
 /* ==========================================
-   1. LAYOUT STRUCTURE (Sidebar Fixed + Scrollable Content)
+   1. LAYOUT STRUCTURE 
    ========================================== */
 .app-container {
   display: flex;
@@ -321,10 +321,10 @@
   overflow: hidden;
 }
 
-/* Full Width Header */
+
 .modal-header {
   width: 100%;
-  background: #1e3a8a;   /* purple strip */
+  background: #1e3a8a;   
   padding: 12px 20px;
   text-align: center;
 }
@@ -336,7 +336,7 @@
   color: white;
 }
 
-/* Body */
+
 .modal-body {
   padding: 20px;
 }
@@ -347,7 +347,7 @@
   color: #374151;
 }
 
-/* Footer */
+
 .modal-footer {
   padding: 12px 20px;
   background: #f9fafb;

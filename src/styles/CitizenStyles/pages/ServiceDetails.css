@@ -1,5 +1,5 @@
 /* ==========================================
-   1. LAYOUT & SCROLLING LOGIC
+   1. LAYOUT 
    ========================================== */
 .app-container {
     display: flex;
@@ -10,12 +10,12 @@
 .main-layout {
     display: flex;
     flex: 1;
-    overflow: hidden; /* Sidebar remains fixed */
+    overflow: hidden; 
 }
 
 .content-area {
     flex: 1;
-    overflow-y: auto; /* Only content scrolls */
+    overflow-y: auto; 
     background-color: #f4f7fe;
     display: flex;
     flex-direction: column;
@@ -38,7 +38,7 @@
 }
 
 /* ==========================================
-   2. HEADER SECTION (Blue Bar)
+   2. HEADER SECTION 
    ========================================== */
 .card-header-blue {
     background-color: #1e3a8a;
@@ -82,10 +82,10 @@
 }
 
 /* ==========================================
-   3. SERVICE INTRO (Title & Description)
+   3. SERVICE INTRO 
    ========================================== */
 .service-intro-section {
-    text-align: center; /* Title stays centered for better visual hierarchy */
+    text-align: center; 
     margin-bottom: 30px;
     padding-bottom: 25px;
     border-bottom: 1px dashed #e2e8f0;
@@ -120,7 +120,7 @@
 }
 
 /* ==========================================
-   4. CONTENT CARDS (Strict Left Alignment)
+   4. CONTENT CARDS 
    ========================================== */
 .detail-info-card {
     background: #ffffff;
@@ -130,7 +130,7 @@
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Forces children to the left */
+    align-items: flex-start; 
 }
 
 .section-header {
@@ -139,7 +139,7 @@
     gap: 10px;
     margin-bottom: 18px;
     width: 100%;
-    justify-content: flex-start; /* Header icon/text to the left */
+    justify-content: flex-start; 
 }
 
 .section-header h3 {
@@ -168,7 +168,7 @@
     text-align: left;
 }
 
-/* UNIFIED FONT SIZE: Eligibility & Documents match exactly */
+/* Eligibility & Documents */
 .standard-text {
     font-size: 14.5px; 
     color: #334155;
@@ -178,17 +178,16 @@
     text-align: left;
 }
 
-/* Bullets for Eligibility */
+
 .dot-bullet {
     width: 6px;
     height: 6px;
     background-color: #94a3b8;
     border-radius: 50%;
-    margin-top: 8px; /* Aligns bullet with the first line of text */
+    margin-top: 8px;
     flex-shrink: 0;
 }
 
-/* Numbers for Documents */
 .index-badge {
     background: #f1f5f9;
     color: #1e3a8a;
@@ -210,7 +209,7 @@
 }
 
 /* ==========================================
-   5. FOOTER & ACTION BUTTON
+   5. FOOTER 
    ========================================== */
 .warning-note {
     display: flex;
@@ -223,7 +222,7 @@
     font-size: 13px;
     margin-bottom: 25px;
     align-items: center;
-    justify-content: flex-start; /* Note text to the left */
+    justify-content: flex-start; 
 }
 
 .primary-apply-button {

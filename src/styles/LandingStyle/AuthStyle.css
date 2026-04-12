@@ -6,11 +6,9 @@
     justify-content: center;
     position: relative; 
     overflow: hidden;
-    padding: 130px 20px 40px 20px; 
+    padding: 97px 10px 10px 10px; 
     font-family: 'Segoe UI', Roboto, sans-serif;
 }
-
-
 .auth-container::before {
     content: "";
     position: absolute;
@@ -65,9 +63,10 @@
 }
 
 /* --- Form Fields --- */
+
 .auth-form .form-group {
-    margin-bottom: 15px;
-    width: 93%; 
+    margin-bottom: 10px;
+    width: 100% !important; 
 }
 
 .auth-form label {
@@ -80,22 +79,28 @@
     margin-bottom: 6px;
 }
 
-
 .auth-form .form-control, 
 .auth-form .form-select {
-    padding: 11px 14px;
+    height: 40px;           
+    padding: 0 10px;         
     border: 1.5px solid #000000; 
     border-radius: 8px;
     font-size: 14px;
-    width: 100%;
+    width: 100%;             
     transition: all 0.3s ease;
     background-color: white;
+    box-sizing: border-box;  
 }
 
 
+.auth-form .form-select {
+    line-height: 40px; 
+    appearance: auto;         
+}
+
 .auth-form .form-control:focus, 
 .auth-form .form-select:focus {
-    border-color: #3b82f6 !important; /* ✅ निळा रंग */
+    border-color: #3b82f6 !important;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     outline: none;
 }
@@ -138,7 +143,7 @@
     text-decoration: none;
 }
 
-/* Custom Error Text Styling  */
+
 .error-text {
     color: #dc3545;
     font-size: 11px;
@@ -156,4 +161,47 @@
     .auth-card {
         padding: 25px;
     }
+}
+
+/* Forgot Password Link Styling */
+.forget-password-link {
+    text-align: right;
+    margin-top: 6px;
+}
+
+.forget-password-link a {
+    font-size: 13px;
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.forget-password-link a:hover {
+    text-decoration: underline;
+}
+
+
+.auth-form .form-group {
+    width: 100% !important;
+}
+
+
+.info-banner {
+  max-width: 420px;
+  margin: 90px auto 20px; /* ✅ PUSHES BELOW NAVBAR */
+  padding: 12px 16px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  text-align: center;
+  color: #166534;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.info-banner a {
+  margin-left: 6px;
+  font-weight: 600;
+  color: #15803d;
 }

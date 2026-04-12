@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "../components/AdminComponents/layout/AdminLayout";
+
 import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
 import DepartmentPage from "../pages/AdminPages/departments/DepartmentPage";
 import RolesPage from "../pages/AdminPages/roles/RolesPage";
@@ -13,20 +14,16 @@ import SLARecordsPage from "../pages/AdminPages/slaRecord/SLARecordsPage";
 import UsersPage from "../pages/AdminPages/users/UserPage";
 import ServiceReportsPage from "../pages/AdminPages/serviceReports/ServiceReportsPage";
 import NotificationsPage from "../pages/AdminPages/notification/NotificationsPage";
-import { useAuth } from "../context/AuthContext";
- 
+import AdminProfilePage from "../pages/AdminPages/profile/AdminProfilePage";
+
 function AdminRoutes() {
-    const { user } = useAuth(); 
   return (
     <Routes>
       <Route element={<AdminLayout />}>
-        {/* ✅ Default Redirect
-        <Route index element={<Navigate to="dashboard" />} /> */}
- 
-        {/* ✅ Dashboard */}
+        {/* ✅ DEFAULT ADMIN REDIRECT */}
+        <Route index element={<Navigate to="dashboard" replace />} />
+
         <Route path="dashboard" element={<AdminDashboard />} />
- 
-        {/* ✅ All other admin routes */}
         <Route path="departments" element={<DepartmentPage />} />
         <Route path="roles" element={<RolesPage />} />
         <Route path="sla-days" element={<SLADaysPage />} />
@@ -39,9 +36,10 @@ function AdminRoutes() {
         <Route path="reports" element={<ServiceReportsPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="profile" element={<AdminProfilePage />} />
       </Route>
     </Routes>
   );
 }
- 
+
 export default AdminRoutes;
