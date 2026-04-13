@@ -35,3 +35,4 @@ const RoleGuard = ({ children, allowedRoles }) => {
 };
 
 export default RoleGuard;
+
