@@ -1,0 +1,113 @@
+/* NAVBAR CONTAINER */
+.navbar {
+  height: 70px;
+  background-color: #1f3c88;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* LEFT SECTION */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* LOGO */
+.navbar-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+/* BRAND TEXT */
+.brand-text h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.brand-text span {
+  color: #ffffff;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+    min-height: 90px;
+  }
+
+  .navbar-logo {
+    width: 55px;
+    height: 55px;
+  }
+
+  .brand-text h3 {
+    font-size: 22px;
+  }
+
+  .brand-text span {
+    font-size: 14px;
+  }
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Right side profile */
+.navbar-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Clickable profile area */
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+}
+
+/* Dropdown menu */
+.profile-dropdown {
+  position: absolute;
+  top: 42px;
+  right: 0;
+
+  background: white;
+  color: #111827;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  min-width: 140px;
+  overflow: hidden;
+  z-index: 999;
+}
+
+/* Dropdown items */
+.dropdown-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+/* Logout highlight */
+.dropdown-item.logout {
+  color: #dc2626;
+}

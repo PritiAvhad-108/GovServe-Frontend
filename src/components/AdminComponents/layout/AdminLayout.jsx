@@ -6,7 +6,7 @@ import "./layout.css";
 
 export default function AdminLayout() {
   return (
-    <div className="app-layout">
+    <div className="admin-app app-layout">
       {/* Sidebar */}
       <Sidebar />
 
@@ -20,8 +20,7 @@ export default function AdminLayout() {
           <Outlet />
         </div>
 
-        {/* ✅ FOOTER */}
-        
+        {/* Footer */}
         <Footer />
       </div>
     </div>

@@ -1,14 +1,14 @@
 /* =========================
-   GLOBAL RESET
+   ADMIN APP RESET
 ========================= */
-* {
+.admin-app * {
   box-sizing: border-box;
 }
 
-html, body {
+.admin-app {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100vh;
   background: #f1f5f9;
   font-family: "Inter", sans-serif;
 }
@@ -16,7 +16,7 @@ html, body {
 /* =========================
    ROOT LAYOUT
 ========================= */
-.app-layout {
+.admin-app .app-layout {
   display: flex;
   height: 100vh;
   overflow: hidden;
@@ -25,29 +25,28 @@ html, body {
 /* =========================
    SIDEBAR
 ========================= */
-.sidebar {
+.admin-app .sidebar {
   position: fixed;
-  top: 0;
+  top: 0px;
   left: 0;
   width: 250px;
-  height: 100vh;
+  height: calc(100vh - 120px);
   background: #e7f3f6;
   border-right: 1px solid #dbeafe;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   z-index: 500;
 }
-
 /* =========================
    SIDEBAR NAV
 ========================= */
-.sidebar .nav {
+.admin-app .sidebar .nav {
+ 
   list-style: none;
-  padding: 12px 0;
+  padding: 0px 0;
   margin: 0;
 }
 
-.sidebar .nav-link {
+.admin-app .sidebar .nav-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -60,11 +59,11 @@ html, body {
   border-radius: 10px;
 }
 
-.sidebar .nav-link:hover {
+.admin-app .sidebar .nav-link:hover {
   background: #dbeafe;
 }
 
-.sidebar .nav-link.active {
+.admin-app .sidebar .nav-link.active {
   background: #bfdbfe;
   font-weight: 600;
 }
@@ -72,7 +71,7 @@ html, body {
 /* =========================
    MAIN LAYOUT
 ========================= */
-.main-layout {
+.admin-app .main-layout {
   margin-left: 250px;
   margin-top: 70px;
   display: flex;
@@ -83,7 +82,7 @@ html, body {
 /* =========================
    TOP NAVBAR
 ========================= */
-.topbar {
+.admin-app .topbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -97,7 +96,7 @@ html, body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 
-.topbar-inner {
+.admin-app .topbar-inner {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -105,32 +104,32 @@ html, body {
 }
 
 /* NAVBAR BRAND */
-.navbar-brand {
+.admin-app .navbar-brand {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.navbar-logo {
+.admin-app .navbar-logo {
   width: 44px;
   height: 44px;
   object-fit: contain;
 }
 
-.navbar-brand-text {
+.admin-app .navbar-brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
 }
 
-.navbar-brand-text h3 {
+.admin-app .navbar-brand-text h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
   color: #ffffff;
 }
 
-.navbar-brand-text small {
+.admin-app .navbar-brand-text small {
   font-size: 12px;
   color: #c7d2fe;
 }
@@ -138,10 +137,10 @@ html, body {
 /* =========================
    PAGE CONTENT
 ========================= */
-.page-content {
+.admin-app .page-content {
   flex: 1;
   padding: 32px;
-  padding-bottom: 80px;   /* ✅ space for fixed footer */
+  padding-bottom: 80px;
   overflow-y: auto;
   background: #e4ebef;
 }
@@ -149,13 +148,13 @@ html, body {
 /* =========================
    USER INFO
 ========================= */
-.user-info-wrapper {
+.admin-app .user-info-wrapper {
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
-.user-info {
+.admin-app .user-info {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -163,17 +162,17 @@ html, body {
   color: #ffffff;
 }
 
-.user-text {
+.admin-app .user-text {
   display: flex;
   flex-direction: column;
 }
 
-.user-name {
+.admin-app .user-name {
   font-size: 14px;
   font-weight: 600;
 }
 
-.user-role {
+.admin-app .user-role {
   font-size: 12px;
   color: #c7d2fe;
 }
@@ -181,7 +180,7 @@ html, body {
 /* =========================
    HOME BUTTON
 ========================= */
-.nav-home-btn {
+.admin-app .nav-home-btn {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -191,7 +190,7 @@ html, body {
   border-radius: 6px;
 }
 
-.nav-home-btn:hover {
+.admin-app .nav-home-btn:hover {
   background: rgba(255,255,255,0.15);
 }
 
@@ -251,10 +250,11 @@ html, body {
   100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
+
 /* =========================
    LOGOUT BUTTON
 ========================= */
-.logout-btn {
+.admin-app .logout-btn {
   width: calc(100% - 28px);
   margin: 12px 14px;
   padding: 10px 14px;
@@ -268,55 +268,41 @@ html, body {
   border: 1px solid #fca5a5;
   border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s ease;
 }
 
-.logout-btn:hover {
+.admin-app .logout-btn:hover {
   background: #ef4444;
   color: #ffffff;
   border-color: #ef4444;
 }
 
 /* =========================
-   FOOTER (FULL WIDTH)
+   FOOTER
 ========================= */
-/* =========================
-   FOOTER (FIXED + PROFESSIONAL)
-========================= */
-.admin-footer {
+.admin-app .admin-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
-
   height: 50px;
   background: #1e293b;
   border-top: 1px solid #e2e8f0;
   padding: 14px 24px;
-
   z-index: 900;
 }
 
-/* Footer Content */
-.footer-inner {
-  width: 100%;
+.admin-app .footer-inner {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Footer Text */
-.footer-text {
+.admin-app .footer-text {
   font-size: 13px;
-  color: #ffffff;          /* ✅ professional slate color */
+  color: #ffffff;
   text-align: center;
-  letter-spacing: 0.2px;
 }
 
-/* Brand / Highlight */
-.footer-text strong {
-  color: #ffffff;
+.admin-app .footer-text strong {
   font-weight: 600;
 }
-
- 
