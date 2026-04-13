@@ -8,7 +8,6 @@ import "../../styles/LandingStyle/AuthStyle.css";
 import Navbar from "../../components/Landing/layout/Navbar";
 import Footer from "../../components/Landing/layout/Footer";
 import { useAuth } from "../../context/AuthContext";
-
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
@@ -27,11 +26,11 @@ function LoginPage() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
-
+ 
   async function handleSubmit(event) {
     event.preventDefault();
     if (!validateForm()) return;
-
+ 
     try {
       const response = await axios.post(
         "https://localhost:7027/api/Auth/login",
@@ -60,7 +59,6 @@ function LoginPage() {
         userId,
         email: formData.email,
       });
-
       Swal.fire({
         title: "Login Successful!",
         text: "Redirecting to your dashboard...",
@@ -69,7 +67,6 @@ function LoginPage() {
         timer: 2000,
         showConfirmButton: false,
       });
-
       setTimeout(() => {
         if (userRoleFromToken === "Admin") navigate("/admin/dashboard");
         else if (userRoleFromToken === "Citizen") navigate("/citizen");
@@ -88,11 +85,10 @@ function LoginPage() {
       });
     }
   }
-
+ 
   return (
     <>
       <Navbar />
-
       {/* ✅ ALREADY LOGGED IN BANNER */}
       {isAuthenticated && (
         <div className="info-banner">
@@ -116,7 +112,6 @@ function LoginPage() {
           </Link>
         </div>
       )}
-
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
@@ -132,7 +127,7 @@ function LoginPage() {
             <h2>Welcome Back</h2>
             <p>Login to access your GovServe account</p>
           </div>
-
+ 
           <form onSubmit={handleSubmit} className="auth-form" noValidate>
             <div className="form-group">
               <label>
@@ -153,7 +148,7 @@ function LoginPage() {
                 <span className="error-text">{errors.email}</span>
               )}
             </div>
-
+ 
             <div className="form-group">
               <label>
                 <Lock size={16} /> Password *
@@ -172,12 +167,10 @@ function LoginPage() {
               {errors.password && (
                 <span className="error-text">{errors.password}</span>
               )}
-
               <div className="forget-password-link">
                 <Link to="/forget-password">Forget Password?</Link>
               </div>
             </div>
-
             <button
               type="submit"
               className="auth-btn"
@@ -186,7 +179,7 @@ function LoginPage() {
               Login
             </button>
           </form>
-
+ 
           <div className="auth-footer">
             Don't have an account? <Link to="/register">Register Now</Link>
           </div>
@@ -197,5 +190,5 @@ function LoginPage() {
     </>
   );
 }
-
+ 
 export default LoginPage;

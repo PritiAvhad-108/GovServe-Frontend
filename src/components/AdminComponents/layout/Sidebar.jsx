@@ -15,6 +15,7 @@ import {
   MdLogout
 } from "react-icons/md";
 import "./layout.css";
+import logo from "../../../assets/landing/logo.png";
 
 export default function Sidebar() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
