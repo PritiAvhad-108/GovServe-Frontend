@@ -1,0 +1,104 @@
+/* Page background */
+.status-page-container {
+    padding: 32px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+.status-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+    margin-top: 0;
+}
+
+.custom-breadcrumb {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 24px;
+    padding: 0;
+}
+
+/* Card wrapper */
+.status-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+/* Table */
+.status-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+/* Table header */
+.status-table thead th {
+    background-color: #f8fafc;
+    padding: 16px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Table body cells */
+.status-table tbody td {
+    padding: 16px 24px;
+    font-size: 14px;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.status-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 🚨 DYNAMIC STATUS BADGES (Replaced "badge" with "status-pill") 🚨 */
+.status-pill {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.status-approved { background-color: #dcfce7; color: #16a34a; }
+.status-rejected { background-color: #fee2e2; color: #ef4444; }
+.status-pending { background-color: #fef3c7; color: #d97706; }
+.status-resubmitted { background-color: #f3e8ff; color: #7e22ce; }
+
+/* Action button */
+.view-link-btn {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.view-link-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Loading / Empty */
+.loading-text,
+.empty-row {
+    text-align: center;
+    padding: 40px;
+    font-size: 15px;
+    color: #64748b;
+}

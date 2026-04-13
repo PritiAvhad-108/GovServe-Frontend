@@ -1,0 +1,26 @@
+/* src/components/AdminComponents/layout/OfficerLayout/OfficerLayout.css */
+
+.officer-layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.officer-main-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.officer-page-view {
+  flex: 1;
+  padding: 24px;
+  background-color: #f8fafc;
+  overflow-y: auto;
+
+  /* ✅ ADD THESE 3 LINES */
+  margin-left: 260px;                /* same as sidebar width */
+  min-width: 0;                      /* prevents overflow issues */
+}

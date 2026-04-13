@@ -8,12 +8,16 @@ import Notifications from "../pages/Supervisor/Notifications/Notifications";
 import Officers from "../pages/Supervisor/Officers/Officers";
 import Reports from "../pages/Supervisor/Reports/Reports";
 import Profile from "../pages/Profile";
+import { useAuth } from "../context/AuthContext";
 
 const SupervisorRoutes = () => {
+  const { user } = useAuth();
   return (
     <Routes>
       <Route path="/" element={<SupervisorLayout />}>
         <Route index element={<Navigate to="dashboard" />} />
+ 
+        {/* ✅ Dashboard */}
         <Route path="dashboard" element={<SupervisorDashboard />} />
         <Route path="profile" element={<Profile />} />
         <Route path="cases" element={<Cases />} />
@@ -26,5 +30,6 @@ const SupervisorRoutes = () => {
     </Routes>
   );
 };
-
+ 
 export default SupervisorRoutes;
+ 

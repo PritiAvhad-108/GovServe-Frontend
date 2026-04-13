@@ -1,0 +1,114 @@
+/* Container */
+.sla-workflow-container {
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    width: 100%;
+}
+
+/* Header Styling (Matches your other pages) */
+.sla-header {
+    margin-bottom: 20px;
+}
+
+.sla-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0b1c3c; /* Dark navy text */
+    margin: 0 0 5px 0;
+}
+
+.custom-breadcrumb {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* The White Card */
+.sla-card {
+    background-color: #ffffff;
+    border: 1px solid #eaedf1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    padding: 0; /* Table fills the card */
+    width: 100%;
+    overflow: hidden;
+}
+
+.sla-table-responsive {
+    overflow-x: auto;
+}
+
+.sla-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.sla-table th {
+    background-color: #ffffff;
+    color: #4a5568;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eaedf1;
+    letter-spacing: 0.5px;
+}
+
+.sla-table td {
+    padding: 16px 24px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f2f5;
+    color: #1a202c;
+    font-size: 14px;
+}
+
+.sla-table tr:last-child td {
+    border-bottom: none;
+}
+
+.sla-cell-bold {
+    font-weight: 600;
+    color: #0b1c3c;
+}
+
+/* Base Status Pill */
+.sla-status-pill {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+/* Specific Status Colors */
+.status-pending { background-color: #1a3b8a; color: #ffffff; }
+.status-approved { background-color: #def7ec; color: #03543f; }
+.status-rejected { background-color: #fde8e8; color: #9b1c1c; }
+
+/* Priority Level Colors (Days Remaining) */
+.sla-days {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.urgency-breached {
+    color: #e53e3e; /* Bright Red */
+}
+
+.urgency-critical {
+    color: #dd6b20; /* Orange */
+}
+
+.urgency-ontime {
+    color: #38a169; /* Green */
+}
+
+/* Empty State / Loading */
+.sla-loading, .sla-empty {
+    color: #718096;
+    text-align: center;
+    padding: 40px 0;
+    font-size: 15px;
+}
