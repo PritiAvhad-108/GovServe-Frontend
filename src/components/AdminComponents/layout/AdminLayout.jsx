@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import Footer from "../../Landing/layout/Footer"; // ✅ ADD FOOTER IMPORT
+import Footer from "./Footer";
 import "./layout.css";
 
 export default function AdminLayout() {
@@ -20,8 +20,9 @@ export default function AdminLayout() {
           <Outlet />
         </div>
 
-        {/* ✅ FOOTER (VISIBLE ON ALL ADMIN PAGES) */}
-        {/* <Footer /> */}
+        {/* ✅ FOOTER */}
+        
+        <Footer />
       </div>
     </div>
   );

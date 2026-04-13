@@ -15,8 +15,10 @@ import UsersPage from "../pages/AdminPages/users/UserPage";
 import ServiceReportsPage from "../pages/AdminPages/serviceReports/ServiceReportsPage";
 import NotificationsPage from "../pages/AdminPages/notification/NotificationsPage";
 import AdminProfilePage from "../pages/AdminPages/profile/AdminProfilePage";
+import { useAuth } from "../context/AuthContext";
 
 function AdminRoutes() {
+  const { user } = useAuth(); 
   return (
     <Routes>
       <Route element={<AdminLayout />}>

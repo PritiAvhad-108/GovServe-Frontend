@@ -15,7 +15,6 @@ import {
   MdLogout
 } from "react-icons/md";
 import "./layout.css";
-import logo from "../../../assets/landing/logo.png";
 
 export default function Sidebar() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -23,111 +22,45 @@ export default function Sidebar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
     <>
       <div className="sidebar">
 
-        {/* BRAND */}
-        <div className="sidebar-brand-wrapper">
-          <div>
-            <img src={logo} alt="GovServe Logo" className="sidebar-logo" />
-          </div>
-
-          <div className="brand-info">
-            <h3>GovServe</h3>
-            <small>Government Services</small>
-          </div>
-        </div>
-
-        {/* NAV */}
-        <ul className="nav flex-column">
-          <li>
-            <NavLink className="nav-link" to="/admin/dashboard">
-              <MdDashboard size={18} /> Dashboard
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/roles">
-              <MdSecurity size={18} /> Roles
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/sla-days">
-              <MdAccessTime size={18} /> SLA Days
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/departments">
-              <MdApartment size={18} /> Departments
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/services">
-              <MdHomeRepairService size={18} /> Services
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/eligibility-rules">
-              <MdFactCheck size={18} /> Eligibility Rules
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/required-documents">
-              <MdDescription size={18} /> Required Documents
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/workflow-stages">
-              <MdDeviceHub size={18} /> Workflow Stages
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/sla-records">
-              <MdErrorOutline size={18} /> SLA Records
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/reports">
-              <MdBarChart size={18} /> Reports
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/admin/users">
-              <MdPeople size={18} /> Users
-            </NavLink>
-          </li>
+        {/* ✅ NAVIGATION */}
+        <ul className="nav">
+          <li><NavLink className="nav-link" to="/admin/dashboard"><MdDashboard /> Dashboard</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/roles"><MdSecurity /> Roles</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/sla-days"><MdAccessTime /> SLA Days</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/departments"><MdApartment /> Departments</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/services"><MdHomeRepairService /> Services</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/eligibility-rules"><MdFactCheck /> Eligibility Rules</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/required-documents"><MdDescription /> Required Documents</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/workflow-stages"><MdDeviceHub /> Workflow Stages</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/sla-records"><MdErrorOutline /> SLA Records</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/reports"><MdBarChart /> Reports</NavLink></li>
+          <li><NavLink className="nav-link" to="/admin/users"><MdPeople /> Users</NavLink></li>
         </ul>
 
-        {/* LOGOUT */}
-        <div className="logout-section">
+        {/* ✅ PROFESSIONAL LOGOUT SECTION */}
+        <div className="sidebar-logout">
           <button
-            className="nav-link logout-btn"
+            className="logout-btn"
             onClick={() => setShowLogoutConfirm(true)}
-            style={{ background: "none", border: "none", width: "100%", textAlign: "left" }}
           >
-            <MdLogout size={20} /> Logout
+            <MdLogout size={18} />
+            <span>Log out</span>
           </button>
         </div>
       </div>
 
-      {/* ✅ LOGOUT CONFIRMATION MODAL */}
+      {/* ✅ LOGOUT CONFIRMATION POPUP */}
       {showLogoutConfirm && (
         <div className="logout-overlay">
           <div className="logout-modal">
-            <h4>Confirm Sign Out</h4>
+            <h4>Confirm Log Out</h4>
             <p>Are you sure you want to log out?</p>
 
             <div className="logout-actions">

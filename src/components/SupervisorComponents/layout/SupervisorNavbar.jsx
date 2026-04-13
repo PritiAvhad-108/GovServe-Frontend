@@ -1,86 +1,113 @@
-import React from "react";
-import { FiBell, FiUser } from "react-icons/fi";
+import { useState, useRef, useEffect } from "react";
+import { FiBell, FiUser, FiMenu } from "react-icons/fi";
 import { FaChartBar } from "react-icons/fa";
+import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuth } from "../../../context/AuthContext";
+import logo from "../../../assets/landing/logo.png";
 
-export default function SupervisorNavbar() {
+export default function SupervisorNavbar({ onToggleSidebar }) {
   const navigate = useNavigate();
+  const { logout, user } = useAuth();
+
+  const [open, setOpen] = useState(false);
+  const [showProfileCard, setShowProfileCard] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logout successful");
+    navigate("/");
+  };
+
+  useEffect(() => {
+    const closeDropdown = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+        setShowProfileCard(false); // ✅ close profile card too
+      }
+    };
+    document.addEventListener("mousedown", closeDropdown);
+    return () => document.removeEventListener("mousedown", closeDropdown);
+  }, []);
 
   return (
-    <header className="topbar">
-      <div className="topbar-inner">
-        <div className="topbar-actions">
+    <header className="sup-topbar">
+      {/* LEFT */}
+      <div className="sup-topbar-left">
+        <FiMenu className="sup-menu" onClick={onToggleSidebar} />
 
-          {/*  Reports */}
-          <FaChartBar
-            size={18}
-            className="notification-icon"
-            onClick={() => navigate("/supervisor/reports")}
-            title="Reports"
-          />
-
-          {/* 🔔 Notifications */}
-          <FiBell
-            size={20}
-            className="notification-icon"
-            onClick={() => navigate("/supervisor/notifications")}
-            title="Notifications"
-          />
-
-          <div className="user-info">
-            <FiUser size={20} />
-            <span>Supervisor User</span>
+        <div
+          className="sup-brand"
+          onClick={() => navigate("/supervisor/dashboard")}
+        >
+          <img src={logo} alt="GovServe" />
+          <div>
+            <span className="sup-title">GovServe</span>
+            <span className="sup-sub">Government Services</span>
           </div>
         </div>
       </div>
 
-      {/* ✅ CSS PRESERVED */}
-      <style>{`
-        .topbar {
-          height: 75px;
-          background: #1e3a8a;
-          display: flex;
-          align-items: center;
-          padding: 0 24px;
-          box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-        }
+      {/* RIGHT */}
+      <div className="sup-topbar-right">
+        <FaChartBar onClick={() => navigate("/supervisor/reports")} />
+        <FiBell onClick={() => navigate("/supervisor/notifications")} />
 
-        .topbar-inner {
-          display: flex;
-          justify-content: flex-end;
-          width: 100%;
-        }
+        {/* USER DROPDOWN */}
+        <div
+          className="sup-user"
+          ref={dropdownRef}
+          onClick={() => setOpen(!open)}
+        >
+          <FiUser />
+          <span>{user?.fullName || "Supervisor"}</span>
 
-        .topbar-actions {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-          color: #ffffff;
-        }
+          {open && (
+            <div className="sup-dropdown">
+              <div
+                onClick={(e) => {
+                  e.stopPropagation(); // ✅ prevent closing dropdown
+                  setShowProfileCard(!showProfileCard);
+                }}
+              >
+                My Profile
+              </div>
 
-        .notification-icon {
-          cursor: pointer;
-        }
+              <div className="logout" onClick={handleLogout}>
+                <LogOut size={14} /> Logout
+              </div>
 
-        .notification-icon:hover {
-          color: #c7d2fe;
-        }
+              {showProfileCard && (
+                <div className="sup-profile-card">
+                  <div className="profile-row">
+                    <span className="label">Name</span>
+                    <span className="value">
+                      {user?.fullName || "—"}
+                    </span>
+                  </div>
 
-        .user-info {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
+                  <div className="profile-row">
+                    <span className="label">Email</span>
+                    <span className="value">
+                      {user?.email || "—"}
+                    </span>
+                  </div>
 
-        .topbar-actions svg {
-          color: #ffffff;
-        }
-
-        .topbar-actions span {
-          font-size: 14px;
-          font-weight: 500;
-        }
-      `}</style>
+                  <div className="profile-row">
+                    <span className="label">Role</span>
+                    <span className="value">
+                      {user?.role || "Supervisor"}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </header>
   );
 }

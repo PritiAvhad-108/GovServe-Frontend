@@ -14,11 +14,11 @@ import {
   getApplications,
   getAllCases
 } from "../../../api/api";
-import { useNavigate, useLocation } from "react-router-dom"; // ✅ added useLocation
+import { useNavigate, useLocation } from "react-router-dom"; 
 
 const SupervisorDashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ added
+  const location = useLocation(); 
 
   const [stats, setStats] = useState({
     total: 0,
@@ -39,7 +39,6 @@ const SupervisorDashboard = () => {
   const itemsPerPage = 5;
   const slaItemsPerPage = 5;
 
-  // ✅ CHANGED: re-load dashboard whenever route changes
   useEffect(() => {
     loadDashboardStats();
     loadRecentApplications();
@@ -75,40 +74,39 @@ const SupervisorDashboard = () => {
   };
 
   /* ---------------- ACTIVE SLA COUNT ---------------- */
-const loadActiveSLABreaches = async () => {
-  try {
-    const [slaRes, caseRes] = await Promise.all([
-      getSLABreachedCases(),
-      getAllCases()
-    ]);
+  const loadActiveSLABreaches = async () => {
+    try {
+      const [slaRes, caseRes] = await Promise.all([
+        getSLABreachedCases(),
+        getAllCases()
+      ]);
 
-    if (!Array.isArray(slaRes.data) || !Array.isArray(caseRes.data)) {
-      setSlaBreached(0);
-      return;
-    }
-
-    const escalatedCaseIds = new Set(
-      caseRes.data
-        .filter(c => c.status === "Escalated")
-        .map(c => c.caseId)
-    );
-
-    const uniqueCaseIds = new Set();
-
-    slaRes.data.forEach(row => {
-      if (escalatedCaseIds.has(row.caseId)) {
-        uniqueCaseIds.add(row.caseId);
+      if (!Array.isArray(slaRes.data) || !Array.isArray(caseRes.data)) {
+        setSlaBreached(0);
+        return;
       }
-    });
 
-    setSlaBreached(uniqueCaseIds.size);
-  } catch {
-    setSlaBreached(0);
-  }
-};
+      const escalatedCaseIds = new Set(
+        caseRes.data
+          .filter(c => c.status === "Escalated")
+          .map(c => c.caseId)
+      );
+
+      const uniqueCaseIds = new Set();
+
+      slaRes.data.forEach(row => {
+        if (escalatedCaseIds.has(row.caseId)) {
+          uniqueCaseIds.add(row.caseId);
+        }
+      });
+
+      setSlaBreached(uniqueCaseIds.size);
+    } catch {
+      setSlaBreached(0);
+    }
+  };
 
   /* ---------------- RECENT APPLICATIONS ---------------- */
-
   const loadRecentApplications = async () => {
     const [appRes, caseRes] = await Promise.all([
       getApplications(),
@@ -120,28 +118,22 @@ const loadActiveSLABreaches = async () => {
       caseLookup[c.applicationNumber] = c;
     });
 
-    const updated = await Promise.all(
-      appRes.data.map(async app => {
-        let citizenName = "N/A";
-        try {
-          const citizen = await getCitizenByApplication(app.applicationId);
-          citizenName = citizen.data.fullName;
-        } catch {}
+    const updated = appRes.data.map(app => {
+      const matchedCase = caseLookup[`APP-${app.applicationId}`];
 
-        const matchedCase = caseLookup[`APP-${app.applicationId}`];
-
-        return {
-          ...app,
-          citizenName,
-          caseId: matchedCase?.caseId ?? null
-        };
-      })
-    );
+      return {
+        ...app,
+        citizenName: app.applicantName ?? "N/A",
+        serviceName: app.serviceName ?? "N/A",
+        caseId: matchedCase?.caseId ?? null
+      };
+    });
 
     setApplications(updated);
   };
 
   /* ---------------- SLA BREACHED CASES ---------------- */
+ /* ---------------- SLA BREACHED CASES ---------------- */
 const loadSLABreachedCases = async () => {
   try {
     const [slaRes, caseRes] = await Promise.all([
@@ -149,19 +141,20 @@ const loadSLABreachedCases = async () => {
       getAllCases()
     ]);
 
+    // safety check
     if (!Array.isArray(slaRes.data) || !Array.isArray(caseRes.data)) {
       setSlaCases([]);
       return;
     }
 
-    // Step 1: collect escalated cases
+    // collect only escalated case IDs
     const escalatedCaseIds = new Set(
       caseRes.data
         .filter(c => c.status === "Escalated")
         .map(c => c.caseId)
     );
 
-    // Step 2: remove duplicate SLA rows by caseId
+    // remove duplicate SLA rows by caseId
     const uniqueMap = {};
 
     slaRes.data.forEach(row => {
@@ -170,9 +163,10 @@ const loadSLABreachedCases = async () => {
       }
     });
 
-    // Step 3: set unique rows only
+    // set final SLA cases (can be empty)
     setSlaCases(Object.values(uniqueMap));
-  } catch {
+  } catch (error) {
+    console.error("Failed to load SLA breached cases", error);
     setSlaCases([]);
   }
 };
@@ -286,53 +280,61 @@ const loadSLABreachedCases = async () => {
           </button>
         </div>
       </div>
+     {/* ================= SLA BREACHED CASES (UPDATED) ================= */}
+{/* ================= SLA BREACHED CASES ================= */}
+<div className="supervisor-recent">
+  <h2>SLA Breached Cases</h2>
 
-      {/* ================= SLA BREACHED CASES ================= */}
-      {slaCases.length > 0 && (
-        <div className="supervisor-recent">
-          <h2>SLA Breached Cases</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Case ID</th>
+        <th>Application ID</th>
+        <th>Department ID</th>
+        <th>Status</th>
+      </tr>
+    </thead>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Case ID</th>
-                <th>Application ID</th>
-                <th>Department ID</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentSla.map(c => (
-                <tr key={c.caseId}>
-                  <td>CASE-{c.caseId}</td>
-                  <td>APP-{c.applicationID}</td>
-                  <td>{c.departmentID}</td>
-                  <td>
-                    <span className="status-rejected">Breached</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <div className="supervisor-pagination">
-            <button
-              disabled={slaPage === 1}
-              onClick={() => setSlaPage(slaPage - 1)}
-            >
-              Previous
-            </button>
-            <span>Page {slaPage} of {slaTotalPages}</span>
-            <button
-              disabled={slaPage === slaTotalPages}
-              onClick={() => setSlaPage(slaPage + 1)}
-            >
-              Next
-            </button>
-          </div>
-        </div>
+    <tbody>
+      {currentSla.length === 0 ? (
+        <tr>
+          <td colSpan="4" className="empty-text">
+            No cases available
+          </td>
+        </tr>
+      ) : (
+        currentSla.map(c => (
+          <tr key={c.caseId}>
+            <td>CASE-{c.caseId}</td>
+            <td>APP-{c.applicationID}</td>
+            <td>{c.departmentID}</td>
+            <td>
+              <span className="status-rejected">Breached</span>
+            </td>
+          </tr>
+        ))
       )}
+    </tbody>
+  </table>
 
+  <div className="supervisor-pagination">
+    <button
+      disabled={slaPage === 1 || currentSla.length === 0}
+      onClick={() => setSlaPage(slaPage - 1)}
+    >
+      Previous
+    </button>
+
+    <span>Page {slaPage} of {slaTotalPages || 1}</span>
+
+    <button
+      disabled={slaPage === slaTotalPages || currentSla.length === 0}
+      onClick={() => setSlaPage(slaPage + 1)}
+    >
+      Next
+    </button>
+  </div>
+</div>
     </div>
   );
 };
