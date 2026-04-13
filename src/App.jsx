@@ -66,12 +66,13 @@ function App() {
           }
         />
 
-        {/* SUPERVISOR */}
+        SUPERVISOR
         <Route
           path="/supervisor/*"
           element={
             <RoleGuard allowedRoles={["Supervisor"]}>
               <Supervisorroutes />
+              
             </RoleGuard>
           }
         />

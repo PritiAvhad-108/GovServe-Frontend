@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../../../styles/Profile.css"; 
 import { FaUser, FaEnvelope, FaPhone, FaUserTag, FaBuilding } from 'react-icons/fa';
 import { useAuth } from "../../../context/AuthContext"; 
-//import "./AdminProfile.css";
+import "./AdminProfile.css";
 
 const Profile = () => {
     const { user: authUser } = useAuth(); 
