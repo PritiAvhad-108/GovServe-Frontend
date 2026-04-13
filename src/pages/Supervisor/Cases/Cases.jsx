@@ -11,6 +11,10 @@ const Cases = () => {
   const [applications, setApplications] = useState([]);
   const [departments, setDepartments] = useState([]);
 
+  //  NEW: services & mapping
+  const [services, setServices] = useState([]);
+  const [serviceDeptMap, setServiceDeptMap] = useState({});
+
   const [assignData, setAssignData] = useState({
     applicationId: "",
     departmentId: ""
@@ -32,8 +36,22 @@ const Cases = () => {
     const appRes = await getApplications();
     const deptRes = await axios.get("https://localhost:7027/api/Department");
 
+    // NEW: fetch services
+    const serviceRes = await axios.get("https://localhost:7027/api/Services");
+
     setCases(caseRes.data);
     setDepartments(deptRes.data);
+    setServices(serviceRes.data);
+
+    // build service → department mapping
+    const map = {};
+    serviceRes.data.forEach(s => {
+      map[s.serviceName] = {
+        departmentId: s.departmentID,
+        departmentName: s.departmentName
+      };
+    });
+    setServiceDeptMap(map);
 
     const assignedSet = new Set(
       caseRes.data
@@ -56,6 +74,14 @@ const Cases = () => {
     setApplications(availableApplications);
   };
 
+  // NEW: get selected service from application
+  const getSelectedService = () => {
+    const selectedApp = applications.find(
+      a => String(a.applicationId) === String(assignData.applicationId)
+    );
+    return selectedApp?.serviceName || "";
+  };
+
   const handleAutoAssign = async () => {
     setAssignMessage("");
     setAssignType("");
@@ -66,6 +92,20 @@ const Cases = () => {
 
     if (alreadyAssigned) {
       setAssignMessage("This application has already been assigned to an officer.");
+      setAssignType("error");
+      return;
+    }
+
+    // NEW: validate department against service
+    const selectedService = getSelectedService();
+    const validDeptId = serviceDeptMap[selectedService]?.departmentId;
+
+    if (
+      selectedService &&
+      validDeptId &&
+      Number(assignData.departmentId) !== Number(validDeptId)
+    ) {
+      setAssignMessage("Please select suitable department");
       setAssignType("error");
       return;
     }
@@ -103,7 +143,9 @@ const Cases = () => {
 
         <select
           value={assignData.applicationId}
-          onChange={e => setAssignData({ ...assignData, applicationId: e.target.value })}
+          onChange={e =>
+            setAssignData({ ...assignData, applicationId: e.target.value })
+          }
         >
           <option value="">Select Application</option>
           {applications.map(app => {
@@ -118,14 +160,30 @@ const Cases = () => {
 
         <select
           value={assignData.departmentId}
-          onChange={e => setAssignData({ ...assignData, departmentId: e.target.value })}
+          onChange={e =>
+            setAssignData({ ...assignData, departmentId: e.target.value })
+          }
         >
           <option value="">Select Department</option>
-          {departments.map(dep => (
-            <option key={dep.departmentID} value={dep.departmentID}>
-              {dep.departmentName}
-            </option>
-          ))}
+          {departments.map(dep => {
+            const selectedService = getSelectedService();
+            const validDept = serviceDeptMap[selectedService]?.departmentId;
+
+            const isDisabled =
+              selectedService &&
+              validDept &&
+              dep.departmentID !== validDept;
+
+            return (
+              <option
+                key={dep.departmentID}
+                value={dep.departmentID}
+                disabled={isDisabled}
+              >
+                {dep.departmentName}
+              </option>
+            );
+          })}
         </select>
 
         <button
@@ -188,11 +246,17 @@ const Cases = () => {
         </table>
 
         <div className="pagination">
-          <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
             Prev
           </button>
           <span>Page {currentPage} of {totalPages}</span>
-          <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
             Next
           </button>
         </div>
