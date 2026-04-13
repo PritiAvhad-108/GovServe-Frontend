@@ -55,7 +55,7 @@ const SlaWorkflowPage = () => {
                             <thead>
                                 <tr>
                                     <th>CASE ID</th>
-                                    <th>APPLICATION NAME</th>
+                                    <th>SERVICE</th>
                                     <th>STATUS</th>
                                     <th>DAYS REMAINING</th>
                                 </tr>
@@ -64,7 +64,7 @@ const SlaWorkflowPage = () => {
                                 {slaCases.length > 0 ? (
                                     slaCases.map((c) => (
                                         <tr key={c.caseId}>
-                                            <td className="sla-cell-bold"># {c.caseId}</td>
+                                            <td className="sla-cell-bold"> {c.caseId}</td>
                                             <td>{c.applicationName || 'N/A'}</td>
                                             <td>
                                                 <span className={`sla-status-pill status-${c.status?.toLowerCase() || 'pending'}`}>

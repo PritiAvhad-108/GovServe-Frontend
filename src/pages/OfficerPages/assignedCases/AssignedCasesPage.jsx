@@ -10,8 +10,8 @@ const AssignedCasesPage = () => {
 
     // Get officerId from localStorage or default to 1 for testing
     // Clean the ID to ensure no "1:1" or extra characters exist
-const rawUserId = localStorage.getItem('userId');
-const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
+    const rawUserId = localStorage.getItem('userId');
+    const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
 
     useEffect(() => {
         fetchData();
@@ -59,10 +59,18 @@ const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
                             {caseList.length > 0 ? (
                                 caseList.map((item) => (
                                     <tr key={item.caseId}>
-                                        <td className="font-medium">#{item.caseId}</td>
+                                        <td className="font-medium">{item.caseId}</td>
                                         
-                                        {/* ✅ FIX 1: Look inside the User object for the Applicant Name */}
-                                        <td>{item.user?.fullName || 'N/A'}</td>
+                                        {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
+                                        <td>
+                                            {
+                                                item.user?.fullName || 
+                                                item.User?.fullName || 
+                                                item.application?.citizenDetails?.fullName || 
+                                                item.application?.User?.fullName || 
+                                                'N/A'
+                                            }
+                                        </td>
                                         
                                         {/* ✅ FIX 2: Look inside the Application object for the Service Name */}
                                         <td>{item.application?.service?.serviceName || 'General Service'}</td>
