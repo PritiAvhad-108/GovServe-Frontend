@@ -1,7 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+//import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "../components/AdminComponents/layout/AdminLayout";
 
 import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
+//import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
 import DepartmentPage from "../pages/AdminPages/departments/DepartmentPage";
 import RolesPage from "../pages/AdminPages/roles/RolesPage";
 import SLADaysPage from "../pages/AdminPages/slaDays/SLADaysPage";

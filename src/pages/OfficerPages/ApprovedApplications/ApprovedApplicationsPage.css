@@ -1,0 +1,147 @@
+/* Page background */
+.approved-container {
+    padding: 32px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Header */
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+    margin-top: 0;
+}
+
+/* FIXED: Custom class name so Bootstrap leaves it alone */
+.custom-breadcrumb {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 6px;
+    padding: 0;
+    background: transparent;
+}
+
+.total-count {
+    font-size: 15px;
+    color: #475569;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+/* Card wrapper */
+.approved-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0px 12px 28px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Table */
+.approved-table-new {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+/* Table header */
+.approved-table-new thead th {
+    background-color: #f1f5f9;
+    padding: 18px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+    text-align: left;
+    border: none;
+}
+
+/* Table body cells */
+.approved-table-new tbody td {
+    padding: 20px 24px;
+    font-size: 15px;
+    color: #1e293b;
+    border-top: 1px solid #edf2f7;
+    border-bottom: none;
+    vertical-align: middle;
+}
+
+/* Status text */
+.status-approved {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+/* Action button */
+.view-app-btn {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.view-app-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* --- NEW: Pagination Styles to fix the "Invisible Buttons" --- */
+
+.custom-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 12px;
+    border-top: 1px solid #edf2f7;
+    background-color: #ffffff;
+}
+
+/* Ensure the button is blue and text is white */
+.page-nav-btn {
+    background-color: #2563eb !important; 
+    color: #ffffff !important;
+    border: 1px solid #2563eb;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-flex; /* Helps center text inside */
+    align-items: center;
+    justify-content: center;
+}
+
+.page-nav-btn:hover:not(:disabled) {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+.page-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+}
+
+.page-info {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Loading / Empty */
+.loading-text,
+.empty-text {
+    text-align: center;
+    padding: 32px;
+    font-size: 15px;
+    color: #64748b;
+}

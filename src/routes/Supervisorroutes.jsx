@@ -16,6 +16,8 @@ const SupervisorRoutes = () => {
     <Routes>
       <Route path="/" element={<SupervisorLayout />}>
         <Route index element={<Navigate to="dashboard" />} />
+ 
+        {/* ✅ Dashboard */}
         <Route path="dashboard" element={<SupervisorDashboard />} />
         <Route path="profile" element={<Profile />} />
         <Route path="cases" element={<Cases />} />
@@ -28,5 +30,6 @@ const SupervisorRoutes = () => {
     </Routes>
   );
 };
-
+ 
 export default SupervisorRoutes;
+ 

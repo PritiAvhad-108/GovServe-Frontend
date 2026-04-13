@@ -23,6 +23,7 @@ function App() {
   const getRedirectPath = () => {
     if (userRole === "Admin") return "/admin/dashboard";
     if (userRole === "Supervisor") return "/supervisor";
+    if (userRole === "Officer") return "/officer";
     return "/citizen";
   };
  

@@ -1,0 +1,101 @@
+/* Page */
+.pending-container {
+    padding: 28px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Header */
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+
+.total-count {
+    font-size: 15px;
+    color: #475569;
+    margin-bottom: 20px;
+}
+
+/* Card */
+.pending-card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* Table */
+.pending-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pending-table thead th {
+    background-color: #f1f5f9;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #475569;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: left;
+}
+
+.pending-table tbody td {
+    padding: 18px 20px;
+    font-size: 15px;
+    color: #1e293b;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Ensure the table cell itself has no weird background */
+.pending-table tbody td.status-pending {
+    background-color: transparent;
+}
+
+/* Style the span inside as a professional badge */
+.status-pending span {
+    background-color: #fef3c7; 
+    color: #b45309;           
+    padding: 6px 14px;         
+    border-radius: 20px;       
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid #fde68a; /* Subtle border for crispness */
+    text-transform: uppercase; /* Optional: Looks good for statuses */
+    letter-spacing: 0.5px;
+}
+
+/* Action Button */
+.view-btn {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Empty / Loading */
+.loading-text,
+.empty-text {
+    text-align: center;
+    padding: 30px;
+    font-size: 15px;
+    color: #64748b;
+}
