@@ -1,0 +1,141 @@
+
+
+.service-row-card.border-rejected {
+    border-left: 4px solid #ef4444;
+}
+
+
+.status-tag-inline {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600; 
+    text-transform: capitalize;
+    display: inline-flex;
+    align-items: center;
+}
+
+
+
+.status-tag-inline.submitted {
+    background-color: #e0f2fe; 
+    color: #0369a1;
+}
+
+.status-tag-inline.pending {
+    background-color: #fef3c7; 
+    color: #b45309;
+}
+
+.status-tag-inline.approved {
+    background-color: #dcfce7; 
+    color: #166534;
+}
+
+.status-tag-inline.rejected {
+    background-color: #fee2e2; 
+    color: #991b1b;
+}
+
+/* --- View Details Section --- */
+
+.card-right-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.view-details-action {
+    display: flex;
+    align-items: center;
+    gap: 6px; 
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13.5px; 
+    font-weight: 500;
+}
+
+
+.view-details-action svg {
+    width: 16px !important; 
+    height: 16px !important;
+    color: #94a3b8;
+}
+
+
+.view-details-action:hover, 
+.view-details-action:hover svg {
+    color: #1e3a8a;
+}
+
+/* --- Edit Button (For Rejected Applications) --- */
+.edit-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.edit-action-btn:hover {
+    background: #fecaca;
+}
+
+
+
+.meta-separator {
+    margin: 0 6px;
+    color: #e2e8f0;
+}
+
+.service-meta-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+}
+/* ==========================================
+   SEARCH BAR
+   ========================================== */
+.search-section {
+  position: sticky;  
+  top: 0;
+  z-index: 10;    
+  margin-top: 20px;   
+  margin-bottom: 15px;
+  width: 94%;
+  padding-left: 50px;
+  background-color: #f4f7fe; 
+}
+
+
+.search-box-attractive {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.search-box-attractive input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    color: #1e293b;
+}
+
+.search-icon-color {
+    color: #1e3a8a;
+}

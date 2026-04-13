@@ -6,6 +6,10 @@ import ActionModal from '../../../components/OfficerComponents/common/ActionModa
 import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending } from '../../../api/officerApi';
 import './CaseDetails.css';
 
+
+
+
+
 const CaseDetailsPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -18,31 +22,42 @@ const CaseDetailsPage = () => {
     const [selectedDocUrl, setSelectedDocUrl] = useState(null); 
     const [docStatuses, setDocStatuses] = useState({}); 
     
-    // 🚨 REMOVED the useOfficerActions hook to handle it directly below
-
+    // =================================================================
+    // ✅ FIX 1: Fetch the main Case Details when the page loads
+    // =================================================================
     useEffect(() => {
-        const fetchDetailsAndDocs = async () => {
+        const fetchMainDetails = async () => {
             try {
                 setPageLoading(true);
-                const caseResponse = await getCaseDetails(id);
-                const caseData = caseResponse.data || caseResponse;
-                setDetails(caseData);
-
-                const appId = caseData.application?.applicationID || caseData.applicationID;
-                if (appId) {
-                    const docResponse = await getDocumentsByApplicationId(appId);
-                    setDocuments(docResponse.data || docResponse); 
-                }
+                // Call your API to get the case data based on the URL id
+                const response = await getCaseDetails(id); 
+                setDetails(response.data || response); 
             } catch (error) {
-                console.error(error);
-                alert("Could not load case details or documents.");
+                console.error("Failed to fetch case details:", error);
             } finally {
                 setPageLoading(false);
             }
         };
-
-        fetchDetailsAndDocs();
+        fetchMainDetails();
     }, [id]);
+    
+    // 🚨 REMOVED the useOfficerActions hook to handle it directly below
+    const applicationId = details?.applicationID || details?.application?.applicationID;
+    useEffect(() => {
+        const fetchDocuments = async () => {
+            try {
+                const response = await getDocumentsByApplicationId(applicationId);
+                // Ensure it sets an array even if the response is weird
+                setDocuments(response.data || []); 
+            } catch (error) {
+                console.error("Failed to fetch documents", error);
+            }
+        };
+
+        if (applicationId) {
+            fetchDocuments();
+        }
+    }, [applicationId]);
 
     // --- ✅ NEW LOGIC FOR APPROVING THE WHOLE APPLICATION ---
     const handleApproveApplication = async () => {
@@ -227,10 +242,18 @@ const CaseDetailsPage = () => {
                         <div className="document-list">
                             {documents.map((doc, index) => {
                                 const currentStatus = docStatuses[doc.documentId] || doc.status || 'Pending';
-                                const filePath = doc.uri || doc.documentUrl || "";
-                                const cleanPath = filePath.startsWith('/') ? filePath : `/${filePath}`;
-                                const fullUrl = `https://localhost:7027${cleanPath}`;
-                                const isCurrentlyViewing = selectedDocUrl === fullUrl;
+
+// 1. Log the document so we can see exactly what the backend sends
+console.log("Document Data from backend:", doc);
+
+// 2. ✅ FIX: Look for ALL possible capitalizations of URI
+const filePath = doc.documentUrl || doc.uri || doc.URI || "";
+
+// 3. ✅ FIX: Only build the URL if the file path actually exists
+const cleanPath = filePath ? (filePath.startsWith('/') ? filePath : `/${filePath}`) : "";
+const fullUrl = cleanPath ? `https://localhost:7027${cleanPath}` : null;
+
+const isCurrentlyViewing = selectedDocUrl === fullUrl;
 
                                 return (
                                     <div key={doc.documentId || index} className={`doc-row ${isCurrentlyViewing ? 'active-row' : ''}`}>

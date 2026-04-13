@@ -1,0 +1,366 @@
+/* ==========================================
+    1. LAYOUT & CONTAINERS
+   ========================================== */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f4f7fe;
+    font-family: 'Inter', sans-serif;
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 40px;
+}
+
+.stepper-container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+    2. STEPPER HEADER & INDICATORS
+   ========================================== */
+.stepper-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.stepper-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.round-back {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    transition: background 0.2s;
+}
+
+.round-back:hover { background: #1e40af; }
+
+.step-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.dot.active {
+    background: #1e3a8a;
+    box-shadow: 0 0 8px rgba(30, 58, 138, 0.3);
+}
+
+.line {
+    width: 50px;
+    height: 2px;
+    background: #cbd5e1;
+}
+
+.line.active { background: #1e3a8a; }
+
+/* ==========================================
+    3. CARD DESIGN & TITLES
+   ========================================== */
+.step-card {
+    background: white;
+    padding: 22px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef2f6;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.card-title h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* ==========================================
+    4. FORM GRID SYSTEM
+   ========================================== */
+.compact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+.v-row {
+    display: flex;
+    gap: 20px; 
+    width: 100%;
+}
+
+.v-input-group {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 4px; 
+    position: relative;
+    min-width: 0; 
+}
+
+.v-input-group.full { width: 100%; }
+
+/* ==========================================
+    5. LABELS, INPUTS & READONLY
+   ========================================== */
+.v-input-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px; 
+    font-weight: 600;
+    color: #64748b;
+}
+
+.v-input-group input, 
+.v-input-group select {
+    width: 100%; 
+    padding: 8px 12px;
+    border: 1.2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #1e293b;
+    box-sizing: border-box; 
+}
+
+.v-input-group input:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.v-input-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.v-readonly-box {
+    flex: 1;
+    background: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+/* ==========================================
+    6. UPLOAD SECTION (NEW)
+   ========================================== */
+.upload-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.upload-item-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.upload-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.doc-label { font-size: 13px; font-weight: 600; color: #1e293b; }
+.file-name { font-size: 11px; color: #10b981; font-weight: 500; }
+
+.upload-btn-label {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1.5px dashed #1e3a8a;
+    color: #1e3a8a;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.upload-btn-label.uploaded {
+    background: #10b981;
+    border: none;
+    color: white;
+}
+
+/* ==========================================
+    7. SUCCESS MODAL (NEW & EFFECTIVE)
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.success-card {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.success-check-circle {
+    background: #10b981;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #d1fae5;
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+}
+
+.success-card h3 { color: #1e293b; font-size: 20px; margin-bottom: 8px; }
+.success-card p { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+
+.app-id-badge {
+    background: #f1f5f9;
+    color: #1e3a8a;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+.btn-modal-close {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-modal-close:hover { background: #059669; transform: translateY(-2px); }
+
+/* ==========================================
+    8. BUTTONS & ANIMATIONS
+   ========================================== */
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-primary, .btn-submit {
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-back {
+    background-color: #f1f5f9;
+    color: #1e3a8a;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.v-input-group.error input { border-color: #ef4444; }
+.err-msg { color: #ef4444; font-size: 10px; font-weight: 600; margin-top: 1px; }
+
+.spin { animation: rotate 1s linear infinite; }
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.fade-in { animation: fadeIn 0.3s ease-out; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,12 +1,14 @@
 // src/components/AdminComponents/layout/OfficerLayout/OfficerNavbar.jsx
 
-import React from 'react';
+import React,{ useState } from 'react';
 // ✅ IMPORT YOUR NEW COMPONENT HERE
 import NotificationBell from '../../../pages/OfficerPages/notifications/OfficerNotifications';
-
+import OfficerProfilePopup from '../../../pages/OfficerPages/OfficerProfile/ProfilePopup'; // <-- Adjust this path if needed!
 const OfficerNavbar = () => {
-    return (
 
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    return (
+   
         <nav style={{ 
             height: '70px', 
             background: '#1a3a8a', /* 🔵 GovServe Dark Blue Color */
@@ -35,10 +37,19 @@ const OfficerNavbar = () => {
                 <NotificationBell />
 
                 {/* Profile Badge */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.1)', padding: '5px 15px', borderRadius: '20px' }}>
+                <div onClick={() => setIsProfileOpen(!isProfileOpen)}
+                style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.1)', padding: '5px 15px', borderRadius: '20px' }}>
                     <span className="material-icons">account_circle</span>
                     <span style={{ fontWeight: '500' }}>Officer</span>
                 </div>
+
+                {/* ✅ Conditionally render the popup if isProfileOpen is true */}
+                {isProfileOpen && (
+                    <OfficerProfilePopup 
+                        onClose={() => setIsProfileOpen(false)} 
+                    />
+                )}
+                
             </div>
         </nav>
     );

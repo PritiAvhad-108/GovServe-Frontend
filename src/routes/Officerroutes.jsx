@@ -6,7 +6,7 @@ import CaseDetailsPage from "../pages/OfficerPages/caseDetails/CaseDetailsPage";
 import CasesByStatusPage from "../pages/OfficerPages/casesByStatus/CasesByStatusPage";
 import NotificationBell from "../pages/OfficerPages/notifications/OfficerNotifications";
 import SlaWorkflowPage from "../pages/OfficerPages/SlaWorkflowPage/SlaWorkflowPage";
-// import OfficerProfile from "../pages/OfficerPages/OfficerProfile/OfficerProfile";
+import OfficerProfile from "../pages/OfficerPages/OfficerProfile/OfficerProfile";
 
 // ✅ 1. Import your dedicated Pending Cases Page
 import PendingCasesPage from "../pages/OfficerPages/PendingCasesPage/PendingCasesPage";
@@ -35,7 +35,7 @@ function OfficerRoutes() {
         {/* ✅ 2. Point the pending-review URL to your dedicated page */}
         <Route path="pending-review" element={<PendingCasesPage />} />
 
-        {/* <Route path="profile" element={<OfficerProfile />} /> */}
+       <Route path="profile" element={<OfficerProfile />} />
       </Route>
     </Routes>
   );
