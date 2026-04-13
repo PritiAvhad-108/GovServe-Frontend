@@ -1,0 +1,32 @@
+/* Reset browser defaults */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Main layout wrapper */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navbar stays on top, body takes rest */
+.layout-body {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar + page content area */
+.layout-content {
+  flex: 1;
+  padding: 20px ;
+  margin-left: 240px;
+  background-color: #f5f7fa;
+  padding-top: 30px;
+  overflow-y: auto;
+}

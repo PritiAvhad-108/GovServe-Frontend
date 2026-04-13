@@ -12,6 +12,7 @@ import Citizenroutes from "./routes/Citizenroutes";
 import Adminroutes from "./routes/Adminroutes"; 
 import Supervisorroutes from "./routes/Supervisorroutes"; 
 import ForgetPassword from "./pages/auth/ForgetPassword";
+import GrievanceRoute from "./routes/GrievanceRoute";
 
 function App() {
   const { isAuthenticated, userRole, loading } = useAuth(); 
@@ -59,6 +60,14 @@ function App() {
           element={
             <RoleGuard allowedRoles={["Supervisor"]}>
               <Supervisorroutes />
+            </RoleGuard>
+          }
+        />
+        <Route
+          path="/grievances/*"
+          element={
+            <RoleGuard allowedRoles={["Grievance"]}>
+              <GrievanceRoute />
             </RoleGuard>
           }
         />

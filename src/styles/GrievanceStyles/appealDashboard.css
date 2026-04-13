@@ -1,0 +1,22 @@
+/* ==============================
+   TABLE WRAPPER (Appeal Dashboard)
+============================== */
+.table-wrapper {
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+/* ==============================
+   COLUMN WIDTH CONTROL
+============================== */
+.reason-col {
+  width: 180px;
+  line-height: 1.4;
+}
+
+.description-col {
+  width: 420px;
+  line-height: 1.4;
+}
