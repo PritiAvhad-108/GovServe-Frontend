@@ -1,0 +1,111 @@
+/* Page Container */
+.rejected-page-container {
+    padding: 32px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styling */
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h2 {
+    font-size: 28px;
+    color: #0f172a;
+    margin-bottom: 6px;
+    font-weight: 700;
+    margin-top: 0;
+}
+
+/* Breadcrumb block Bootstrap */
+.custom-breadcrumb {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    padding: 0;
+}
+
+/* Table Container (The Card) */
+.table-responsive {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    width: 100%;
+}
+
+/* The Reference Table Style */
+.reference-table {
+    width: 100%;
+    border-collapse: collapse; 
+    margin: 0;
+}
+
+/* Table Headers */
+.reference-table th {
+    background-color: #f8fafc;
+    padding: 16px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Table Cells */
+.reference-table td {
+    padding: 16px 24px;
+    font-size: 14px;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.reference-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 🚨 THE FIX FOR THE BLURRED TEXT 🚨 */
+.rejected-pill {
+    background-color: #fee2e2; /* Light Red */
+    color: #ef4444; /* Dark Red - highly visible! */
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* Action Button */
+.reference-view-btn {
+    background-color: #2563eb; 
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.reference-view-btn:hover {
+    background-color: #1d4ed8; 
+}
+
+/* Empty State / Loading */
+.empty-table-row {
+    text-align: center !important;
+    color: #64748b !important;
+    padding: 40px !important;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 40px;
+    color: #64748b;
+}

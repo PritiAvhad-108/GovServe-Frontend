@@ -20,7 +20,7 @@ export default function RecentApplicationsTable({ applications }) {
         <thead>
           <tr>
             <th>Application ID</th>
-            <th>User ID</th>
+            <th>User Name</th> {/* ✅ CHANGED */}
             <th>Service</th>
             <th>Status</th>
             <th>Submitted Date</th>
@@ -37,8 +37,12 @@ export default function RecentApplicationsTable({ applications }) {
           ) : (
             currentData.map((app) => (
               <tr key={app.applicationId}>
-                <td>App-{app.applicationNumber || app.applicationId}</td>
-                <td>{app.userId}</td>
+                <td>
+                  App-{app.applicationNumber || app.applicationId}
+                </td>
+                <td>
+                  {app.applicantName || "Unknown User"} {/* ✅ CHANGED */}
+                </td>
                 <td>{app.serviceName}</td>
                 <td>{app.applicationStatus}</td>
                 <td>

@@ -9,10 +9,12 @@ import GrievanceDetails from "../pages/GrievancesPages/GrievanceDetails";
 /* ✅ Appeal Pages */
 import AppealDashboard from "../pages/GrievancesPages/AppealDashboard";
 import AppealDetailsCard from "../pages/GrievancesPages/AppealDetailsCard";
+import { useAuth } from "../context/AuthContext";
 
 import Profile from "../pages/Profile";
 
 const GrievanceRoute = () => {
+  const { user } = useAuth();
   return (
     <Routes>
       {/* ✅ Layout wrapper (ONLY ONCE) */}

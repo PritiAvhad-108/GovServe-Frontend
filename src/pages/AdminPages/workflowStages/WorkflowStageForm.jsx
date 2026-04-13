@@ -63,20 +63,43 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
         <h4>{stage.stageID ? "Edit Workflow Stage" : "Add Workflow Stage"}</h4>
 
         <form onSubmit={handleSubmit}>
+          {/* ✅ SERVICE */}
           <label>Service</label>
-          <select
-            className="form-control mb-2"
-            value={form.serviceID}
-            onChange={e => setForm({ ...form, serviceID: e.target.value })}
-          >
-            <option value="">Select Service</option>
-            {services.map(s => (
-              <option key={s.serviceID} value={s.serviceID}>
-                {s.serviceName}
-              </option>
-            ))}
-          </select>
 
+          {stage.stageID ? (
+            <>
+              {/* ✅ EDIT MODE → SHOW SAVED SERVICE NAME */}
+              <input
+                type="text"
+                className="form-control mb-1"
+                value={stage.serviceName || ""}
+                disabled
+              />
+              <small className="text-muted">
+                Service cannot be changed once the workflow is created.
+              </small>
+            </>
+          ) : (
+            <>
+              {/* ✅ CREATE MODE → SELECT SERVICE */}
+              <select
+                className="form-control mb-2"
+                value={form.serviceID}
+                onChange={e =>
+                  setForm({ ...form, serviceID: e.target.value })
+                }
+              >
+                <option value="">Select Service</option>
+                {services.map(s => (
+                  <option key={s.serviceID} value={s.serviceID}>
+                    {s.serviceName}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+
+          {/* ✅ ROLE */}
           <label>Responsible Role</label>
           <select
             className="form-control mb-2"
@@ -91,14 +114,16 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
             ))}
           </select>
 
+          {/* ✅ SEQUENCE */}
           <label>Sequence Number</label>
           <input
             type="number"
             className="form-control mb-3"
             min="1"
-            step="1"
             value={form.sequenceNumber}
-            onChange={e => setForm({ ...form, sequenceNumber: e.target.value })}
+            onChange={e =>
+              setForm({ ...form, sequenceNumber: e.target.value })
+            }
           />
 
           <div className="actions-row">

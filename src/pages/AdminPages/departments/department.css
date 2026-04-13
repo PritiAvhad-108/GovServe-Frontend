@@ -129,10 +129,12 @@
 ================================ */
 .badge.bg-success {
   background-color: #16a34a;
+  color: white;
 }
 
 .badge.bg-secondary {
   background-color: #9ca3af;
+  color: white;
 }
 
 /* ===============================
@@ -209,7 +211,7 @@
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #c1c3c6;
   margin-bottom: 6px;
 }
 

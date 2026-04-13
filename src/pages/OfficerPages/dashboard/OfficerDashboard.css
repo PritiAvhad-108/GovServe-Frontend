@@ -1,0 +1,88 @@
+/* ✅ Compensates for fixed sidebar */
+.officer-dashboard-wrapper {
+    margin-left: 240px;              /* SAME as sidebar width */
+    width: calc(100% - 240px);
+    display: flex;
+    justify-content: center;
+}
+
+/* ✅ Centered dashboard content */
+.officer-dashboard {
+    width: 100%;
+    max-width: 1200px;               /* keeps dashboard centered */
+    padding: 2rem;
+}
+
+/* ✅ Header styling */
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.dashboard-header p {
+    color: #64748b;
+    margin-top: 6px;
+}
+
+/* ✅ Stable responsive grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ✅ Existing StatCard styles (unchanged) */
+.stat-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.stat-card:first-child {
+    border: 2px solid #3b82f6;
+    background-color: #eff6ff;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.card-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 10px;
+}
+
+.card-count {
+    font-size: 40px;
+    font-weight: 800;
+    color: #1a3a8a;
+}
+
+/* Removes the blue border and background from the first StatCard */
+.stats-grid > div {
+    border: none !important; /* Removes the blue line */
+    background-color: #ffffff !important; /* Makes the background pure white */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05); /* Keeps the soft shadow */
+}
