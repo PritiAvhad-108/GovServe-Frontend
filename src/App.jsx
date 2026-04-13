@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
-
 import Navbar from "./components/Landing/layout/Navbar";
 import Home from "./pages/Home";
 import Footer from "./components/Landing/layout/Footer";
@@ -42,6 +41,24 @@ function App() {
             </RoleGuard>
           }
         />
+          {/* Protected Citizen Routes */}
+        <Route
+          path="/supervisor/*"
+          element={
+            <RoleGuard allowedRoles={["Supervisor"]}>
+              <Supervisorroutes />
+            </RoleGuard>
+          }
+        />
+
+        {/* Protected Admin Routes */}
+         <Route path="/admin/*"
+          element={
+            <RoleGuard allowedRoles={["Admin"]}>
+              <AdminRoutes />
+            </RoleGuard>
+          }
+           />
 
         {/* Admin Routes */}
         <Route
