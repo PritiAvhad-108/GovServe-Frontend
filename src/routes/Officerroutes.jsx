@@ -7,11 +7,13 @@ import CasesByStatusPage from "../pages/OfficerPages/casesByStatus/CasesByStatus
 import NotificationBell from "../pages/OfficerPages/notifications/OfficerNotifications";
 import SlaWorkflowPage from "../pages/OfficerPages/SlaWorkflowPage/SlaWorkflowPage";
 import OfficerProfile from "../pages/OfficerPages/OfficerProfile/OfficerProfile";
+import { useAuth } from "../context/AuthContext";
 
 // ✅ 1. Import your dedicated Pending Cases Page
 import PendingCasesPage from "../pages/OfficerPages/PendingCasesPage/PendingCasesPage";
 
 function OfficerRoutes() {
+  const { user } = useAuth();
   return (
     <Routes>
       <Route element={<OfficerLayout />}>

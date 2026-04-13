@@ -13,6 +13,9 @@ import RoleGuard from "./components/Guards/RoleGuard";
 import Citizenroutes from "./routes/Citizenroutes";
 import AdminRoutes from "./routes/Adminroutes";
 import Supervisorroutes from "./routes/Supervisorroutes";
+import OfficerRoutes from "./routes/Officerroutes";
+
+
  
 function App() {
   const { isAuthenticated, userRole, loading } = useAuth();
@@ -73,6 +76,15 @@ function App() {
           element={
             <RoleGuard allowedRoles={["Supervisor"]}>
               <Supervisorroutes />
+            </RoleGuard>
+          }
+        />
+         {/* OFFICER */}
+        <Route
+          path="/officer/*"
+          element={
+            <RoleGuard allowedRoles={["Officer"]}>
+              <OfficerRoutes />
             </RoleGuard>
           }
         />

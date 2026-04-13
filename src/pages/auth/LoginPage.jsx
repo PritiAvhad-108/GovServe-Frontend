@@ -74,6 +74,7 @@ function LoginPage() {
         if (userRoleFromToken === "Admin") navigate("/admin/dashboard");
         else if (userRoleFromToken === "Citizen") navigate("/citizen");
         else if (userRoleFromToken === "Supervisor") navigate("/supervisor");
+        else if (userRoleFromToken === "Officer") navigate("/officer");
         else navigate("/");
       }, 1000);
 
@@ -103,6 +104,8 @@ function LoginPage() {
                 ? "/citizen"
                 : userRole === "Supervisor"
                 ? "/supervisor"
+                : userRole === "Officer"
+                ? "/officer"
                 : "/"
             }
           >
