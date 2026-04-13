@@ -1,0 +1,111 @@
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    background-color: #f8fafc; /* Slightly lighter, more modern background */
+    min-height: 100vh;
+}
+
+.profile-card {
+    background: white;
+    width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.header-banner {
+    background: #1e3a8a;
+    height: 100px;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.profile-content {
+    padding: 60px 30px 30px;
+}
+
+.user-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.user-title h2 {
+    font-size: 22px;
+    color: #1e293b;
+    margin: 0 0 4px 0;
+}
+
+.user-title p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    background: #fdfdfd;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    background: #eff6ff;
+    color: #1e3a8a;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+.info-detail label {
+    display: block;
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.info-detail span {
+    display: block;
+    font-size: 15px;
+    color: #334155;
+    font-weight: 600;
+}
+
+/* ✅ Updated Status Badge for a cleaner look */
+.status-badge {
+    display: inline-block;
+    background: #dcfce7;
+    color: #166534;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 2px;
+}

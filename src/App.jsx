@@ -1,17 +1,25 @@
 
+import { Routes, Route, Navigate } from "react-router-dom";
 import SupervisorRoutes from "./routes/Supervisorroutes";
-function App() {
-  
-     return <SupervisorRoutes />;
-   
-
-
-  
-}
-
-    
-
-
+import AdminRoutes from "./routes/Adminroutes";
+import OfficerRoutes from "./routes/Officerroutes";
  
+function App() {
+  return (
+    <Routes>
+      {/* Supervisor */}
+      <Route path="/supervisor/*" element={<SupervisorRoutes />} />
+ 
+      {/* Admin */}
+      <Route path="/admin/*" element={<AdminRoutes />} />
 
-export default App;
+      {/* officer */}
+     <Route path="/officer/*" element={<OfficerRoutes />} />
+ 
+      {/* Default */}
+      <Route path="*" element={<Navigate to="/supervisor/dashboard" />} />
+    </Routes>
+    
+  );
+}
+ export default App;

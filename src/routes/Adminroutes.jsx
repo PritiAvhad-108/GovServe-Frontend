@@ -1,8 +1,6 @@
-
-
-
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "../components/AdminComponents/layout/AdminLayout";
+import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
 import DepartmentPage from "../pages/AdminPages/departments/DepartmentPage";
 import RolesPage from "../pages/AdminPages/roles/RolesPage";
 import SLADaysPage from "../pages/AdminPages/slaDays/SLADaysPage";
@@ -14,36 +12,35 @@ import WorkflowStagePage from "../pages/AdminPages/workflowStages/WorkflowStageP
 import SLARecordsPage from "../pages/AdminPages/slaRecord/SLARecordsPage";
 import UsersPage from "../pages/AdminPages/users/UserPage";
 import ServiceReportsPage from "../pages/AdminPages/serviceReports/ServiceReportsPage";
-import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
 import NotificationsPage from "../pages/AdminPages/notification/NotificationsPage";
-
+ 
 function AdminRoutes() {
   return (
-    <AdminLayout>
-      <Routes>
-
-        
-          {/* ✅ Default Redirect
-          <Route path="/" element={<Navigate to="/admin/dashboard" />} /> */}
-          {/* ✅ Dashboard */}
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        {/* <Route path="*" element={<Navigate to="/admin/dashboard" />}/> */}
-        <Route path="/admin/departments" element={<DepartmentPage />} />
-        <Route path="/admin/roles" element={<RolesPage/>} />
-        <Route path="/admin/sla-days" element={<SLADaysPage />} />
-        <Route path="/admin/services" element={<ServicesPage />} />
-        <Route path="/admin/services/:serviceId"element={<ServiceDetailsPage />}/>
-        <Route path="/admin/eligibility-rules" element={<EligibilityPage />} />
-        <Route path="/admin/required-documents" element={<RequiredDocsPage />} />
-        <Route path="/admin/workflow-stages"element={<WorkflowStagePage />}/>  
-       <Route path="/admin/sla-records"element={<SLARecordsPage />}/>
-       <Route path="/admin/reports" element={<ServiceReportsPage />} />
-       <Route path="/admin/users" element={<UsersPage />} /> 
-       <Route path="/notifications" element={<NotificationsPage />} />
-
-      </Routes>
-    </AdminLayout>
+    <Routes>
+      <Route element={<AdminLayout />}>
+        {/* ✅ Default Redirect */}
+        <Route index element={<Navigate to="dashboard" />} />
+ 
+        {/* ✅ Dashboard */}
+        <Route path="dashboard" element={<AdminDashboard />} />
+ 
+        {/* ✅ All other admin routes */}
+        <Route path="departments" element={<DepartmentPage />} />
+        <Route path="roles" element={<RolesPage />} />
+        <Route path="sla-days" element={<SLADaysPage />} />
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="services/:serviceId" element={<ServiceDetailsPage />} />
+        <Route path="eligibility-rules" element={<EligibilityPage />} />
+        <Route path="required-documents" element={<RequiredDocsPage />} />
+        <Route path="workflow-stages" element={<WorkflowStagePage />} />
+        <Route path="sla-records" element={<SLARecordsPage />} />
+        <Route path="reports" element={<ServiceReportsPage />} />
+        <Route path="users" element={<UsersPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+      </Route>
+    </Routes>
   );
 }
-
+ 
 export default AdminRoutes;
+ 
