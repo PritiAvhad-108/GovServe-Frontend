@@ -85,7 +85,7 @@ export default function SupervisorNavbar({ onToggleSidebar }) {
                   <div className="profile-row">
                     <span className="label">Name</span>
                     <span className="value">
-                      {user?.fullName || "—"}
+                      {user?.fullName || "-"}
                     </span>
                   </div>
 

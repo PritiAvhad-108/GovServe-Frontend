@@ -8,8 +8,11 @@ import Notifications from "../pages/Supervisor/Notifications/Notifications";
 import Officers from "../pages/Supervisor/Officers/Officers";
 import Reports from "../pages/Supervisor/Reports/Reports";
 import Profile from "../pages/Profile";
+import { useAuth } from "../context/AuthContext";
 
 const SupervisorRoutes = () => {
+
+   const {user}=useAuth();
   return (
     <Routes>
       <Route path="/" element={<SupervisorLayout />}>
