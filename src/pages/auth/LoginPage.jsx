@@ -64,7 +64,7 @@ function LoginPage() {
 
       setTimeout(() => {
         if (userRole === "Citizen") navigate("/citizen");
-        else if (userRole === "Admin") navigate("/admin");
+        else if (userRole === "Admin") navigate("/admin/dashboard");
         else if (userRole === "Officer") navigate("/officer");
          else if (userRole === "Supervisor") navigate("/supervisor");
         else navigate("/");

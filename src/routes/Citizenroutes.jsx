@@ -36,11 +36,8 @@ function Citizenroutes() {
             <Route path="apply" element={<ApplyService />} />
             <Route path="service-details/:id" element={<ServiceDetails />} />
             <Route path="apply-form/:id" element={<ApplicationForm />} />
-            <Route 
-              path="my-applications" 
-              element={<MyApplications userId={user?.userId} />} 
-            />
-            
+            <Route path="edit-application/:id" element={<ApplicationForm />} />
+            <Route path="my-applications" element={<MyApplications userId={user?.userId} />} />
             <Route path="application-details/:id" element={<ApplicationDetails />} />
             <Route path="my-documents" element={<MyDocuments />} />
             <Route path="grievance" element={<Grievance />} />
