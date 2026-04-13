@@ -1,3 +1,6 @@
+/* =========================
+   PROFILE POPUP
+========================= */
 .profile-popup {
   position: absolute;
   top: 55px;
@@ -48,20 +51,19 @@
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #111827; /* ✅ force visible */
+  color: #111827;
 }
 
-/* Button container */
+/* Actions */
 .popup-actions {
   display: flex;
-  background: #ffffff; /* ✅ strong contrast */
+  background: #ffffff;
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 18px;
   border: 1px solid #d1d5db;
 }
 
-/* Buttons */
 .action-btn {
   flex: 1;
   background: transparent;
@@ -71,27 +73,20 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   font-size: 14px;
   font-weight: 500;
-
   cursor: pointer;
-
-  /* 🔴 FORCE TEXT + ICON VISIBILITY */
-  /* color: #111827 !important; */
-  fill: #111827 !important;
+  color: #111827;
 }
 
 .action-btn svg {
-  color: #111827 !important;
+  color: #111827;
 }
 
-/* Divider */
 .action-btn:first-child {
   border-right: 1px solid #e5e7eb;
 }
 
-/* Hover */
 .action-btn:hover {
   background: #eef2f7;
 }
@@ -99,7 +94,7 @@
 /* Footer */
 .popup-footer {
   font-size: 12px;
-  color: #374151; /* ✅ visible footer */
+  color: #374151;
   display: flex;
   justify-content: center;
   gap: 6px;
@@ -112,4 +107,61 @@
 .popup-footer span:hover {
   text-decoration: underline;
   color: #1e3a8a;
+}
+
+/* =========================
+   LOGOUT CONFIRM MODAL
+========================= */
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.logout-modal {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.logout-modal h4 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.logout-modal p {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 20px;
+}
+
+.logout-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
 }

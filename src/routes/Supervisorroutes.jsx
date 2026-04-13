@@ -9,7 +9,7 @@ import Officers from "../pages/Supervisor/Officers/Officers";
 import Reports from "../pages/Supervisor/Reports/Reports";
 import Profile from "../pages/Profile";
 import { useAuth } from "../context/AuthContext";
-
+import SupervisorProfilePage from "../pages/Supervisor/profile/SupervisorProfilePage";
 const SupervisorRoutes = () => {
 
    const {user}=useAuth();
@@ -18,13 +18,14 @@ const SupervisorRoutes = () => {
       <Route path="/" element={<SupervisorLayout />}>
         <Route index element={<Navigate to="dashboard" />} />
         <Route path="dashboard" element={<SupervisorDashboard />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<SupervisorProfilePage />} />
         <Route path="cases" element={<Cases />} />
         <Route path="case-details/:caseId" element={<CaseDetails />} />
         <Route path="escalations" element={<Escalations />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="officers" element={<Officers />} />
         <Route path="reports" element={<Reports />} />
+         <Route path="profile" element={<SupervisorProfilePage />} />
       </Route>
     </Routes>
   );

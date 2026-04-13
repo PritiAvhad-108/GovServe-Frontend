@@ -8,17 +8,16 @@ import Footer from "./components/Landing/layout/Footer";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgetPassword from "./pages/auth/ForgetPassword";
- 
 import RoleGuard from "./components/Guards/RoleGuard";
 import Citizenroutes from "./routes/Citizenroutes";
 import Adminroutes from "./routes/Adminroutes";
 import Supervisorroutes from "./routes/Supervisorroutes";
- 
+
 function App() {
   const { isAuthenticated, userRole, loading } = useAuth();
- 
+
   if (loading) return null;
- 
+
   // ✅ FIXED REDIRECT PATHS
   const getRedirectPath = () => {
     if (userRole === "Admin") return "/admin/dashboard";
@@ -39,13 +38,13 @@ function App() {
             </>
           }
         />
- 
+
         {/* AUTH */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
- 
+
         <Route path="/forget-password" element={<ForgetPassword />} />
- 
+
         {/* CITIZEN */}
         <Route
           path="/citizen/*"
@@ -55,7 +54,6 @@ function App() {
             </RoleGuard>
           }
         />
- 
         {/* ADMIN */}
         <Route
           path="/admin/*"
@@ -65,7 +63,6 @@ function App() {
             </RoleGuard>
           }
         />
- 
         {/* SUPERVISOR */}
         <Route
           path="/supervisor/*"
@@ -75,7 +72,6 @@ function App() {
             </RoleGuard>
           }
         />
- 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

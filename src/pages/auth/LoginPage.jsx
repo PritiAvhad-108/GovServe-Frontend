@@ -8,14 +8,13 @@ import "../../styles/LandingStyle/AuthStyle.css";
 import Navbar from "../../components/Landing/layout/Navbar";
 import Footer from "../../components/Landing/layout/Footer";
 import { useAuth } from "../../context/AuthContext";
- 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
- 
+
   const { isAuthenticated, userRole, login } = useAuth();
- 
+
   function validateForm() {
     const newErrors = {};
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
@@ -37,22 +36,22 @@ function LoginPage() {
         "https://localhost:7027/api/Auth/login",
         formData
       );
- 
+
       const { token } = response.data;
- 
+
       // ✅ DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
- 
+
       const userId =
         decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] ||
         decodedToken["UserId"] ||
         decodedToken["nameid"] ||
         decodedToken["sub"];
- 
+
       const userRoleFromToken =
         decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
         decodedToken.role;
- 
+
       // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
       login({
         token,
@@ -60,7 +59,6 @@ function LoginPage() {
         userId,
         email: formData.email,
       });
- 
       Swal.fire({
         title: "Login Successful!",
         text: "Redirecting to your dashboard...",
@@ -90,7 +88,6 @@ function LoginPage() {
   return (
     <>
       <Navbar />
- 
       {/* ✅ ALREADY LOGGED IN BANNER */}
       {isAuthenticated && (
         <div className="info-banner">
@@ -110,7 +107,6 @@ function LoginPage() {
           </Link>
         </div>
       )}
- 
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
@@ -166,12 +162,10 @@ function LoginPage() {
               {errors.password && (
                 <span className="error-text">{errors.password}</span>
               )}
- 
               <div className="forget-password-link">
                 <Link to="/forget-password">Forget Password?</Link>
               </div>
             </div>
- 
             <button
               type="submit"
               className="auth-btn"
@@ -186,7 +180,6 @@ function LoginPage() {
           </div>
         </div>
       </div>
- 
       <Footer />
     </>
   );
