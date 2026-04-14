@@ -57,9 +57,18 @@ const PendingCasesPage = () => {
                             {pendingCases.length > 0 ? (
                                 pendingCases.map((item) => (
                                     <tr key={item.caseId}>
-                                        <td style={{ fontWeight: '600' }}># {item.caseId}</td>
+                                        <td style={{ fontWeight: '600' }}> {item.caseId}</td>
                                         
-                                        <td>{item.user?.fullName || 'N/A'}</td>
+                                        {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
+                                        <td>
+                                            {
+                                                item.user?.fullName || 
+                                                item.User?.fullName || 
+                                                item.application?.citizenDetails?.fullName || 
+                                                item.application?.User?.fullName || 
+                                                'N/A'
+                                            }
+                                        </td>
                                         
                                         <td>{item.application?.service?.serviceName || 'General Service'}</td>
                                         
@@ -68,7 +77,6 @@ const PendingCasesPage = () => {
                                         </td>
                                         
                                         <td>
-                                            {/* ✅ Fixed: The comment is now safely outside the button tag */}
                                             <button
                                                 className="view-btn"
                                                 onClick={() => navigate(`/officer/case-details/${item.caseId}`)}

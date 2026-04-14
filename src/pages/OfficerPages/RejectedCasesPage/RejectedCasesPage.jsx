@@ -62,7 +62,7 @@ const RejectedCasesPage = () => {
                             {rejectedCases.length > 0 ? (
                                 rejectedCases.map((item) => (
                                     <tr key={item.caseId}>
-                                        <td style={{ fontWeight: '600' }}>#{item.caseId}</td>
+                                        <td style={{ fontWeight: '600' }}>{item.caseId}</td>
                                         <td>{item.fullName || item.application?.citizenDetails?.fullName || 'N/A'}</td>
                                         <td>{item.serviceName || item.application?.serviceName || 'N/A'}</td>
                                         <td>
