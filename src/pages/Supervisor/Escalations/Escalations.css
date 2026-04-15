@@ -55,48 +55,32 @@ button:disabled {
   color: red;
   margin-top: 8px;
 }
-
-/* ==============================
-   TABLE ALIGNMENT FIX
-============================== */
-.card table th,
-.card table td {
+.card table th,.card table td {
   text-align: left !important;
 }
-
-/* ==============================
-   REMOVE DEFAULT BULLETS
-============================== */
 .card ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
-/* =====================================================
-   ✅ ESCALATION TIMELINE – DOT RIGHT NEXT TO TEXT
-===================================================== */
-
 .timeline {
   margin-top: 16px;
 }
 
-/* REMOVE any old line logic */
 .timeline::before {
   display: none;
 }
 
 .timeline li {
-  display: flex;                 /* ✅ KEY FIX */
+  display: flex;                 
   align-items: center;
-  gap: 6px;                      /* ✅ tiny clean gap */
+  gap: 6px;                      
   margin-bottom: 14px;
   font-size: 14px;
   font-weight: 500;
   color: #1f2937;
 }
 
-/* Dot */
 .timeline li::before {
   content: "";
   width: 6px;
@@ -105,10 +89,6 @@ button:disabled {
   border-radius: 50%;
   flex-shrink: 0;
 }
-
-/* =====================================================
-   ✅ REASSIGNMENT GUIDELINES – SAME CLEAN STYLE
-===================================================== */
 
 .card h4 {
   margin-top: 26px;
@@ -119,7 +99,7 @@ button:disabled {
 }
 
 .card h4 + ul li {
-  display: flex;                 /* ✅ same fix */
+  display: flex;                 
   align-items: center;
   gap: 6px;
   margin-bottom: 10px;

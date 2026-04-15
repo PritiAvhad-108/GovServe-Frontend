@@ -9,10 +9,10 @@ export default function SupervisorProfilePopup({ user, onClose }) {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
-  // ✅ NEW STATE (added, not removing anything)
+  // NEW STATE (added, not removing anything)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  // ✅ EXISTING LOGOUT LOGIC (kept simple)
+  // EXISTING LOGOUT LOGIC (kept simple)
   const handleLogout = () => {
     logout();
     toast.success("Logout successful");
@@ -47,7 +47,7 @@ export default function SupervisorProfilePopup({ user, onClose }) {
             <User size={16} /> My profile
           </button>
 
-          {/* ✅ UPDATED: opens confirmation (logic NOT removed) */}
+          {/*  UPDATED: opens confirmation (logic NOT removed) */}
           <button
             className="popup-btn logout"
             onClick={() => setShowLogoutConfirm(true)}

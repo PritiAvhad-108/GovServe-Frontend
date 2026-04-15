@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SupervisorDashboard.css";
-import {
-  FaFolder,
-  FaClock,
-  FaUserCheck,
-  FaCheckCircle,
-  FaArrowUp,
-  FaHourglassEnd
-} from "react-icons/fa";
-import {
-  getCitizenByApplication,
-  getSLABreachedCases,
-  getApplications,
-  getAllCases
-} from "../../../api/api";
+import {FaFolder,FaClock,FaUserCheck,FaCheckCircle,FaArrowUp,FaHourglassEnd} from "react-icons/fa";
+import {getCitizenByApplication,getSLABreachedCases,getApplications,getAllCases} from "../../../api/api";
 import { useNavigate, useLocation } from "react-router-dom"; 
 
 const SupervisorDashboard = () => {
@@ -45,9 +33,6 @@ const SupervisorDashboard = () => {
     loadActiveSLABreaches();
     loadSLABreachedCases();
   }, [location.pathname]);
-
-  /* ---------------- DASHBOARD STATS ---------------- */
-
   const loadDashboardStats = async () => {
     try {
       const res = await getAllCases();
@@ -72,8 +57,6 @@ const SupervisorDashboard = () => {
       });
     }
   };
-
-  /* ---------------- ACTIVE SLA COUNT ---------------- */
   const loadActiveSLABreaches = async () => {
     try {
       const [slaRes, caseRes] = await Promise.all([
@@ -105,8 +88,6 @@ const SupervisorDashboard = () => {
       setSlaBreached(0);
     }
   };
-
-  /* ---------------- RECENT APPLICATIONS ---------------- */
   const loadRecentApplications = async () => {
     const [appRes, caseRes] = await Promise.all([
       getApplications(),
@@ -131,9 +112,6 @@ const SupervisorDashboard = () => {
 
     setApplications(updated);
   };
-
-  /* ---------------- SLA BREACHED CASES ---------------- */
- /* ---------------- SLA BREACHED CASES ---------------- */
 const loadSLABreachedCases = async () => {
   try {
     const [slaRes, caseRes] = await Promise.all([
@@ -170,9 +148,6 @@ const loadSLABreachedCases = async () => {
     setSlaCases([]);
   }
 };
-
-  /* ---------------- PAGINATION ---------------- */
-
   const filteredApps = applications.filter(app =>
     app.applicationId.toString().includes(search)
   );
@@ -187,8 +162,6 @@ const loadSLABreachedCases = async () => {
 
   return (
     <div className="supervisor-dashboard-wrapper">
-
-      {/* ================= CARDS ================= */}
       <div className="supervisor-cards">
         <div className="supervisor-card">
           <div className="icon-box blue"><FaFolder /></div>
@@ -229,8 +202,6 @@ const loadSLABreachedCases = async () => {
           <p>{slaBreached}</p>
         </div>
       </div>
-
-      {/* ================= RECENT APPLICATIONS ================= */}
       <div className="supervisor-recent">
         <h2>Recent Applications</h2>
 
@@ -280,8 +251,6 @@ const loadSLABreachedCases = async () => {
           </button>
         </div>
       </div>
-     {/* ================= SLA BREACHED CASES (UPDATED) ================= */}
-{/* ================= SLA BREACHED CASES ================= */}
 <div className="supervisor-recent">
   <h2>SLA Breached Cases</h2>
 
