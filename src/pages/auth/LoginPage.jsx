@@ -12,9 +12,9 @@ function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
+ 
   const { isAuthenticated, userRole, login } = useAuth();
-
+ 
   function validateForm() {
     const newErrors = {};
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
@@ -36,22 +36,22 @@ function LoginPage() {
         "https://localhost:7027/api/Auth/login",
         formData
       );
-
+ 
       const { token } = response.data;
-
+ 
       // ✅ DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
-
+ 
       const userId =
         decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] ||
         decodedToken["UserId"] ||
         decodedToken["nameid"] ||
         decodedToken["sub"];
-
+ 
       const userRoleFromToken =
         decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
         decodedToken.role;
-
+ 
       // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
       login({
         token,
@@ -75,7 +75,7 @@ function LoginPage() {
         else if (userRoleFromToken === "Grievance Officer") navigate("/grievances");
         else navigate("/");
       }, 1000);
-
+ 
     } catch (error) {
       Swal.fire({
         title: "Login Failed",
@@ -185,7 +185,7 @@ function LoginPage() {
           </div>
         </div>
       </div>
-
+ 
       <Footer />
     </>
   );

@@ -10,8 +10,8 @@ const AssignedCasesPage = () => {
 
     // Get officerId from localStorage or default to 1 for testing
     // Clean the ID to ensure no "1:1" or extra characters exist
-const rawUserId = localStorage.getItem('userId');
-const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
+    const rawUserId = localStorage.getItem('userId');
+    const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
 
     useEffect(() => {
         fetchData();
@@ -36,9 +36,11 @@ const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
 
     return (
         <div className="assigned-container">
-            <div className="flex justify-between items-center mb-6">
+            
+            {/* 🚨 FIX: Replaced the old flex/justify classes with our centered class! */}
+            <div className="assigned-header">
                 <h1 className="text-2xl font-bold text-gray-800">Assigned Cases</h1>
-                <span className="text-sm text-gray-500">Total: {caseList.length} Applications</span>
+                {/* <span className="text-sm text-gray-500">Total: {caseList.length} Applications</span> */}
             </div>
 
             <div className="table-wrapper">
@@ -59,10 +61,18 @@ const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
                             {caseList.length > 0 ? (
                                 caseList.map((item) => (
                                     <tr key={item.caseId}>
-                                        <td className="font-medium">#{item.caseId}</td>
+                                        <td className="font-medium">{item.caseId}</td>
                                         
-                                        {/* ✅ FIX 1: Look inside the User object for the Applicant Name */}
-                                        <td>{item.user?.fullName || 'N/A'}</td>
+                                        {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
+                                        <td>
+                                            {
+                                                item.user?.fullName || 
+                                                item.User?.fullName || 
+                                                item.application?.citizenDetails?.fullName || 
+                                                item.application?.User?.fullName || 
+                                                'N/A'
+                                            }
+                                        </td>
                                         
                                         {/* ✅ FIX 2: Look inside the Application object for the Service Name */}
                                         <td>{item.application?.service?.serviceName || 'General Service'}</td>

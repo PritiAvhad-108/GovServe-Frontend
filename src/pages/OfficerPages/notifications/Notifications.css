@@ -2,13 +2,14 @@
 .notification-wrapper {
     position: relative;
     display: inline-block;
+    z-index: 9999; /* ✅ ensure above navbar & sidebar */
 }
 
 /* The Bell Button in the Navbar */
 .bell-trigger-btn {
     background: transparent;
     border: none;
-    color: white; /* Change this if your navbar is light colored */
+    color: white;
     cursor: pointer;
     position: relative;
     padding: 8px;
@@ -17,15 +18,25 @@
     justify-content: center;
 }
 
+/* ✅ FIX: Force SVG bell visibility */
+.bell-trigger-btn svg {
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    fill: #ffffff;
+    display: block;
+}
+
 .bell-trigger-btn:hover {
     opacity: 0.8;
 }
 
+/* Red unread count badge */
 .unread-badge {
     position: absolute;
     top: 2px;
     right: 2px;
-    background-color: #ef4444; /* Red badge */
+    background-color: #ef4444;
     color: white;
     font-size: 10px;
     font-weight: bold;
@@ -40,15 +51,15 @@
 /* The Floating Dropdown Box */
 .notification-dropdown {
     position: absolute;
-    top: 45px; /* Pushes it below the bell */
-    right: 0; /* Aligns to the right side of the bell */
+    top: 45px;
+    right: 0;
     width: 350px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     border: 1px solid #e2e8f0;
-    z-index: 1000; /* Ensures it stays on top of everything else */
-    overflow: hidden; /* Keeps the rounded corners clean */
+    z-index: 10000;
+    overflow: hidden;
 }
 
 /* Header inside Dropdown */
@@ -72,13 +83,13 @@
 
 /* Scrollable List area */
 .notifications-list {
-    max-height: 400px; /* Forces scroll if too many notifications */
+    max-height: 400px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
 
-/* Individual Card (Slightly smaller for a dropdown) */
+/* Individual Card */
 .notification-card {
     display: flex;
     align-items: center;
@@ -100,7 +111,7 @@
 }
 
 .notification-card:hover {
-    background-color: #f8fafc; /* Simpler hover effect for dropdowns */
+    background-color: #f8fafc;
 }
 
 .note-icon {
