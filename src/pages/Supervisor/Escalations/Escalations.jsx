@@ -74,8 +74,6 @@ const Escalations = () => {
       });
 
       setStatusMsg(res.data || "Case reassigned successfully");
-
-      //  KEY FIX: remove reassigned case from UI
       setEscalatedCases(prev =>
         prev.filter(c => c.caseId !== form.caseId)
       );

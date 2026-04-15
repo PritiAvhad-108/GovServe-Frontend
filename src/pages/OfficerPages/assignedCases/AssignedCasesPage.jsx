@@ -36,9 +36,11 @@ const AssignedCasesPage = () => {
 
     return (
         <div className="assigned-container">
-            <div className="flex justify-between items-center mb-6">
+            
+            {/* 🚨 FIX: Replaced the old flex/justify classes with our centered class! */}
+            <div className="assigned-header">
                 <h1 className="text-2xl font-bold text-gray-800">Assigned Cases</h1>
-                <span className="text-sm text-gray-500">Total: {caseList.length} Applications</span>
+                {/* <span className="text-sm text-gray-500">Total: {caseList.length} Applications</span> */}
             </div>
 
             <div className="table-wrapper">

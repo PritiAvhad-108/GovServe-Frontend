@@ -1,18 +1,20 @@
-/* ✅ Compensates for fixed sidebar */
+/* ✅ 1. The Wrapper: Force alignment to the left */
+/* ✅ 1. The Wrapper: Remove 'flex' entirely so it stops trying to center things */
 .officer-dashboard-wrapper {
-    margin-left: 240px;              /* SAME as sidebar width */
-    width: calc(100% - 240px);
-    display: flex;
-    justify-content: center;
+    display: block; 
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-/* ✅ Centered dashboard content */
 .officer-dashboard {
     width: 100%;
-    max-width: 1200px;               /* keeps dashboard centered */
-    padding: 2rem;
+    max-width: 1200px;     /* ✅ ADD THIS BACK */
+    margin: 0 auto;        /* ✅ This centers the dashboard */
+    padding: 10px 20px;
 }
 
+/* ... keep all the rest of your CSS exactly the same ... */
 /* ✅ Header styling */
 .dashboard-header {
     margin-bottom: 2rem;

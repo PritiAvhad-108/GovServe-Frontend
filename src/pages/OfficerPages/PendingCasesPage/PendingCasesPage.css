@@ -1,28 +1,47 @@
-/* Page */
+/* Page Wrapper - Centers the whole container */
+.pending-page-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Page Container - Limits width to match Assigned Cases */
 .pending-container {
+    width: 100%;
+    max-width: 1200px; /* Matches Assigned Cases width */
     padding: 28px;
     background-color: #f8fafc;
     min-height: 100vh;
 }
 
-/* Header */
+/* 🚨 NEW FIX: Centers the Title, Breadcrumb, and Count */
+.pending-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 25px;
+    gap: 6px;
+}
+
 .page-title {
     font-size: 28px;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 6px;
+    margin: 0;
 }
 
 .breadcrumb {
     font-size: 14px;
     color: #64748b;
-    margin-bottom: 6px;
+    margin: 0;
 }
 
 .total-count {
     font-size: 15px;
     color: #475569;
-    margin-bottom: 20px;
+    margin: 0;
 }
 
 /* Card */
@@ -65,13 +84,13 @@
 .status-pending span {
     background-color: #fef3c7; 
     color: #b45309;           
-    padding: 6px 14px;         
+    padding: 6px 14px;        
     border-radius: 20px;       
     font-size: 13px;
     font-weight: 600;
     display: inline-block;
-    border: 1px solid #fde68a; /* Subtle border for crispness */
-    text-transform: uppercase; /* Optional: Looks good for statuses */
+    border: 1px solid #fde68a; 
+    text-transform: uppercase; 
     letter-spacing: 0.5px;
 }
 
