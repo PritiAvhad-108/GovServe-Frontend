@@ -70,12 +70,12 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  /* ✅ Submit */
+  /*  Submit */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    // ✅ IMPORTANT FIX: DO NOT send immutable fields on UPDATE
+    //  DO NOT send immutable fields on UPDATE
     const payload = isEdit
       ? {
           description: form.description.trim(),
@@ -116,7 +116,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
         <h4>{isEdit ? "Edit Service" : "Add Service"}</h4>
 
         <form onSubmit={handleSubmit}>
-          {/* ✅ Department */}
+          {/*  Department */}
           {!isEdit ? (
             <>
               <label>Department</label>
@@ -152,7 +152,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             </div>
           )}
 
-          {/* ✅ Service Name */}
+          {/*  Service Name */}
           <label>Service Name</label>
           {isEdit ? (
             <>
@@ -182,7 +182,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             </>
           )}
 
-          {/* ✅ Description */}
+          {/*  Description */}
           <label>Description</label>
           <textarea
             className="form-control"
@@ -192,7 +192,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             }
           />
 
-          {/* ✅ SLA Days */}
+          {/*  SLA Days */}
           <label>SLA Days</label>
           <input
             type="number"
@@ -208,7 +208,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             <small className="error-text">{errors.slA_Days}</small>
           )}
 
-          {/* ✅ Status */}
+          {/*  Status */}
           <label>Status</label>
           <select
             className={`form-control ${errors.status ? "is-invalid" : ""}`}

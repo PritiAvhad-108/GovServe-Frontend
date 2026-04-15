@@ -48,8 +48,8 @@ export default function DepartmentForm({ department, onClose, onSave }) {
         toast.success("Department created successfully.");
       }
 
-      onSave();   // ✅ refresh list
-      onClose();  // ✅ CLOSE MODAL AUTOMATICALLY ✅✅✅
+      onSave();   // refresh list
+      onClose();  //  CLOSE MODAL AUTOMATICALLY
 
     } catch {
       toast.error("Department with this name already exists.");
