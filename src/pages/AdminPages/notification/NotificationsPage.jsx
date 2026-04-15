@@ -10,7 +10,7 @@ export default function NotificationsPage() {
   const ADMIN_USER_ID = 2;
 
   /* ===============================
-     Load notifications (backend-driven)
+     Load notifications 
   =============================== */
   const loadNotifications = async () => {
     try {
@@ -106,7 +106,7 @@ export default function NotificationsPage() {
                 </span>
               </div>
 
-              {/* ✅ STATUS BADGE */}
+              {/*  STATUS BADGE */}
               <span
                 className={`status-badge ${
                   n.isRead ? "read" : "unread"

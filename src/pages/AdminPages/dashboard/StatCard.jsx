@@ -1,5 +1,8 @@
 import React from "react";
 
+// Reusable card component for dashboard stats 
+//props: title, value, icon
+
 export default function StatCard({ title, value, icon }) {
   return (
     <div className="stat-card">

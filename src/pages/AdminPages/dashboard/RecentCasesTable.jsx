@@ -5,9 +5,9 @@ export default function RecentCasesTable({ cases }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(cases.length / itemsPerPage);
+  const totalPages = Math.ceil(cases.length / itemsPerPage); // how many pages required to show all records ceil==>partial page count as full
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = cases.slice(startIndex, startIndex + itemsPerPage);
+  const currentData = cases.slice(startIndex, startIndex + itemsPerPage); //current page data slice==>include startindex and exclude last index
 
   return (
     <div className="panel">

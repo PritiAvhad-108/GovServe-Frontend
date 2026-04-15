@@ -41,7 +41,7 @@ export default function RecentApplicationsTable({ applications }) {
                   App-{app.applicationNumber || app.applicationId}
                 </td>
                 <td>
-                  {app.applicantName || "Unknown User"} {/* ✅ CHANGED */}
+                  {app.applicantName || "Unknown User"} 
                 </td>
                 <td>{app.serviceName}</td>
                 <td>{app.applicationStatus}</td>

@@ -30,7 +30,7 @@ export default function Sidebar() {
     <>
       <div className="sidebar">
 
-        {/* ✅ NAVIGATION */}
+        {/*  NAVIGATION */}
         <ul className="nav">
           <li><NavLink className="nav-link" to="/admin/dashboard"><MdDashboard /> Dashboard</NavLink></li>
           <li><NavLink className="nav-link" to="/admin/roles"><MdSecurity /> Roles</NavLink></li>
@@ -45,7 +45,7 @@ export default function Sidebar() {
           <li><NavLink className="nav-link" to="/admin/users"><MdPeople /> Users</NavLink></li>
         </ul>
 
-        {/* ✅ PROFESSIONAL LOGOUT SECTION */}
+        {/*  PROFESSIONAL LOGOUT SECTION */}
         <div className="sidebar-logout">
           <button
             className="logout-btn"
@@ -57,7 +57,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* ✅ LOGOUT CONFIRMATION POPUP */}
+      {/*  LOGOUT CONFIRMATION POPUP */}
       {showLogoutConfirm && (
         <div className="logout-overlay">
           <div className="logout-modal">

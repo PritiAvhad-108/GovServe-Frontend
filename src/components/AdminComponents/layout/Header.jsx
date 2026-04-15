@@ -36,7 +36,7 @@ export default function Navbar() {
       const res = await api.get(`/Notification/unread/${adminUserId}`);
       const count = res.data.length;
 
-      /* 🔔 SHAKE + TITLE CHANGE WHEN NEW NOTIFICATION ARRIVES */
+      /*  SHAKE + TITLE CHANGE WHEN NEW NOTIFICATION ARRIVES */
       if (count > previousUnreadRef.current) {
         const oldTitle = document.title;
         document.title = "🔔 New Notification!";
@@ -94,10 +94,10 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ✅ RIGHT ACTIONS */}
+        {/*  RIGHT ACTIONS */}
         <div className="user-info-wrapper">
 
-          {/* 🏠 HOME */}
+          {/*  HOME */}
           <div
             className="nav-home-btn"
             onClick={() => navigate("/")}
@@ -107,7 +107,7 @@ export default function Navbar() {
             <span>Home</span>
           </div>
 
-          {/* 🔔 NOTIFICATION — ENHANCED UI */}
+          {/*  NOTIFICATION — ENHANCED UI */}
           <div
             className={`notification-bell ${
               unreadCount > 0 ? "has-alert" : ""
@@ -124,7 +124,7 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* 👤 USER INFO */}
+          {/*  USER INFO */}
           <div
             className="user-info"
             onClick={(e) => {

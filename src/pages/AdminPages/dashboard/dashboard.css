@@ -211,7 +211,7 @@
   color: #166534;
 }
 
-/* ✅ Subtle emphasis on hover */
+/* Subtle emphasis on hover */
 .table-white tbody tr:hover .case-status {
   filter: brightness(0.95);
 }
