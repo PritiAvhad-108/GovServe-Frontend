@@ -336,7 +336,7 @@ const ApplicationForm = () => {
                   <div className="upload-text">
                     <span className="doc-label">{doc.documentName}</span>
                     {files[doc.documentID] && <span className="file-name">{files[doc.documentID].name}</span>}
-                    {isEditMode && !files[doc.documentID] && <span className="file-name status-pending">Existing document attached</span>}
+                    {isEditMode && files[doc.documentID] && <span className="file-name status-pending">Existing document attached</span>}
                   </div>
                   <label className={`upload-btn-label ${files[doc.documentID] ? 'uploaded' : ''}`}>
                     {files[doc.documentID] ? <CheckCircle size={16}/> : <Upload size={16}/>}
