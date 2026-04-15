@@ -3,6 +3,7 @@ import { FiBell, FiUser, FiMenu } from "react-icons/fi";
 import { FaChartBar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import { getNotificationsByUser } from "../../../api/api"; 
 import logo from "../../../assets/landing/logo.png";
 import SupervisorProfilePopup from "../../../pages/Supervisor/profile/SupervisorProfilePopup";
 
@@ -13,6 +14,9 @@ export default function SupervisorNavbar({ onToggleSidebar }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  // ADDED: unread notification count
+  const [unreadCount, setUnreadCount] = useState(0);
+
   useEffect(() => {
     const closePopup = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -22,6 +26,27 @@ export default function SupervisorNavbar({ onToggleSidebar }) {
     window.addEventListener("click", closePopup);
     return () => window.removeEventListener("click", closePopup);
   }, []);
+
+  // ADDED: fetch unread notifications
+  useEffect(() => {
+    if (!user?.userId) return;
+
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await getNotificationsByUser(user.userId);
+        const unread = (res.data || []).filter(n => !n.isRead);
+        setUnreadCount(unread.length);
+      } catch (err) {
+        console.error("Failed to fetch notification count", err);
+      }
+    };
+
+    fetchUnreadCount();
+
+    // optional auto-refresh
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, [user]);
 
   return (
     <header className="sup-topbar">
@@ -44,7 +69,17 @@ export default function SupervisorNavbar({ onToggleSidebar }) {
       {/* RIGHT */}
       <div className="sup-topbar-right">
         <FaChartBar onClick={() => navigate("/supervisor/reports")} />
-        <FiBell onClick={() => navigate("/supervisor/notifications")} />
+
+        {/* UPDATED BELL WITH BADGE */}
+        <div
+          className="notification-bell"
+          onClick={() => navigate("/supervisor/notifications")}
+        >
+          <FiBell />
+          {unreadCount > 0 && (
+            <span className="notification-badge">{unreadCount}</span>
+          )}
+        </div>
 
         {/* USER */}
         <div

@@ -41,14 +41,19 @@ const Notifications = () => {
     fetchRoles();
   }, [effectiveUserId]);
 
-  const fetchNotifications = async () => {
-    try {
-      const res = await getNotificationsByUser(effectiveUserId);
-      setNotifications(res.data || []);
-    } catch (err) {
-      console.error("Failed to fetch notifications", err);
-    }
-  };
+const fetchNotifications = async () => {
+  try {
+    const res = await getNotificationsByUser(effectiveUserId);
+    const data = res.data || [];
+    setNotifications(data);
+
+    const unreadCount = data.filter(n => !n.isRead).length;
+    localStorage.setItem("unreadCount", unreadCount);
+
+  } catch (err) {
+    console.error("Failed to fetch notifications", err);
+  }
+};
 
   const fetchUsers = async () => {
     try {
@@ -63,7 +68,7 @@ const Notifications = () => {
     try {
       const res = await api.get("/Roles");
 
-      // ✅ FILTER OUT SUPERVISOR ROLE
+      //  FILTER OUT SUPERVISOR ROLE
       const filteredRoles = (res.data || []).filter(
         r => r.roleName !== "Supervisor"
       );
@@ -84,14 +89,14 @@ const Notifications = () => {
     setErrorMsg("");
 
     if (!selectedRole || !form.message.trim()) {
-      setErrorMsg("⚠️ Please select a role and enter a message");
+      setErrorMsg(" Please select a role and enter a message");
       return;
     }
 
     setLoading(true);
 
     try {
-      // ✅ FILTER USERS:
+      //  FILTER USERS:
       // - remove Supervisor
       // - remove logged-in user (self)
       const roleUsers = users.filter(
@@ -102,20 +107,20 @@ const Notifications = () => {
       );
 
       if (roleUsers.length === 0) {
-        setErrorMsg("⚠️ No users found for selected role");
+        setErrorMsg(" No users found for selected role");
         return;
       }
 
       for (const user of roleUsers) {
         await sendNotification({
           userId: user.userId,
-          senderId: effectiveUserId, // ✅ self copy handled in backend
+          senderId: effectiveUserId, //  self copy handled in backend
           message: form.message,
           category: form.category
         });
       }
 
-      setSuccessMsg(`✅ Notification sent successfully to ${selectedRole}`);
+      setSuccessMsg(` Notification sent successfully to ${selectedRole}`);
       setForm({ message: "", category: "General" });
       setSelectedRole("");
 
