@@ -1,13 +1,8 @@
-/* =========================
-   SUPERVISOR LAYOUT (NO CONFLICT)
-========================= */
-
-.sup-layout {
+ .sup-layout {
   min-height: 100vh;
   background: #eef3f8;
 }
 
-/* ===== TOPBAR ===== */
 /* ===== TOPBAR (FIXED & ALIGNED) ===== */
 .sup-topbar {
   position: fixed;
@@ -91,8 +86,9 @@
 }
 
 .sup-sidebar a.active {
-  background: #1e40af;
-  color: white;
+  background: #bfdbfe;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #1e3a8a;
 }
 
 /* ===== CONTENT ===== */
@@ -144,7 +140,6 @@
   color: #dc2626;
 }
 /* ===== PROFILE CARD ===== */
-/* ===== PROFILE CARD (IMPROVED) ===== */
 .sup-profile-card {
   margin-top: 8px;
   padding: 14px 16px;
@@ -178,4 +173,53 @@
   text-align: right;
   max-width: 150px;
   word-break: break-word;
+}
+
+/* =========================
+   SUPERVISOR FOOTER 
+========================= */
+.supervisor-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 20px;
+  background: #1e293b;
+  border-top: 1px solid #e2e8f0;
+  padding: 14px 24px;
+  z-index: 900;
+}
+
+ .footer-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 13px;
+  color: #ffffff;
+  text-align: center;
+}
+
+ .footer-text strong {
+  font-weight: 600;
+}
+.notification-bell {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
 }

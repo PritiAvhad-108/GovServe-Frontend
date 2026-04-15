@@ -13,7 +13,7 @@ export default function EligibilityRuleForm({ rule = {}, onClose, onSave }) {
     rule?.ruleDescription || ""
   );
 
-  /* ✅ Load services only for CREATE */
+  /*  Load services only for CREATE */
   useEffect(() => {
     if (!isEdit) {
       api
@@ -23,7 +23,7 @@ export default function EligibilityRuleForm({ rule = {}, onClose, onSave }) {
     }
   }, [isEdit]);
 
-  /* ✅ Validation */
+  /*  Validation */
   const validateForm = () => {
     const newErrors = {};
 
@@ -42,7 +42,7 @@ export default function EligibilityRuleForm({ rule = {}, onClose, onSave }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  /* ✅ Submit */
+  /*  Submit */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -78,7 +78,7 @@ export default function EligibilityRuleForm({ rule = {}, onClose, onSave }) {
         <h4>{isEdit ? "Edit Eligibility Rule" : "Add Eligibility Rule"}</h4>
 
         <form onSubmit={handleSubmit}>
-          {/* ✅ Service */}
+          {/*  Service */}
           <label>Service</label>
           {isEdit ? (
             <>
@@ -113,7 +113,7 @@ export default function EligibilityRuleForm({ rule = {}, onClose, onSave }) {
             </>
           )}
 
-          {/* ✅ Rule Description */}
+          {/*  Rule Description */}
           <label>Rule Description</label>
           <textarea
             className={`form-control ${

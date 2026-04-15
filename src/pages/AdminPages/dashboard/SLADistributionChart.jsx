@@ -8,8 +8,9 @@ import {
 } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
+//data come from Parent component (AdminDashboard) as props onTime, breached
 export default function SLADistributionChart({ onTime, breached }) {
+  //char configuration - labels, data, colors
   const data = {
     labels: ["On Time", "Breached"],
     datasets: [
@@ -23,6 +24,7 @@ export default function SLADistributionChart({ onTime, breached }) {
   return (
     <div className="panel">
       <h3>SLA Distribution</h3>
+      {/* // Show message if no data available (conditional rendering)*/}
       {(onTime + breached) === 0 ? (
         <p>No SLA data</p>
       ) : (

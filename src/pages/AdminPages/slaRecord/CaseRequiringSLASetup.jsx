@@ -26,7 +26,7 @@ export default function CasesRequiringSLASetup() {
           </p>
         </div>
 
-        {/* ✅ Pending SLA Count Card */}
+        {/*  Pending SLA Count Card */}
         <div className="sla-count-card">
           <div className="icon-bg">
             <Timer size={28} color="#2563eb" />

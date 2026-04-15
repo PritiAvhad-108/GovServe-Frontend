@@ -1,9 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-//import { Routes, Route, Navigate } from "react-router-dom";
+
 import AdminLayout from "../components/AdminComponents/layout/AdminLayout";
 
 import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
-//import AdminDashboard from "../pages/AdminPages/dashboard/AdminDashboard";
 import DepartmentPage from "../pages/AdminPages/departments/DepartmentPage";
 import RolesPage from "../pages/AdminPages/roles/RolesPage";
 import SLADaysPage from "../pages/AdminPages/slaDays/SLADaysPage";
@@ -17,12 +16,14 @@ import UsersPage from "../pages/AdminPages/users/UserPage";
 import ServiceReportsPage from "../pages/AdminPages/serviceReports/ServiceReportsPage";
 import NotificationsPage from "../pages/AdminPages/notification/NotificationsPage";
 import AdminProfilePage from "../pages/AdminPages/profile/AdminProfilePage";
+
 import { useAuth } from "../context/AuthContext";
+
 function AdminRoutes() {
   const { user } = useAuth(); 
   return (
     <Routes>
-      <Route element={<AdminLayout />}>
+      <Route element={<AdminLayout />}> {/*nested routing for admin pages */}
         {/* ✅ DEFAULT ADMIN REDIRECT */}
         <Route index element={<Navigate to="dashboard" replace />} />
 

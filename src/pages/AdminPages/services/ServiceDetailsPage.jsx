@@ -32,7 +32,7 @@ export default function ServiceDetailsPage() {
 
       const serviceName = serviceData.serviceName;
 
-      /* ✅ Eligibility Rules */
+      /* Eligibility Rules */
       try {
         const rulesRes = await api.get(
           `/EligibilityRules/search?serviceName=${encodeURIComponent(
@@ -46,7 +46,7 @@ export default function ServiceDetailsPage() {
         setRulesMessage("No eligibility rules defined for this service.");
       }
 
-      /* ✅ Required Documents */
+      /*  Required Documents */
       try {
         const docsRes = await api.get(
           `/RequiredDocuments/search?serviceName=${encodeURIComponent(
@@ -76,7 +76,7 @@ export default function ServiceDetailsPage() {
 
   return (
     <div className="service-details-container">
-      {/* ✅ HEADER */}
+      {/*  HEADER */}
       <div className="details-header">
         <ArrowLeft
           className="back-icon"
@@ -86,7 +86,7 @@ export default function ServiceDetailsPage() {
         <h2>{service.serviceName}</h2>
       </div>
 
-      {/* ✅ TABS */}
+      {/*  TABS */}
       <div className="tabs">
         <button
           className={activeTab === "rules" ? "active" : ""}
@@ -103,7 +103,7 @@ export default function ServiceDetailsPage() {
         </button>
       </div>
 
-      {/* ✅ ELIGIBILITY RULES */}
+      {/*  ELIGIBILITY RULES */}
       {activeTab === "rules" && (
         <div className="content">
           {rules.length === 0 ? (
@@ -118,7 +118,7 @@ export default function ServiceDetailsPage() {
         </div>
       )}
 
-      {/* ✅ REQUIRED DOCUMENTS */}
+      {/*  REQUIRED DOCUMENTS */}
       {activeTab === "docs" && (
         <div className="content">
           {documents.length === 0 ? (
