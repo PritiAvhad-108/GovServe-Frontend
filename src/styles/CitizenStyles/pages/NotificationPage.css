@@ -24,16 +24,22 @@
     padding: 0 30px;
 }
 
+.notification-header-section {
+    text-align: center;
+    margin-bottom: 30px;
+     align-items: center;
+}
+
 .page-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 5px;
+    font-size: 2rem;
+    color: #003366; 
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .subtitle {
-    color: #64748b;
-    margin-bottom: 25px;
+    color: #666;
+    font-size: 1.1rem;
 }
 
 

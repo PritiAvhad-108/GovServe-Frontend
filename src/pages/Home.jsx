@@ -8,7 +8,7 @@ import "../styles/LandingStyle/global.css";
 
 const Home = () => {
   return (
-    <>
+    <div className="landing-page-wrapper">
       <section className="hero">
         <div className="hero-left">
           <h1>
@@ -22,8 +22,7 @@ const Home = () => {
           </p>
 
           <div className="hero-buttons hover-effect">
-           
-            <Link to="/register" className="primary-btn">
+            <Link to="/register" className="primary-btnn">
               Register Now
             </Link>
 
@@ -61,7 +60,7 @@ const Home = () => {
       </div>
       
       <StatsAndCTA />
-    </>
+    </div>
   );
 };
 
