@@ -27,10 +27,10 @@
 ========================= */
 .admin-app .sidebar {
   position: fixed;
-  top: 70px;
+  top:70px;
   left: 0;
   width: 250px;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 110px);
   background: #e7f3f6;
   border-right: 1px solid #dbeafe;
   overflow: hidden;
