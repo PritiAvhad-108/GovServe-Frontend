@@ -91,8 +91,9 @@
 }
 
 .sup-sidebar a.active {
-  background: #1e40af;
-  color: white;
+  background: #bfdbfe;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #1e3a8a;
 }
 
 /* ===== CONTENT ===== */
@@ -178,4 +179,35 @@
   text-align: right;
   max-width: 150px;
   word-break: break-word;
+}
+
+/* =========================
+   SUPERVISOR FOOTER 
+========================= */
+.supervisor-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 20px;
+  background: #1e293b;
+  border-top: 1px solid #e2e8f0;
+  padding: 14px 24px;
+  z-index: 900;
+}
+
+ .footer-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 13px;
+  color: #ffffff;
+  text-align: center;
+}
+
+ .footer-text strong {
+  font-weight: 600;
 }
