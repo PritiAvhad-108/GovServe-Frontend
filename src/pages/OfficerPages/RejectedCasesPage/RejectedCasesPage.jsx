@@ -20,6 +20,10 @@ const RejectedCasesPage = () => {
                 if (Array.isArray(data)) {
                     const strictlyRejected = data.filter(item => item.status === 'Rejected');
                     setRejectedCases(strictlyRejected);
+
+                    // 👇 ADDED: Console log to inspect the C# response
+                    console.log("🕵️‍♂️ REJECTED LIST DATA FROM C#:", strictlyRejected);
+
                 } else {
                     setRejectedCases([]);
                 }
