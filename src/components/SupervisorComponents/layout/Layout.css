@@ -1,13 +1,8 @@
-/* =========================
-   SUPERVISOR LAYOUT (NO CONFLICT)
-========================= */
-
-.sup-layout {
+ .sup-layout {
   min-height: 100vh;
   background: #eef3f8;
 }
 
-/* ===== TOPBAR ===== */
 /* ===== TOPBAR (FIXED & ALIGNED) ===== */
 .sup-topbar {
   position: fixed;
@@ -145,7 +140,6 @@
   color: #dc2626;
 }
 /* ===== PROFILE CARD ===== */
-/* ===== PROFILE CARD (IMPROVED) ===== */
 .sup-profile-card {
   margin-top: 8px;
   padding: 14px 16px;

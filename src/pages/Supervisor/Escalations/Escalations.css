@@ -46,17 +46,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.timeline {
-  list-style: none;
-  padding-left: 10px;
-}
-
-.timeline li {
-  border-left: 4px solid #2563eb;
-  padding-left: 10px;
-  margin-bottom: 8px;
-}
-
 .success {
   color: green;
   margin-top: 8px;
@@ -65,4 +54,85 @@ button:disabled {
 .error {
   color: red;
   margin-top: 8px;
+}
+
+/* ==============================
+   TABLE ALIGNMENT FIX
+============================== */
+.card table th,
+.card table td {
+  text-align: left !important;
+}
+
+/* ==============================
+   REMOVE DEFAULT BULLETS
+============================== */
+.card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* =====================================================
+   ✅ ESCALATION TIMELINE – DOT RIGHT NEXT TO TEXT
+===================================================== */
+
+.timeline {
+  margin-top: 16px;
+}
+
+/* REMOVE any old line logic */
+.timeline::before {
+  display: none;
+}
+
+.timeline li {
+  display: flex;                 /* ✅ KEY FIX */
+  align-items: center;
+  gap: 6px;                      /* ✅ tiny clean gap */
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+/* Dot */
+.timeline li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   ✅ REASSIGNMENT GUIDELINES – SAME CLEAN STYLE
+===================================================== */
+
+.card h4 {
+  margin-top: 26px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.card h4 + ul li {
+  display: flex;                 /* ✅ same fix */
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.card h4 + ul li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
