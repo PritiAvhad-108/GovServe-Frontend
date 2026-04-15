@@ -1,34 +1,20 @@
 /* ==========================================
-   1. LAYOUT STRUCTURE 
+   1. MODULE SCOPING (Prevents Global Conflicts)
    ========================================== */
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+.cz-dashboard-scope {
+  width: 100%;
 }
 
-.main-layout {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-.content-area {
-  flex: 1;
-  overflow-y: auto;
-  background: #f0f7ff;
-  padding: 25px 0;
-}
-
-.content-wrapper {
+/* ==========================================
+   2. CONTENT WRAPPER & HEADINGS
+   ========================================== */
+.cz-dashboard-scope .content-wrapper {
   max-width: 100%;
   margin: 0;
   padding: 0 30px;
 }
 
-
-.content-wrapper h1 {
+.cz-dashboard-scope .content-wrapper h1 {
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 20px;
@@ -36,28 +22,31 @@
   text-align: center;
 }
 
-.cards {
+/* ==========================================
+   3. CARDS GRID SYSTEM
+   ========================================== */
+.cz-dashboard-scope .cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.card {
+/* Base Card Styling */
+.cz-dashboard-scope .card {
   background: white;
   border-radius: 16px;
-  padding: 25px;
+  padding: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid black;
   position: relative;
   overflow: hidden;
-  min-height: 200px;
+  min-height: 170px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-
-.card::before {
+.cz-dashboard-scope .card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -67,20 +56,21 @@
   border-radius: 16px 16px 0 0;
 }
 
-
-.card:hover {
+.cz-dashboard-scope .card:hover {
   transform: translateY(-6px) scale(1.02);
   background: #f9fbff;
 }
 
+/* Color Themes for Hover State */
+.cz-dashboard-scope .card.green:hover { border-color: #22c55e; box-shadow: 0 0 15px #22c55e66; }
+.cz-dashboard-scope .card.blue:hover { border-color: #1e3a8a; box-shadow: 0 0 15px #3b82f666; }
+.cz-dashboard-scope .card.orange:hover { border-color: #f59e0b; box-shadow: 0 0 15px #f59e0b66; }
+.cz-dashboard-scope .card.red:hover { border-color: #ef4444; box-shadow: 0 0 15px #ef444466; }
 
-.card.green:hover { border-color: #22c55e; box-shadow: 0 0 15px #22c55e66; }
-.card.blue:hover { border-color: #1e3a8a; box-shadow: 0 0 15px #3b82f666; }
-.card.orange:hover { border-color: #f59e0b; box-shadow: 0 0 15px #f59e0b66; }
-.card.red:hover { border-color: #ef4444; box-shadow: 0 0 15px #ef444466; }
-
-
-.icon {
+/* ==========================================
+   4. ICON STYLING
+   ========================================== */
+.cz-dashboard-scope .icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,21 +80,22 @@
   margin: 0 auto 20px;   
 }
 
-.green .icon { color: #22c55e; background: #22c55e22; }
-.blue .icon { color: #1e3a8a; background: #3b82f622; }
-.orange .icon { color: #f59e0b; background: #f59e0b22; }
-.red .icon { color: #ef4444; background: #ef444422; }
+.cz-dashboard-scope .green .icon { color: #22c55e; background: #22c55e22; }
+.cz-dashboard-scope .blue .icon { color: #1e3a8a; background: #3b82f622; }
+.cz-dashboard-scope .orange .icon { color: #f59e0b; background: #f59e0b22; }
+.cz-dashboard-scope .red .icon { color: #ef4444; background: #ef444422; }
 
-
-.card h3 {
+.cz-dashboard-scope .card h3 {
   margin: 10px 0 5px;
   font-size: 18px;
   color:#111827;
   text-align: center;
 }
 
-/* ================= FOOTER ================= */
-.card-footer {
+/* ==========================================
+   5. CARD FOOTER SECTION
+   ========================================== */
+.cz-dashboard-scope .card-footer {
   position: absolute;
   bottom: 15px;
   left: 20px;
@@ -114,8 +105,7 @@
   align-items: center;
 }
 
-
-.footer-line {
+.cz-dashboard-scope .footer-line {
   position: absolute;
   top: -8px;
   left: 0;
@@ -124,27 +114,24 @@
   border-top: 1px solid #ddd;
 }
 
-.desc {
+.cz-dashboard-scope .desc {
   font-size: 13px;
   color: #6b7280;
   margin: 0;
   flex: 1;
 }
 
-.arrow {
-  font-size: 18px;
-  opacity: 0.6;
-  margin-left: 10px;
-}
-
-
-.ripple {
+/* ==========================================
+   6. INTERACTIVE RIPPLE EFFECT
+   ========================================== */
+.cz-dashboard-scope .ripple {
   position: absolute;
   border-radius: 50%;
   transform: scale(0);
   animation: ripple-animation 600ms linear;
   background: rgba(0, 0, 0, 0.2);
 }
+
 @keyframes ripple-animation {
   to { transform: scale(4); opacity: 0; }
 }

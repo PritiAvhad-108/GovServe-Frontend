@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { 
-  User, Building2, ClipboardList, Upload, CheckCircle, 
-  Loader2, XCircle, ArrowRight, ArrowLeft 
+import {  
+  User, Building2, ClipboardList, Upload, CheckCircle,  
+  Loader2, XCircle, ArrowRight, ArrowLeft  
 } from "lucide-react";
 import axios from "axios";
 import "../../styles/CitizenStyles/pages/ApplicationForm.css";
 
 const ApplicationForm = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();  
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
@@ -18,9 +18,10 @@ const ApplicationForm = () => {
   
   const [serviceData, setServiceData] = useState(null);
   const [requiredDocs, setRequiredDocs] = useState([]);
+  const [existingDocs, setExistingDocs] = useState([]);
 
-  const currentUserId = localStorage.getItem("userId"); 
-  const token = localStorage.getItem("jwtToken"); 
+  const currentUserId = localStorage.getItem("userId");  
+  const token = localStorage.getItem("jwtToken");  
 
   const isEditMode = window.location.pathname.includes("edit-application");
 
@@ -40,7 +41,7 @@ const ApplicationForm = () => {
     aadhaarNumber: ""
   });
   
-  const [files, setFiles] = useState({}); 
+  const [files, setFiles] = useState({});  
 
   useEffect(() => {
     if (!currentUserId || !token) {
@@ -48,7 +49,6 @@ const ApplicationForm = () => {
         return;
     }
 
-    //Resubmit Application Section
     const fetchInitialData = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -60,7 +60,6 @@ const ApplicationForm = () => {
           console.log("Full Application Data:", data);
 
           const details = data.citizenInfo || data.citizenDetails || {};
-          
           setCitizen({
             fullName: details.fullName || "",
             gender: details.gender || "",
@@ -77,9 +76,9 @@ const ApplicationForm = () => {
             aadhaarNumber: details.aadhaarNumber || ""
           });
 
-       
-          const svcId = data.serviceID || data.serviceId || (data.service && data.service.serviceID);
+          setExistingDocs(data.documents || []);
 
+          const svcId = data.serviceID || data.serviceId || (data.service && data.service.serviceID);
           if (svcId) {
             const [svc, docs] = await Promise.all([
               axios.get(`https://localhost:7027/api/Services/${svcId}`, config),
@@ -87,9 +86,10 @@ const ApplicationForm = () => {
             ]);
             setServiceData(svc.data);
             setRequiredDocs(docs.data);
+            console.log("Required Docs:", docs.data);
           } else {
             setServiceData({
-              serviceName: data.serviceName || "N/A", 
+              serviceName: data.serviceName || "N/A",  
               departmentName: data.departmentName || "N/A"
             });
           }
@@ -100,6 +100,7 @@ const ApplicationForm = () => {
           ]);
           setServiceData(svc.data);
           setRequiredDocs(docs.data);
+          console.log("Required Docs:", docs.data);
         }
       } catch (err) {
         setApiError("Connection Error: Could not load data.");
@@ -116,49 +117,55 @@ const ApplicationForm = () => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
       if (isEditMode) {
-      
         let uploadedDocs = [];
         if (Object.keys(files).length > 0) {
           const uploadPromises = Object.entries(files).map(async ([docId, file]) => {
             const formData = new FormData();
             formData.append("ApplicationID", id);
             formData.append("UserId", currentUserId);
-            formData.append("DocumentID", parseInt(docId)); 
-            formData.append("URI", file); 
+            formData.append("DocumentID", parseInt(docId));  
+            formData.append("URI", file);  
             const upRes = await axios.post("https://localhost:7027/api/CitizenDocument/upload", formData, {
               headers: { ...config.headers, 'Content-Type': 'multipart/form-data' }
             });
             
             return {
-                documentName: requiredDocs.find(d => d.documentID === parseInt(docId))?.documentName || "",
-                documentUrl: upRes.data.url || file.name 
+              documentName: requiredDocs.find(d => (d.documentID || d.documentId) === parseInt(docId))?.documentName || "",
+              documentUrl: upRes.data.url || file.name
             };
           });
           uploadedDocs = await Promise.all(uploadPromises);
         }
 
-       
+        const formattedDocs = uploadedDocs.map(doc => ({
+          documentName: doc.documentName,
+          documentUrl: doc.documentUrl,
+          verificationStatus: "Pending",
+          uploadedDate: new Date().toISOString()
+        }));
+
+        const allDocs = [
+          ...(existingDocs || []),
+          ...formattedDocs
+        ];
+
         const updatePayload = {
-          applicationId: parseInt(id),
+          applicationID: parseInt(id),
           applicationStatus: "Resubmitted",
           submittedDate: new Date().toISOString(),
-          citizenInfo: { 
+          citizenInfo: {  
             ...citizen,
             applicationID: parseInt(id),
             dateOfBirth: citizen.dateOfBirth ? new Date(citizen.dateOfBirth).toISOString() : null
           },
-          documents: uploadedDocs 
+          documents: allDocs
         };
 
         await axios.put(`https://localhost:7027/api/Application/resubmit/${id}`, updatePayload, config);
         
         setGeneratedAppId(id);
         setShowSuccess(true);
-      } 
-      
-      //New Application Section
-      else {
-     
+      } else {
         const deptId = serviceData?.departmentID || 0;
         const appRes = await axios.post("https://localhost:7027/api/Application/create", {
           userId: parseInt(currentUserId),
@@ -169,22 +176,22 @@ const ApplicationForm = () => {
         const newAppId = appRes.data.applicationID || appRes.data.applicationId;
         setGeneratedAppId(newAppId);
 
-        await axios.post("https://localhost:7027/api/CitizenDetails/create", { 
-          ...citizen, 
+        await axios.post("https://localhost:7027/api/CitizenDetails/create", {  
+          ...citizen,  
           applicationID: newAppId,
           dateOfBirth: new Date(citizen.dateOfBirth).toISOString()
         }, config);
 
         if (Object.keys(files).length > 0) {
-            const uploadPromises = Object.entries(files).map(([docId, file]) => {
-                const formData = new FormData();
-                formData.append("ApplicationID", newAppId);
-                formData.append("UserId", currentUserId);
-                formData.append("DocumentID", parseInt(docId)); 
-                formData.append("URI", file); 
-                return axios.post("https://localhost:7027/api/CitizenDocument/upload", formData, config);
-            });
-            await Promise.all(uploadPromises);
+          const uploadPromises = Object.entries(files).map(([docId, file]) => {
+            const formData = new FormData();
+            formData.append("ApplicationID", newAppId);
+            formData.append("UserId", currentUserId);
+            formData.append("DocumentID", parseInt(docId));  
+            formData.append("URI", file);  
+            return axios.post("https://localhost:7027/api/CitizenDocument/upload", formData, config);
+          });
+          await Promise.all(uploadPromises);
         }
         setShowSuccess(true);
       }
@@ -194,6 +201,8 @@ const ApplicationForm = () => {
       setSubmitting(false);
     }
   };
+
+ 
   return (
     <div className="content-wrapper">
       <div className="stepper-container">
@@ -233,7 +242,7 @@ const ApplicationForm = () => {
             </div>
           </div>
         )}
-
+                           
         {step === 2 && (
           <div className="step-card fade-in">
             <div className="card-title"><User size={16}/> <h3>Citizen Personal Details</h3></div>
@@ -291,7 +300,10 @@ const ApplicationForm = () => {
                 <label>Address Line 1</label>
                 <input value={citizen.addressLine1} onChange={e => setCitizen({...citizen, addressLine1: e.target.value})} placeholder="House No, Building, Area" />
               </div>
-              
+              <div className="v-input-group full">
+                <label>Address Line 2</label>
+                <input value={citizen.addressLine2} onChange={e => setCitizen({...citizen, addressLine2: e.target.value})} placeholder="House No, Building, Area" />
+              </div>
               <div className="v-row">
                 <div className="v-input-group">
                   <label>City / Village</label>

@@ -2,27 +2,24 @@ import { useState, useRef, useEffect } from "react";
 import { Menu, Bell, User, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; 
-import { toast } from "react-toastify"; // Toast notification sathi
+import { toast } from "react-toastify"; 
 import logo from "../../assets/landing/logo.png"; 
 import "../../styles/CitizenStyles/common/global.css"; 
 
-// Profile Popup import
 import CitizenProfilePopup from "../../pages/CitizenPages/CitizenProfilePopup";
 
 function Navbar({ toggleSidebar }) {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useAuth(); // AuthContext madhun logout function ghetle
+  const { user, logout } = useAuth(); 
   const profileRef = useRef();
   const navigate = useNavigate();
 
-  // HOME VAR CLICK KELYAVAR LOGOUT ANI REDIRECT KARNYASATHI FUNCTION
   const handleHomeClick = () => {
-    logout(); // Session clear karel
-    toast.success("Logged out and redirected to Home!"); // Optional alert
-    navigate("/", { replace: true }); // Main Landing Page var jail
+    logout(); 
+    toast.success("Logged out and redirected to Home!"); 
+    navigate("/", { replace: true }); 
   };
 
-  // Baher click kelyavar popup band honyasathi
   useEffect(() => {
     function handleClickOutside(event) {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -34,8 +31,8 @@ function Navbar({ toggleSidebar }) {
   }, []);
 
   return (
-    <nav className="navbar">
-      {/* LEFT: Logo & Brand */}
+    /* Unique class 'cz-navbar' height fix sathi */
+    <nav className="cz-navbar">
       <div className="nav-left">
         <Menu className="menu-icon" onClick={toggleSidebar} />
         <div className="brand-wrapper" onClick={() => navigate("/citizen")}>
@@ -48,7 +45,6 @@ function Navbar({ toggleSidebar }) {
       </div>
 
       <div className="nav-right">
-        {/* HOME: Ithe onClick badlla ahe */}
         <div 
           className="nav-action-item" 
           onClick={handleHomeClick} 
@@ -59,12 +55,10 @@ function Navbar({ toggleSidebar }) {
           <span>Home</span>
         </div>
 
-        {/* Notifications */}
         <div className="nav-action-item notification-icon" onClick={() => navigate("/citizen/notifications")}>
           <Bell size={20} />
         </div>
 
-        {/* PROFILE SECTION */}
         <div className="profile-container" ref={profileRef}>
           <div className="profile-badge" onClick={() => setOpen(!open)}>
             <User size={18} />
