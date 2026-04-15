@@ -132,6 +132,9 @@
 /* =======================================================
    TABLE STYLES
 ======================================================= */
+
+
+
 .table-white {
   width: 100%;
   background: #ffffff;
@@ -140,6 +143,7 @@
   border-collapse: collapse;
   overflow: hidden;
 }
+
 
 .table-white th,
 .table-white td {
@@ -160,7 +164,7 @@
   transition: background-color 0.15s ease;
 }
 
-/* ✅ PROFESSIONAL ROW HOVER */
+/*  PROFESSIONAL ROW HOVER */
 .table-white tbody tr:hover {
   background: #f8fafc;
 }
@@ -169,7 +173,7 @@
   color: #1f2937;
 }
 
-/* ✅ EMPTY TABLE STATE */
+/*  EMPTY TABLE STATE */
 .empty-msg {
   text-align: center;
   padding: 32px;
@@ -177,7 +181,7 @@
   color: #64748b;
 }
 
-/* ✅ FULL WIDTH TABLES */
+/*  FULL WIDTH TABLES */
 .dashboard-row .table-panel,
 .dashboard-row .panel.full-width {
   grid-column: 1 / -1;

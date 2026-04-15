@@ -12,7 +12,7 @@ export default function RecentCasesTable({ cases }) {
   return (
     <div className="panel">
       <h3>Recent Cases</h3>
-
+      
       <table className="table-white">
         <thead>
           <tr>

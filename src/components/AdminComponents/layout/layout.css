@@ -66,6 +66,7 @@
 .admin-app .sidebar .nav-link.active {
   background: #bfdbfe;
   font-weight: 600;
+  box-shadow: inset 3px 0 0 #1e3a8a;
 }
 
 /* =========================
@@ -350,10 +351,16 @@
 @media (max-width: 576px) {
 
   .admin-app .page-content {
+    
     padding: 12px;
+    
   }
 
   table {
     font-size: 13px;
+    
   }
+  
+ 
 }
+
