@@ -23,44 +23,50 @@ function Dashboard() {
   };
 
   return (
-    <div className="content-wrapper">
-      <h1>Welcome Back!</h1>
-      <div className="cards">
-     
-        <div className="card green" onClick={(e) => { createRipple(e); navigate("/citizen/apply"); }}>
-          <FileText size={60} className="icon" />
-          <h3>Apply Services</h3>
-          <div className="card-footer">
-            <hr className="footer-line" /><p className="desc">Apply for services</p>
+    <div className="cz-dashboard-scope">
+      <div className="content-wrapper">
+        <h1>Welcome Back!</h1>
+        <div className="cards">
+          
+          <div className="card green" onClick={(e) => { createRipple(e); navigate("/citizen/apply"); }}>
+            <FileText size={60} className="icon" />
+            <h3>Apply Services</h3>
+            <div className="card-footer">
+              <hr className="footer-line" />
+              <p className="desc">Apply for services</p>
+            </div>
           </div>
-        </div>
 
-        <div className="card blue" onClick={(e) => { createRipple(e); navigate("/citizen/my-applications"); }}>
-          <FolderOpen size={60} className="icon" />
-          <h3>My Applications</h3>
-          <div className="card-footer">
-            <hr className="footer-line" /><p className="desc">Track status</p>
+          <div className="card blue" onClick={(e) => { createRipple(e); navigate("/citizen/my-applications"); }}>
+            <FolderOpen size={60} className="icon" />
+            <h3>My Applications</h3>
+            <div className="card-footer">
+              <hr className="footer-line" />
+              <p className="desc">Track status</p>
+            </div>
           </div>
-        </div>
 
-        <div className="card orange" onClick={(e) => { createRipple(e); navigate("/citizen/my-documents"); }}>
-          <Upload size={60} className="icon" />
-          <h3>Documents</h3>
-          <div className="card-footer">
-            <hr className="footer-line" /><p className="desc">Manage files</p>
+          <div className="card orange" onClick={(e) => { createRipple(e); navigate("/citizen/my-documents"); }}>
+            <Upload size={60} className="icon" />
+            <h3>Documents</h3>
+            <div className="card-footer">
+              <hr className="footer-line" />
+              <p className="desc">Manage files</p>
+            </div>
           </div>
-        </div>
 
-        <div className="card red" onClick={(e) => { createRipple(e); navigate("/citizen/grievance"); }}>
-          <MessageSquareWarning size={60} className="icon" />
-          <h3>Grievance</h3>
-          <div className="card-footer">
-            <hr className="footer-line" /><p className="desc">Raise complaints</p>
+          <div className="card red" onClick={(e) => { createRipple(e); navigate("/citizen/grievance"); }}>
+            <MessageSquareWarning size={60} className="icon" />
+            <h3>Grievance</h3>
+            <div className="card-footer">
+              <hr className="footer-line" />
+              <p className="desc">Raise complaints</p>
+            </div>
           </div>
+          
         </div>
       </div>
     </div>
-    
   );
 }
 
