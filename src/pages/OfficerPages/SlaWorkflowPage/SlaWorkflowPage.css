@@ -1,25 +1,42 @@
-/* Container */
-.sla-workflow-container {
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+/* ✅ NEW: Wraps the whole page to center it horizontally */
+.sla-page-wrapper {
+    display: flex;
+    justify-content: center;
     width: 100%;
+    background-color: #f8fafc;
+    min-height: 100vh;
 }
 
-/* Header Styling (Matches your other pages) */
+/* Container */
+.sla-workflow-container {
+    padding: 28px;
+    width: 100%;
+    max-width: 1200px; /* ✅ Matches the width of your other pages */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 🚨 FIX: Centers the Title and Breadcrumb perfectly */
 .sla-header {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 25px;
+    gap: 6px;
 }
 
 .sla-header h2 {
     font-size: 28px;
     font-weight: 700;
     color: #0b1c3c; /* Dark navy text */
-    margin: 0 0 5px 0;
+    margin: 0;
 }
 
 .custom-breadcrumb {
     color: #6c757d;
     font-size: 14px;
+    margin: 0;
 }
 
 /* The White Card */

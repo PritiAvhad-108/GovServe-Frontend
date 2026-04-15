@@ -14,8 +14,9 @@ import Citizenroutes from "./routes/Citizenroutes";
 import AdminRoutes from "./routes/Adminroutes";
 import Supervisorroutes from "./routes/Supervisorroutes";
 import OfficerRoutes from "./routes/Officerroutes";
- 
- 
+import GrievanceRoute from "./routes/GrievanceRoute";
+
+
  
 function App() {
   const { isAuthenticated, userRole, loading } = useAuth();
@@ -27,6 +28,7 @@ function App() {
     if (userRole === "Admin") return "/admin/dashboard";
     if (userRole === "Supervisor") return "/supervisor";
     if (userRole === "Officer") return "/officer";
+    if (userRole === "Grievance Officer") return "/grievances";
     return "/citizen";
   };
  
@@ -88,6 +90,17 @@ function App() {
             </RoleGuard>
           }
         />
+
+         {/* OFFICER */}
+        <Route
+          path="/grievances/*"
+          element={
+            <RoleGuard allowedRoles={["Grievance Officer"]}>
+              <GrievanceRoute />
+            </RoleGuard>
+          }
+        />
+ 
  
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

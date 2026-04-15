@@ -14,8 +14,7 @@ const PendingCasesPage = () => {
         const fetchPendingCases = async () => {
             try {
                 setLoading(true);
-                // 🚨 CRITICAL: Check your C# database. 
-                // If the status is saved as 'Under Verification', change 'Pending' to 'Under Verification' here!
+            
                 const response = await getCasesByStatus(officerId, 'Pending');
                 const data = response.data || response;
                 setPendingCases(Array.isArray(data) ? data : []);
@@ -31,71 +30,77 @@ const PendingCasesPage = () => {
     }, [officerId]);
 
     return (
-        <div className="pending-container">
-            {/* Header */}
-            <h2 className="page-title">Pending Applications</h2>
-            <p className="breadcrumb">Officer / Pending Review</p>
-            <p className="total-count">Total: {pendingCases.length} Applications</p>
+        /* ✅ NEW: Wraps the whole page to center it horizontally */
+        <div className="pending-page-wrapper">
+            <div className="pending-container">
+                
+                {/* 🚨 FIX: Grouped the title, breadcrumb, and count in the new centered header class */}
+                <div className="pending-header">
+                    <h2 className="page-title">Pending Applications</h2>
+                    {/* <p className="breadcrumb">Officer / Pending Review</p> */}
+                    {/* <p className="total-count">Total: {pendingCases.length} Applications</p> */}
+                </div>
 
-            {/* Card Table */}
-            <div className="pending-card">
-                {loading ? (
-                    <div className="loading-text">Loading pending cases...</div>
-                ) : (
-                    <table className="pending-table">
-                        <thead>
-                            <tr>
-                                <th>CASE ID</th>
-                                <th>APPLICANT NAME</th>
-                                <th>SERVICE TYPE</th>
-                                <th>STATUS</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
+                {/* Card Table */}
+                <div className="pending-card">
+                    {loading ? (
+                        <div className="loading-text">Loading pending cases...</div>
+                    ) : (
+                        <table className="pending-table">
+                            <thead>
+                                <tr>
+                                    <th>CASE ID</th>
+                                    <th>APPLICANT NAME</th>
+                                    <th>SERVICE TYPE</th>
+                                    <th>STATUS</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {pendingCases.length > 0 ? (
-                                pendingCases.map((item) => (
-                                    <tr key={item.caseId}>
-                                        <td style={{ fontWeight: '600' }}> {item.caseId}</td>
-                                        
-                                        {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
-                                        <td>
-                                            {
-                                                item.user?.fullName || 
-                                                item.User?.fullName || 
-                                                item.application?.citizenDetails?.fullName || 
-                                                item.application?.User?.fullName || 
-                                                'N/A'
-                                            }
-                                        </td>
-                                        
-                                        <td>{item.application?.service?.serviceName || 'General Service'}</td>
-                                        
-                                        <td className="status-pending">
-                                            <span>Pending</span>
-                                        </td>
-                                        
-                                        <td>
-                                            <button
-                                                className="view-btn"
-                                                onClick={() => navigate(`/officer/case-details/${item.caseId}`)}
-                                            >
-                                                Review Application
-                                            </button>
+                            <tbody>
+                                {pendingCases.length > 0 ? (
+                                    pendingCases.map((item) => (
+                                        <tr key={item.caseId}>
+                                            <td style={{ fontWeight: '600' }}> {item.caseId}</td>
+                                            
+                                            {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
+                                            <td>
+                                                {
+                                                    item.user?.fullName || 
+                                                    item.User?.fullName || 
+                                                    item.application?.citizenDetails?.fullName || 
+                                                    item.application?.User?.fullName || 
+                                                    'N/A'
+                                                }
+                                            </td>
+                                            
+                                            <td>{item.application?.service?.serviceName || 'General Service'}</td>
+                                            
+                                            <td className="status-pending">
+                                                <span>Pending</span>
+                                            </td>
+                                            
+                                            <td>
+                                                <button
+                                                    className="view-btn"
+                                                    onClick={() => navigate(`/officer/case-details/${item.caseId}`)}
+                                                >
+                                                    view Application
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="5" className="empty-text">
+                                            No Pending cases available.
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="5" className="empty-text">
-                                        No Pending cases available.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                )}
+                                )}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
             </div>
         </div>
     );

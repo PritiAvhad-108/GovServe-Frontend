@@ -101,16 +101,16 @@ const ApprovedApplicationsPage = () => {
                             </tbody>
                         </table>
 
-                        {/* Updated: Pagination Section with Blue Button Labels */}
+                        Updated: Pagination Section with Blue Button Labels
                         {!loading && caseList.length > 0 && (
                             <div className="custom-pagination">
-                                <button className="page-nav-btn" disabled>
+                                {/* <button className="page-nav-btn" >
                                     Previous
-                                </button>
-                                <span className="page-info">Page 1 of 1</span>
+                                </button> */}
+                                {/* <span className="page-info">Page 1 of 1</span>
                                 <button className="page-nav-btn" disabled={caseList.length <= 10}>
                                     Next
-                                </button>
+                                </button> */}
                             </div>
                         )}
                     </>

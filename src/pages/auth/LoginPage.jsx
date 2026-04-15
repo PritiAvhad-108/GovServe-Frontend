@@ -8,7 +8,6 @@ import "../../styles/LandingStyle/AuthStyle.css";
 import Navbar from "../../components/Landing/layout/Navbar";
 import Footer from "../../components/Landing/layout/Footer";
 import { useAuth } from "../../context/AuthContext";
- 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
@@ -60,7 +59,6 @@ function LoginPage() {
         userId,
         email: formData.email,
       });
- 
       Swal.fire({
         title: "Login Successful!",
         text: "Redirecting to your dashboard...",
@@ -69,12 +67,12 @@ function LoginPage() {
         timer: 2000,
         showConfirmButton: false,
       });
- 
       setTimeout(() => {
         if (userRoleFromToken === "Admin") navigate("/admin/dashboard");
         else if (userRoleFromToken === "Citizen") navigate("/citizen");
         else if (userRoleFromToken === "Supervisor") navigate("/supervisor");
         else if (userRoleFromToken === "Officer") navigate("/officer");
+        else if (userRoleFromToken === "Grievance Officer") navigate("/grievances");
         else navigate("/");
       }, 1000);
  
@@ -91,7 +89,6 @@ function LoginPage() {
   return (
     <>
       <Navbar />
- 
       {/* ✅ ALREADY LOGGED IN BANNER */}
       {isAuthenticated && (
         <div className="info-banner">
@@ -106,6 +103,8 @@ function LoginPage() {
                 ? "/supervisor"
                 : userRole === "Officer"
                 ? "/officer"
+                :userRole === "Grievance Officer"
+                ? "/grievances"
                 : "/"
             }
           >
@@ -113,7 +112,6 @@ function LoginPage() {
           </Link>
         </div>
       )}
- 
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
@@ -169,12 +167,10 @@ function LoginPage() {
               {errors.password && (
                 <span className="error-text">{errors.password}</span>
               )}
- 
               <div className="forget-password-link">
                 <Link to="/forget-password">Forget Password?</Link>
               </div>
             </div>
- 
             <button
               type="submit"
               className="auth-btn"
