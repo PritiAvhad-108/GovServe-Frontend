@@ -24,7 +24,7 @@ function App() {
  
   if (loading) return null;
  
-  // ✅ FIXED REDIRECT PATHS
+  // FIXED REDIRECT PATHS
   const getRedirectPath = () => {
     if (userRole === "Admin") return "/admin/dashboard";
     if (userRole === "Supervisor") return "/supervisor";
@@ -57,9 +57,11 @@ function App() {
         <Route
           path="/citizen/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Citizen"]}>
               <Citizenroutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
  
@@ -68,11 +70,11 @@ function App() {
         <Route
           path="/admin/*"
           element={
-             <AuthGuard>
+            
             <RoleGuard allowedRoles={["Admin"]}>
               <AdminRoutes />
             </RoleGuard>
-            </AuthGuard>
+           
           }
         />
  
@@ -80,18 +82,22 @@ function App() {
         <Route
           path="/supervisor/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Supervisor"]}>
               <Supervisorroutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
          {/* OFFICER */}
         <Route
           path="/officer/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Officer"]}>
               <OfficerRoutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
 
@@ -99,9 +105,11 @@ function App() {
         <Route
           path="/grievances/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Grievance Officer"]}>
               <GrievanceRoute />
             </RoleGuard>
+            </AuthGuard>
           }
         />
  
