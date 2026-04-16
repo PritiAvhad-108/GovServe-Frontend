@@ -1,0 +1,199 @@
+
+
+.application-page {
+  background-color: #f5f7fb;
+  min-height: calc(100vh - 70px); 
+  
+}
+
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background-color: #1f3c88;
+  color: white;
+  padding: 14px 20px;
+
+  border-radius: 6px;
+}
+
+.app-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.back-icon {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Application ID */
+.app-id {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 18px;
+}
+
+
+.card {
+  background-color: #ffffff;
+  padding:  24px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #0f172a;
+}
+
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 16px;
+  column-gap: 24px;
+}
+
+.overview-grid label {
+  font-size: 12px;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.overview-grid p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+/* Status pill */
+.status-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  text-transform: uppercase;
+}
+
+
+.citizen-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.citizen-grid label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.citizen-grid p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+.document-section-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.document-list {
+  width: 40%;
+}
+
+.doc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.doc-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.doc-action-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.view-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Document Preview */
+.document-preview-box {
+  width: 60%;
+  background-color: #f8fafc;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.document-preview-box h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.case-detail-container {
+  max-width: 1000px;   
+  margin: 0 auto;      
+}
+
+
+
+@media (max-width: 768px) {
+  .overview-grid,
+  .citizen-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .document-section-layout {
+    flex-direction: column;
+  }
+
+  .document-list,
+  .document-preview-box {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .application-page {
+    margin-left: 0;
+    margin-top: 70px;
+    padding: 16px;
+  }
+}

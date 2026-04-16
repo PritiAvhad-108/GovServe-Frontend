@@ -1,5 +1,6 @@
 import GrievanceNavbar from "./GrievanceNavbar";
 import GrievanceSidebar from "./GrievanceSidebar";
+import GrievanceFooter from "./GrievanceFooter";
 import { Outlet } from "react-router-dom";
 import "../../../styles/GrievanceStyles/layout.css";
 
@@ -15,6 +16,8 @@ const GrievanceLayout = () => {
 
         <main className="layout-content">
           <Outlet />
+
+          <GrievanceFooter />
         </main>
       </div>
     </div>

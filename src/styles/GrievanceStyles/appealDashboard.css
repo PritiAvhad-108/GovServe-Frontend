@@ -1,6 +1,4 @@
-/* ==============================
-   TABLE WRAPPER (Appeal Dashboard)
-============================== */
+
 .table-wrapper {
   background-color: #ffffff;
   border-radius: 6px;
@@ -8,9 +6,7 @@
   margin-top: 20px;
 }
 
-/* ==============================
-   COLUMN WIDTH CONTROL
-============================== */
+
 .reason-col {
   width: 180px;
   line-height: 1.4;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ActionModel.css'; 
+import './GrievanceStyle/ActionModel.css';
 
 const ActionModal = ({ isOpen, onClose, onConfirm, title }) => {
     const [reason, setReason] = useState('');
