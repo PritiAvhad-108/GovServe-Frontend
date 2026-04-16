@@ -63,12 +63,12 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
         <h4>{stage.stageID ? "Edit Workflow Stage" : "Add Workflow Stage"}</h4>
 
         <form onSubmit={handleSubmit}>
-          {/* ✅ SERVICE */}
+          {/*  SERVICE */}
           <label>Service</label>
 
           {stage.stageID ? (
             <>
-              {/* ✅ EDIT MODE → SHOW SAVED SERVICE NAME */}
+              {/*  EDIT MODE → SHOW SAVED SERVICE NAME */}
               <input
                 type="text"
                 className="form-control mb-1"
@@ -81,7 +81,7 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
             </>
           ) : (
             <>
-              {/* ✅ CREATE MODE → SELECT SERVICE */}
+              {/*  CREATE MODE → SELECT SERVICE */}
               <select
                 className="form-control mb-2"
                 value={form.serviceID}
@@ -99,7 +99,7 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
             </>
           )}
 
-          {/* ✅ ROLE */}
+          {/*  ROLE */}
           <label>Responsible Role</label>
           <select
             className="form-control mb-2"
@@ -114,7 +114,7 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
             ))}
           </select>
 
-          {/* ✅ SEQUENCE */}
+          {/*  SEQUENCE */}
           <label>Sequence Number</label>
           <input
             type="number"

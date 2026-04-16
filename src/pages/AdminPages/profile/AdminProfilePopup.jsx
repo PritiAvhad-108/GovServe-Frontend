@@ -9,7 +9,7 @@ export default function AdminProfilePopup({ user, onClose }) {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login", { replace: true }); // ✅ IMPORTANT
+    navigate("/login", { replace: true }); 
   };
 
   return (

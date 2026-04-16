@@ -4,19 +4,7 @@ const API = axios.create({
   baseURL: "https://localhost:7027/api",
 });
 
-// API.interceptors.request.use((req) => {
-//   const token = localStorage.getItem("token");
 
-//   req.headers["Content-Type"] = "application/json";
-
-//   if (token) {
-//     req.headers.Authorization = `Bearer ${token}`;
-//   }
-
-//   return req;
-// });
-
-// Export both the instance and helper functions
 export default API;
 
 export const getDashboardStats = () => API.get("/Case/dashboard-stats");

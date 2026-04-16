@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Notifications.css";
 import api from "../../../api/api";
-import {
-  sendNotification,
-  getNotificationsByUser,
-  markNotificationRead,
-  getAllUsers
-} from "../../../api/api";
+import {sendNotification,getNotificationsByUser,markNotificationRead,getAllUsers} from "../../../api/api";
 
 const Notifications = () => {
   const storedUserId = Number(localStorage.getItem("userId"));
 
-  // ✅ FALLBACK LOGIC
+  //  FALLBACK LOGIC
   const effectiveUserId =
     storedUserId && !isNaN(storedUserId) ? storedUserId : 2;
 
@@ -28,11 +23,7 @@ const Notifications = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
-
-  /* =========================
-     LOAD DATA
-  ========================= */
-
+  // Load Data
   useEffect(() => {
     if (!effectiveUserId) return;
 
@@ -41,14 +32,19 @@ const Notifications = () => {
     fetchRoles();
   }, [effectiveUserId]);
 
-  const fetchNotifications = async () => {
-    try {
-      const res = await getNotificationsByUser(effectiveUserId);
-      setNotifications(res.data || []);
-    } catch (err) {
-      console.error("Failed to fetch notifications", err);
-    }
-  };
+const fetchNotifications = async () => {
+  try {
+    const res = await getNotificationsByUser(effectiveUserId);
+    const data = res.data || [];
+    setNotifications(data);
+
+    const unreadCount = data.filter(n => !n.isRead).length;
+    localStorage.setItem("unreadCount", unreadCount);
+
+  } catch (err) {
+    console.error("Failed to fetch notifications", err);
+  }
+};
 
   const fetchUsers = async () => {
     try {
@@ -62,8 +58,7 @@ const Notifications = () => {
   const fetchRoles = async () => {
     try {
       const res = await api.get("/Roles");
-
-      // ✅ FILTER OUT SUPERVISOR ROLE
+      //  FILTER OUT SUPERVISOR ROLE
       const filteredRoles = (res.data || []).filter(
         r => r.roleName !== "Supervisor"
       );
@@ -73,27 +68,21 @@ const Notifications = () => {
       console.error("Failed to fetch roles", err);
     }
   };
-
-  /* =========================
-     SEND NOTIFICATION
-  ========================= */
-
+  // Send Notification
   const handleSendNotification = async (e) => {
     e.preventDefault();
     setSuccessMsg("");
     setErrorMsg("");
 
     if (!selectedRole || !form.message.trim()) {
-      setErrorMsg("⚠️ Please select a role and enter a message");
+      setErrorMsg(" Please select a role and enter a message");
       return;
     }
 
     setLoading(true);
 
     try {
-      // ✅ FILTER USERS:
-      // - remove Supervisor
-      // - remove logged-in user (self)
+      //Removed Supervisor
       const roleUsers = users.filter(
         u =>
           u.roleName?.toLowerCase() === selectedRole.toLowerCase() &&
@@ -102,20 +91,20 @@ const Notifications = () => {
       );
 
       if (roleUsers.length === 0) {
-        setErrorMsg("⚠️ No users found for selected role");
+        setErrorMsg(" No users found for selected role");
         return;
       }
 
       for (const user of roleUsers) {
         await sendNotification({
           userId: user.userId,
-          senderId: effectiveUserId, // ✅ self copy handled in backend
+          senderId: effectiveUserId, 
           message: form.message,
           category: form.category
         });
       }
 
-      setSuccessMsg(`✅ Notification sent successfully to ${selectedRole}`);
+      setSuccessMsg(` Notification sent successfully to ${selectedRole}`);
       setForm({ message: "", category: "General" });
       setSelectedRole("");
 
@@ -125,25 +114,16 @@ const Notifications = () => {
 
     } catch (err) {
       console.error("Send notification error", err);
-      setErrorMsg("❌ Failed to send notification");
+      setErrorMsg(" Failed to send notification");
     } finally {
       setLoading(false);
     }
   };
-
-  /* =========================
-     MARK AS READ
-  ========================= */
-
+// Mark as Read
   const handleMarkRead = async (id) => {
     await markNotificationRead(id);
     fetchNotifications();
   };
-
-  /* =========================
-     UI
-  ========================= */
-
   return (
     <div className="notifications-container">
       <h2 className="page-title">Notifications</h2>

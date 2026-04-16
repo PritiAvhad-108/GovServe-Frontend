@@ -46,7 +46,7 @@ export default function RolesPage() {
     <div className="roles-container">
       <ToastContainer position="top-center" />
 
-      {/* ✅ HEADER */}
+      {/*  HEADER */}
       <div className="roles-header">
         <div>
           <h2 className="page-title">Role Management</h2>
@@ -64,7 +64,7 @@ export default function RolesPage() {
         </div>
       </div>
 
-      {/* ✅ FILTER ROW */}
+      {/*  FILTER ROW */}
       <div className="filter-row">
         <input
           className="form-control"
@@ -81,7 +81,7 @@ export default function RolesPage() {
         </button>
       </div>
 
-      {/* ✅ TABLE */}
+      {/*  TABLE */}
       <table className="table-white">
         <thead>
           <tr>
@@ -104,7 +104,7 @@ export default function RolesPage() {
                 <td>{role.roleID}</td>
                 <td>{role.roleName}</td>
 
-                {/* ✅ ACTIONS – matches CSS */}
+                {/*  ACTIONS – matches CSS */}
                 <td className="actions-col">
                   <Pencil
                     size={18}
@@ -129,14 +129,14 @@ export default function RolesPage() {
         </tbody>
       </table>
 
-      {/* ✅ PAGINATION */}
+      {/*  PAGINATION */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
 
-      {/* ✅ MODAL */}
+      {/* MODAL */}
       {showForm && (
         <RoleForm
           role={showForm}
