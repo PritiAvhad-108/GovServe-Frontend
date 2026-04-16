@@ -46,7 +46,7 @@ const RejectedCasesPage = () => {
                 {/* 🚨 FIX: Centered Header */ }
                 <div className="rejected-header">
                     <h2>Rejected Applications</h2>
-                    <p className="custom-breadcrumb">Officer / Rejected Cases</p>
+                    {/* <p className="custom-breadcrumb">s</p> */}
                 </div>
 
                 <div className="table-responsive">

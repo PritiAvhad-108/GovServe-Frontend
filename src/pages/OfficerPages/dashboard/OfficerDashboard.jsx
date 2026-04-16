@@ -17,7 +17,7 @@ const OfficerDashboard = () => {
     const officerId = localStorage.getItem('userId') || 2; 
 
     useEffect(() => {
-        const loadDashboardData = async () => {
+        const loadDashboardData =  async () => {
             if (!officerId) return;
 
             try {
