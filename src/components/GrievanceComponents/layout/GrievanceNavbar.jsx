@@ -32,7 +32,7 @@ const GrievanceNavbar = () => {
     onClick={() => setShowMenu(!showMenu)}
   >
     <FaUserCircle size={24} />
-    <span>{user?.fullName || "Officer"}</span>
+    <span>{user?.fullName || "Grievance Officer"}</span>
     <FaCaretDown size={12} />
   </div>
 

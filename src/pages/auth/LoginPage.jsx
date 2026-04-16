@@ -40,6 +40,7 @@ function LoginPage() {
 
       const { token } = response.data;
 
+
       // ✅ DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
 
@@ -53,7 +54,12 @@ function LoginPage() {
         decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
         decodedToken.role;
 
-      // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
+        //new added
+      // localStorage.setItem("authToken", token);
+      // localStorage.setItem("role", userRoleFromToken);
+      // localStorage.setItem("userId", userId);
+
+      //  NOW UPDATE AUTH CONTEXT (IMPORTANT)
       login({
         token,
         roleName: userRoleFromToken,
@@ -74,6 +80,8 @@ function LoginPage() {
         if (userRoleFromToken === "Admin") navigate("/admin/dashboard");
         else if (userRoleFromToken === "Citizen") navigate("/citizen");
         else if (userRoleFromToken === "Supervisor") navigate("/supervisor");
+        else if (userRoleFromToken === "Officer") navigate("/officer");
+        else if(userRoleFromToken === "Grievance Officer") navigate("/grievances");
         else navigate("/");
       }, 1000);
 
@@ -103,6 +111,10 @@ function LoginPage() {
                 ? "/citizen"
                 : userRole === "Supervisor"
                 ? "/supervisor"
+                : userRole === "Officer"
+                ? "/officer"
+                : userRole === "Grievance Officer"
+                ? "/grievances"
                 : "/"
             }
           >
