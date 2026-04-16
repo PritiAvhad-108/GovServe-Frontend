@@ -33,7 +33,7 @@ const ApprovedApplicationsPage = () => {
         <div className="approved-container">
             {/* Header */}
             <h2 className="page-title">Approved Applications</h2>
-            <p className="custom-breadcrumb">Officer / Approved Cases</p>
+            {/* <p className="custom-breadcrumb">Officer / Approved Cases</p> */}
             <p className="total-count">
                 Total: {caseList.length} Applications
             </p>
