@@ -9,7 +9,7 @@ function AuthGuard({ children }) {
   
     return <Navigate to="/login" replace />;
   }
-  return children;
+  return children; //token exists, render the protected component
 }
 
 export default AuthGuard;
