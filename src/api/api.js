@@ -1,12 +1,46 @@
 import axios from "axios";
-
+ 
+/* ===============================
+   AXIOS INSTANCE
+=============================== */
 const API = axios.create({
   baseURL: "https://localhost:7027/api",
 });
-
-
+ 
+/* ===============================
+   REQUEST INTERCEPTOR
+   → ATTACH JWT TOKEN
+=============================== */
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("jwtToken");
+ 
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+ 
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+ 
+/* ===============================
+   RESPONSE INTERCEPTOR
+   → HANDLE TOKEN EXPIRY (401)
+=============================== */
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token expired or unauthorized
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+ 
 export default API;
-
 export const getDashboardStats = () => API.get("/Case/dashboard-stats");
 export const getApplications = () => API.get("/Application/all");
 export const getAllCases = () => API.get("/Case/all");
@@ -28,4 +62,5 @@ export const autoEscalateCases = () =>API.post("/Escalation/auto-escalate");
 export const getAllUsers = () => { return API.get("/User/all");};
 export const getRoles = () => API.get("/Roles");
 export const getServices = () => API.get("/Services");
-
+ 
+ 
