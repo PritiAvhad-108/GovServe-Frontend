@@ -20,6 +20,10 @@ const RejectedCasesPage = () => {
                 if (Array.isArray(data)) {
                     const strictlyRejected = data.filter(item => item.status === 'Rejected');
                     setRejectedCases(strictlyRejected);
+
+                    // 👇 ADDED: Console log to inspect the C# response
+                    console.log("🕵️‍♂️ REJECTED LIST DATA FROM C#:", strictlyRejected);
+
                 } else {
                     setRejectedCases([]);
                 }
@@ -42,7 +46,7 @@ const RejectedCasesPage = () => {
                 {/* 🚨 FIX: Centered Header */ }
                 <div className="rejected-header">
                     <h2>Rejected Applications</h2>
-                    <p className="custom-breadcrumb">Officer / Rejected Cases</p>
+                    {/* <p className="custom-breadcrumb">s</p> */}
                 </div>
 
                 <div className="table-responsive">
