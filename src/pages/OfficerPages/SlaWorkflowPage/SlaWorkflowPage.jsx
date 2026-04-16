@@ -44,7 +44,7 @@ const SlaWorkflowPage = () => {
                 
                 {/* 🚨 FIX: Header is now grouped and centered via CSS */}
                 <div className="sla-header">
-                    <h2>SLA and Workflow</h2>
+                    <h2>SLA Record</h2>
                     <div className="custom-breadcrumb"></div>
                 </div>
 
