@@ -1,7 +1,7 @@
 /* SIDEBAR CONTAINER */
 .sidebar {
   width: 240px;
-  background-color: #ffffff;
+  background-color: #e7f3f6;
   min-width: 240px;
   height: 100%;
   border-right: 1px solid #e5e7eb;
@@ -36,9 +36,9 @@
   color: #1e3a8a;
 }
 
-/* ✅ OPTIONAL: ACTIVE STATE (future-safe) */
+/* ACTIVE STATE (future-safe) */
 .sidebar-list li.active {
-  background-color: #e6f0ff;
-  color: #1f3c88;
+ background: #bfdbfe;
   font-weight: 600;
+  box-shadow: inset 3px 0 0 #1e3a8a;
 }

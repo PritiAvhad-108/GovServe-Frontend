@@ -38,7 +38,12 @@ function LoginPage() {
       );
  
       const { token } = response.data;
+
  
+
+
+
+
       // ✅ DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
  
@@ -53,9 +58,6 @@ function LoginPage() {
         decodedToken.role;
 
 
-        
- 
-      // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
       login({
         token,
         roleName: userRoleFromToken,
@@ -75,7 +77,11 @@ function LoginPage() {
         else if (userRoleFromToken === "Citizen") navigate("/citizen");
         else if (userRoleFromToken === "Supervisor") navigate("/supervisor");
         else if (userRoleFromToken === "Officer") navigate("/officer");
+ 
         else if (userRoleFromToken === "Grievance Officer") navigate("/grievances");
+
+        else if(userRoleFromToken === "Grievance Officer") navigate("/grievances");
+
         else navigate("/");
       }, 1000);
  
@@ -106,7 +112,11 @@ function LoginPage() {
                 ? "/supervisor"
                 : userRole === "Officer"
                 ? "/officer"
-                :userRole === "Grievance Officer"
+
+               
+
+                : userRole === "Grievance Officer"
+
                 ? "/grievances"
                 : "/"
             }

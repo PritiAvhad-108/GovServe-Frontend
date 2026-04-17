@@ -16,7 +16,7 @@
   margin-bottom: 32px;
 }
 
-/* ✅ Responsive */
+/*  Responsive */
 @media (max-width: 900px) {
   .dashboard-cards {
     grid-template-columns: repeat(2, 1fr);
