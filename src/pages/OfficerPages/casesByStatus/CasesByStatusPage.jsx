@@ -70,7 +70,7 @@ const CasesByStatusPage = ({ statusTitle }) => {
                                     <tr key={c.caseId}>
                                         <td style={{ fontWeight: '600' }}> {c.caseId}</td>
                                         
-                                        {/* 🚨 THE FIX: Use the Super Name Checker so it never misses a name! */}
+                            
                                         <td>
                                             {
                                                 c.user?.fullName || 
@@ -85,8 +85,7 @@ const CasesByStatusPage = ({ statusTitle }) => {
                                         {/* ✅ UPDATED: Look inside the application object for the service */}
                                         <td>{c.application?.service?.serviceName || c.application?.serviceName || 'General'}</td>
                                         
-                                        {/* ✅ UPDATED: Use completedDate or assignedDate directly from database */}
-                                        {/* ✅ NEW DATE CODE (Shows the exact applied date) */}
+    
                                         <td>
                                             {c.application?.submittedDate 
                                                 ? new Date(c.application.submittedDate).toLocaleDateString('en-GB') 

@@ -274,18 +274,7 @@ const CaseDetailsPage = () => {
                                             >
                                                 View
                                             </button>
-                                            <button 
-                                                className={`doc-action-btn icon-btn ${currentStatus === 'Approved' ? 'active-green' : ''}`}
-                                                onClick={() => handleDocAction(doc.documentId, 'Approved')}
-                                            >
-                                                ✓
-                                            </button>
-                                            <button 
-                                                className={`doc-action-btn icon-btn ${currentStatus === 'Rejected' ? 'active-red' : ''}`}
-                                                onClick={() => handleDocAction(doc.documentId, 'Rejected')}
-                                            >
-                                                ✕
-                                            </button>
+                    
                                         </div>
                                     </div>
                                 );

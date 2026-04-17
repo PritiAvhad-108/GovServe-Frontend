@@ -87,7 +87,7 @@ const OfficerProfile = () => {
                     </div>
 
                     {/* ✅ Used a Check Circle for the active status */}
-                    <div className="info-item">
+                    {/* <div className="info-item">
                         <div className="icon-box"><FaCheckCircle /></div>
                         <div className="info-detail">
                             <label>Status</label>
@@ -95,7 +95,7 @@ const OfficerProfile = () => {
                                 {user?.status || "Active"}
                             </span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

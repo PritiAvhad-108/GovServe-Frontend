@@ -8,8 +8,7 @@ const AssignedCasesPage = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // Get officerId from localStorage or default to 1 for testing
-    // Clean the ID to ensure no "1:1" or extra characters exist
+
     const rawUserId = localStorage.getItem('userId');
     const officerId = rawUserId ? rawUserId.toString().split(':')[0] : 2;
 

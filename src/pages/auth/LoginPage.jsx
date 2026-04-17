@@ -51,6 +51,9 @@ function LoginPage() {
       const userRoleFromToken =
         decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
         decodedToken.role;
+
+
+        
  
       // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
       login({
