@@ -20,7 +20,7 @@ function RegisterPage() {
 
   useEffect(() => {
     axios.get("https://localhost:7027/api/Roles").then(res => setRoles(res.data)).catch(console.error);
-    axios.get("https://localhost:7027/api/Department").then(res => setDepartments(res.data)).catch(console.error);
+    axios.get("https://localhost:7027/api/Department/active").then(res => setDepartments(res.data)).catch(console.error);
   }, []);
 
   const validate = () => {
