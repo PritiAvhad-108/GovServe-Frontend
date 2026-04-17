@@ -36,7 +36,7 @@ const StatsAndCTA = () => {
 
         <div className="cta-buttons">
           
-          <Link to="/register" className="primary-btn">
+          <Link to="/register" className="primary-btnn">
             Create Account
           </Link>
           

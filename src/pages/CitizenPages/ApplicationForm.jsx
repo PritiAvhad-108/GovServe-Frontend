@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import "../../styles/CitizenStyles/pages/ApplicationForm.css";
-
+ 
 const ApplicationForm = () => {
   const { id } = useParams();  
   const navigate = useNavigate();
@@ -15,16 +15,16 @@ const ApplicationForm = () => {
   const [apiError, setApiError] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [generatedAppId, setGeneratedAppId] = useState("");
-  
+ 
   const [serviceData, setServiceData] = useState(null);
   const [requiredDocs, setRequiredDocs] = useState([]);
   const [existingDocs, setExistingDocs] = useState([]);
-
+ 
   const currentUserId = localStorage.getItem("userId");  
   const token = localStorage.getItem("jwtToken");  
-
+ 
   const isEditMode = window.location.pathname.includes("edit-application");
-
+ 
   const [citizen, setCitizen] = useState({
     fullName: "",
     gender: "",
@@ -40,25 +40,59 @@ const ApplicationForm = () => {
     pincode: "",
     aadhaarNumber: ""
   });
+ 
+  const [files, setFiles] = useState({});
   
-  const [files, setFiles] = useState({});  
+  
+ /* ✅ validation state */
+  const [errors, setErrors] = useState({});
+
+  /* ✅ all fields mandatory */
+  const mandatoryFields = [
+    "fullName",
+    "fatherName",
+    "motherName",
+    "gender",
+    "dateOfBirth",
+    "aadhaarNumber",
+    "phone",
+    "email",
+    "addressLine1",
+    "addressLine2",
+    "city",
+    "state",
+    "pincode"
+  ];
+  
+/* ✅ validation function */
+  const validateStep2 = () => {
+    const newErrors = {};
+    mandatoryFields.forEach(f => {
+      if (!citizen[f] || citizen[f].trim() === "") {
+        newErrors[f] = true;
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
 
   useEffect(() => {
     if (!currentUserId || !token) {
         navigate("/login");
         return;
     }
-
+ 
     const fetchInitialData = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        
+       
         if (isEditMode && id) {
           const res = await axios.get(`https://localhost:7027/api/Application/${id}`, config);
           const data = res.data;
-          
+         
           console.log("Full Application Data:", data);
-
+ 
           const details = data.citizenInfo || data.citizenDetails || {};
           setCitizen({
             fullName: details.fullName || "",
@@ -75,9 +109,9 @@ const ApplicationForm = () => {
             pincode: details.pincode || "",
             aadhaarNumber: details.aadhaarNumber || ""
           });
-
+ 
           setExistingDocs(data.documents || []);
-
+ 
           const svcId = data.serviceID || data.serviceId || (data.service && data.service.serviceID);
           if (svcId) {
             const [svc, docs] = await Promise.all([
@@ -108,14 +142,14 @@ const ApplicationForm = () => {
     };
     fetchInitialData();
   }, [id, currentUserId, token, navigate, isEditMode]);
-
+ 
   const handleSubmit = async () => {
     setSubmitting(true);
     setApiError(null);
-
+ 
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-
+ 
       if (isEditMode) {
         let uploadedDocs = [];
         if (Object.keys(files).length > 0) {
@@ -128,7 +162,7 @@ const ApplicationForm = () => {
             const upRes = await axios.post("https://localhost:7027/api/CitizenDocument/upload", formData, {
               headers: { ...config.headers, 'Content-Type': 'multipart/form-data' }
             });
-            
+           
             return {
               documentName: requiredDocs.find(d => (d.documentID || d.documentId) === parseInt(docId))?.documentName || "",
               documentUrl: upRes.data.url || file.name
@@ -136,19 +170,19 @@ const ApplicationForm = () => {
           });
           uploadedDocs = await Promise.all(uploadPromises);
         }
-
+ 
         const formattedDocs = uploadedDocs.map(doc => ({
           documentName: doc.documentName,
           documentUrl: doc.documentUrl,
           verificationStatus: "Pending",
           uploadedDate: new Date().toISOString()
         }));
-
+ 
         const allDocs = [
           ...(existingDocs || []),
           ...formattedDocs
         ];
-
+ 
         const updatePayload = {
           applicationID: parseInt(id),
           applicationStatus: "Resubmitted",
@@ -160,9 +194,9 @@ const ApplicationForm = () => {
           },
           documents: allDocs
         };
-
+ 
         await axios.put(`https://localhost:7027/api/Application/resubmit/${id}`, updatePayload, config);
-        
+       
         setGeneratedAppId(id);
         setShowSuccess(true);
       } else {
@@ -172,16 +206,16 @@ const ApplicationForm = () => {
           serviceID: parseInt(id),
           departmentID: parseInt(deptId)
         }, config);
-
+ 
         const newAppId = appRes.data.applicationID || appRes.data.applicationId;
         setGeneratedAppId(newAppId);
-
+ 
         await axios.post("https://localhost:7027/api/CitizenDetails/create", {  
           ...citizen,  
           applicationID: newAppId,
           dateOfBirth: new Date(citizen.dateOfBirth).toISOString()
         }, config);
-
+ 
         if (Object.keys(files).length > 0) {
           const uploadPromises = Object.entries(files).map(([docId, file]) => {
             const formData = new FormData();
@@ -201,7 +235,7 @@ const ApplicationForm = () => {
       setSubmitting(false);
     }
   };
-
+ 
  
   return (
     <div className="content-wrapper">
@@ -210,7 +244,7 @@ const ApplicationForm = () => {
           <button className="round-back" onClick={() => navigate(-1)}><ArrowLeft size={16}/></button>
           <h2>{isEditMode ? "Update Service Request" : "Service Request Portal"}</h2>
         </div>
-
+ 
         <div className="step-bar">
           <div className={`dot ${step >= 1 ? "active" : ""}`}>1</div>
           <div className={`line ${step >= 2 ? "active" : ""}`}></div>
@@ -218,9 +252,9 @@ const ApplicationForm = () => {
           <div className={`line ${step >= 3 ? "active" : ""}`}></div>
           <div className={`dot ${step >= 3 ? "active" : ""}`}>3</div>
         </div>
-
+ 
         {apiError && <div className="api-error-alert fade-in"><XCircle size={14}/> {apiError}</div>}
-
+ 
         {step === 1 && serviceData && (
           <div className="step-card fade-in">
             <div className="card-title"><Building2 size={16}/> <h3>Service Information</h3></div>
@@ -249,84 +283,105 @@ const ApplicationForm = () => {
             <div className="compact-form">
               <div className="v-row">
                 <div className="v-input-group">
-                  <label>Full Name</label>
-                  <input value={citizen.fullName} onChange={e => setCitizen({...citizen, fullName: e.target.value})} placeholder="As per Aadhaar" />
+                  <label>Full Name *</label>
+                  <input value={citizen.fullName} onChange={e => setCitizen({...citizen, fullName: e.target.value})} placeholder="As per Aadhaar" />          
+                  {errors.fullName && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
                 <div className="v-input-group">
-                  <label>Father's Name</label>
+                  <label>Father's Name *</label>
                   <input value={citizen.fatherName} onChange={e => setCitizen({...citizen, fatherName: e.target.value})} placeholder="Full name of Father" />
+                  {errors.fatherName && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
               </div>
-
+ 
               <div className="v-row">
                 <div className="v-input-group">
-                  <label>Mother's Name</label>
+                  <label>Mother's Name *</label>
                   <input value={citizen.motherName} onChange={e => setCitizen({...citizen, motherName: e.target.value})} placeholder="Full name of Mother" />
+                  {errors.motherName && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
                 <div className="v-input-group">
-                  <label>Gender</label>
+                  <label>Gender *</label>
                   <select value={citizen.gender} onChange={e => setCitizen({...citizen, gender: e.target.value})}>
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
+                    {errors.gender && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
               </div>
-
+ 
               <div className="v-row">
                 <div className="v-input-group">
-                  <label>Date of Birth</label>
+                  <label>Date of Birth *</label>
                   <input type="date" value={citizen.dateOfBirth} onChange={e => setCitizen({...citizen, dateOfBirth: e.target.value})} />
+                   {errors.dateOfBirth && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
                 <div className="v-input-group">
-                  <label>Aadhaar Number</label>
+                  <label>Aadhaar Number *</label>
                   <input maxLength="12" value={citizen.aadhaarNumber} onChange={e => setCitizen({...citizen, aadhaarNumber: e.target.value})} placeholder="12 Digit UIDAI No" />
+                   {errors.aadhaarNumber && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
               </div>
-
+ 
               <div className="v-row">
                 <div className="v-input-group">
-                  <label>Phone Number</label>
+                  <label>Phone Number *</label>
                   <input maxLength="10" value={citizen.phone} onChange={e => setCitizen({...citizen, phone: e.target.value})} placeholder="10 Digit Mobile" />
+                   {errors.phone && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
                 <div className="v-input-group">
-                  <label>Email Address</label>
+                  <label>Email Address *</label>
                   <input type="email" value={citizen.email} onChange={e => setCitizen({...citizen, email: e.target.value})} placeholder="example@mail.com" />
+                   {errors.email && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
               </div>
-
+ 
               <div className="v-input-group full">
-                <label>Address Line 1</label>
+                <label>Address Line 1 *</label>
                 <input value={citizen.addressLine1} onChange={e => setCitizen({...citizen, addressLine1: e.target.value})} placeholder="House No, Building, Area" />
+                 {errors.addressLine1 && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
               </div>
               <div className="v-input-group full">
-                <label>Address Line 2</label>
+                <label>Address Line 2 *</label>
                 <input value={citizen.addressLine2} onChange={e => setCitizen({...citizen, addressLine2: e.target.value})} placeholder="House No, Building, Area" />
+                 {errors.addressLine2 && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
               </div>
               <div className="v-row">
                 <div className="v-input-group">
-                  <label>City / Village</label>
+                  <label>City / Village *</label>
                   <input value={citizen.city} onChange={e => setCitizen({...citizen, city: e.target.value})} placeholder="Enter City" />
+                  {errors.city && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
                 <div className="v-input-group">
-                  <label>State</label>
+                  <label>State *</label>
                   <input value={citizen.state} onChange={e => setCitizen({...citizen, state: e.target.value})} placeholder="Enter State" />
+                  {errors.state && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
                 <div className="v-input-group">
-                  <label>Pincode</label>
+                  <label>Pincode * </label>
                   <input maxLength="6" value={citizen.pincode} onChange={e => setCitizen({...citizen, pincode: e.target.value})} placeholder="6 Digits" />
+                  {errors.pincode && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
                 </div>
               </div>
             </div>
-
+ 
             <div className="card-actions">
               <button className="btn-back" onClick={() => setStep(1)}>Back</button>
-              <button className="btn-primary" onClick={() => setStep(3)}>Next: Upload Docs <ArrowRight size={14}/></button>
+              <button
+                className="btn-primary"
+                onClick={() => {
+                  if (validateStep2()) setStep(3);
+                }}
+              >
+                Next: Upload Docs <ArrowRight size={14} />
+              </button>
+
             </div>
           </div>
         )}
-
+ 
         {step === 3 && (
           <div className="step-card fade-in">
             <div className="card-title"><ClipboardList size={16}/> <h3>Upload Proofs</h3></div>
@@ -336,7 +391,7 @@ const ApplicationForm = () => {
                   <div className="upload-text">
                     <span className="doc-label">{doc.documentName}</span>
                     {files[doc.documentID] && <span className="file-name">{files[doc.documentID].name}</span>}
-                    {isEditMode && !files[doc.documentID] && <span className="file-name status-pending">Existing document attached</span>}
+                    {isEditMode && files[doc.documentID] && <span className="file-name status-pending">Existing document attached</span>}
                   </div>
                   <label className={`upload-btn-label ${files[doc.documentID] ? 'uploaded' : ''}`}>
                     {files[doc.documentID] ? <CheckCircle size={16}/> : <Upload size={16}/>}
@@ -354,7 +409,7 @@ const ApplicationForm = () => {
           </div>
         )}
       </div>
-
+ 
       {showSuccess && (
         <div className="modal-overlay">
           <div className="success-card">
@@ -371,5 +426,6 @@ const ApplicationForm = () => {
     </div>
   );
 };
-
+ 
 export default ApplicationForm;
+ 

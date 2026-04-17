@@ -76,7 +76,7 @@ const MyApplications = () => {
   return (
     <div className="content-wrapper">
       
-      {/* Search Section */}
+      
       <div className="search-section">
         <div className="search-box-attractive">
           <Search size={20} className="search-icon-color" />

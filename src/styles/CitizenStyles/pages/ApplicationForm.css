@@ -1,5 +1,5 @@
 /* ==========================================
-    1. LAYOUT & CONTAINERS
+     LAYOUT & CONTAINERS
    ========================================== */
 .app-layout {
     display: flex;
@@ -27,7 +27,7 @@
 }
 
 /* ==========================================
-    2. STEPPER HEADER & INDICATORS
+    STEPPER HEADER
    ========================================== */
 .stepper-header {
     display: flex;
@@ -90,7 +90,7 @@
 .line.active { background: #1e3a8a; }
 
 /* ==========================================
-    3. CARD DESIGN & TITLES
+    CARD DESIGN & TITLES
    ========================================== */
 .step-card {
     background: white;
@@ -117,7 +117,7 @@
 }
 
 /* ==========================================
-    4. FORM GRID SYSTEM
+    FORM GRID SYSTEM
    ========================================== */
 .compact-form {
     display: flex;
@@ -143,7 +143,7 @@
 .v-input-group.full { width: 100%; }
 
 /* ==========================================
-    5. LABELS, INPUTS & READONLY
+    LABELS, INPUTS
    ========================================== */
 .v-input-group label {
     display: flex;
@@ -189,7 +189,7 @@
 }
 
 /* ==========================================
-    6. UPLOAD SECTION (NEW)
+    UPLOAD SECTION 
    ========================================== */
 .upload-list {
     display: flex;
@@ -215,7 +215,17 @@
 }
 
 .doc-label { font-size: 13px; font-weight: 600; color: #1e293b; }
-.file-name { font-size: 11px; color: #10b981; font-weight: 500; }
+
+
+
+.file-name {
+    background: transparent !important;
+    color: #10b981 !important;   /* green text */
+    text-decoration: none !important;
+    font-weight: 500; 
+    font-size: 11px; 
+}
+
 
 .upload-btn-label {
     width: 34px;
@@ -237,7 +247,7 @@
 }
 
 /* ==========================================
-    7. SUCCESS MODAL (NEW & EFFECTIVE)
+    SUCCESS MODAL (NEW & EFFECTIVE)
    ========================================== */
 .modal-overlay {
     position: fixed;
@@ -308,7 +318,7 @@
 .btn-modal-close:hover { background: #059669; transform: translateY(-2px); }
 
 /* ==========================================
-    8. BUTTONS & ANIMATIONS
+     BUTTONS & ANIMATIONS
    ========================================== */
 .card-actions {
     display: flex;

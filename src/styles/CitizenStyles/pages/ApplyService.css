@@ -1,5 +1,5 @@
 /* ==========================================
-   1. LAYOUT STRUCTURE 
+   LAYOUT STRUCTURE 
    ========================================== */
 .app-container {
     display: flex;
@@ -30,7 +30,7 @@
 }
 
 /* ==========================================
-   2. SEARCH BAR STYLING 
+   SEARCH BAR STYLING 
    ========================================== */
 .search-section {
   position: sticky;  
@@ -68,7 +68,7 @@
 }
 
 /* ==========================================
-   3. SERVICE CARD - FULL WIDTH ALIGNMENT
+   SERVICE CARD - FULL WIDTH ALIGNMENT
    ========================================== */
 .service-list-vertical {
     display: flex;
@@ -118,7 +118,7 @@
 }
 
 /* ==========================================
-   4. TEXT DETAILS (Spread across full width)
+   TEXT DETAILS (Spread across full width)
    ========================================== */
 .service-text-details {
     display: flex;
@@ -178,7 +178,7 @@
 }
 
 /* ==========================================
-   5. PAGINATION
+   PAGINATION
    ========================================== */
 .pagination-footer {
     display: flex;
