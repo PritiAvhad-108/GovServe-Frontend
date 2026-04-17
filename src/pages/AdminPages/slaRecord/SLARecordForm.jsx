@@ -6,7 +6,7 @@ export default function SLARecordForm({
   onClose,
   onSave,
   caseId,
-  editData // present when editing
+  editData 
 }) {
   const [cases, setCases] = useState([]);
   const [stages, setStages] = useState([]);

@@ -45,7 +45,7 @@ export const getDashboardStats = () => API.get("/Case/dashboard-stats");
 export const getApplications = () => API.get("/Application/all");
 export const getAllCases = () => API.get("/Case/all");
 export const getCaseDetails = (id) => API.get(`/Case/case-details/${id}`);
-export const getDepartments = () => API.get("/Department");
+export const getDepartments = () => API.get("/Department/active");
 export const getOfficers = (id) => API.get(`/Officer/by-department/${id}`);
 export const assignCase = (data) => API.post("/Case/assign", data);
 export const autoAssignCase = (data) => API.post("/Case", data);

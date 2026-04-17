@@ -70,10 +70,11 @@ function App() {
         <Route
           path="/admin/*"
           element={
-            
+            <AuthGuard>
             <RoleGuard allowedRoles={["Admin"]}>
               <AdminRoutes />
             </RoleGuard>
+            </AuthGuard>
            
           }
         />
