@@ -5,19 +5,19 @@ import ActionModal from '../../../components/OfficerComponents/common/ActionModa
 // ✅ ADDED markCaseAsPending to the imports
 import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending } from '../../../api/officerApi';
 import './CaseDetails.css';
-
+ 
 const CaseDetailsPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-
+ 
     const [details, setDetails] = useState(null);
     const [documents, setDocuments] = useState([]);
     const [pageLoading, setPageLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const [selectedDocUrl, setSelectedDocUrl] = useState(null); 
-    const [docStatuses, setDocStatuses] = useState({}); 
-    
+ 
+    const [selectedDocUrl, setSelectedDocUrl] = useState(null);
+    const [docStatuses, setDocStatuses] = useState({});
+   
     // =================================================================
     // ✅ FIX 1: Fetch the main Case Details when the page loads
     // =================================================================
@@ -26,12 +26,12 @@ const CaseDetailsPage = () => {
             try {
                 setPageLoading(true);
                 // Call your API to get the case data based on the URL id
-                const response = await getCaseDetails(id); 
-                setDetails(response.data || response); 
-
+                const response = await getCaseDetails(id);
+                setDetails(response.data || response);
+ 
                 // 👇 ADDED: Log the exact data structure from C# to the console
                 console.log("🕵️‍♂️ RAW DATA FROM C#:", response.data || response);
-
+ 
             } catch (error) {
                 console.error("Failed to fetch case details:", error);
             } finally {
@@ -40,7 +40,7 @@ const CaseDetailsPage = () => {
         };
         fetchMainDetails();
     }, [id]);
-    
+   
     // 🚨 REMOVED the useOfficerActions hook to handle it directly below
     const applicationId = details?.applicationID || details?.application?.applicationID;
     useEffect(() => {
@@ -48,33 +48,33 @@ const CaseDetailsPage = () => {
             try {
                 const response = await getDocumentsByApplicationId(applicationId);
                 // Ensure it sets an array even if the response is weird
-                setDocuments(response.data || []); 
+                setDocuments(response.data || []);
             } catch (error) {
                 console.error("Failed to fetch documents", error);
             }
         };
-
+ 
         if (applicationId) {
             fetchDocuments();
         }
     }, [applicationId]);
-
+ 
     // --- ✅ NEW LOGIC FOR APPROVING THE WHOLE APPLICATION ---
     const handleApproveApplication = async () => {
         const confirmApprove = window.confirm("Are you sure you want to APPROVE this application?");
         if (!confirmApprove) return;
-
+ 
         try {
             await approveCase(id); // Calls your API
             alert("Application Approved Successfully! Notifications have been sent.");
             // ✅ FIX: Navigates to the exact path your Sidebar uses
-            navigate('/officer/approved'); 
+            navigate('/officer/approved');
         } catch (error) {
             console.error("Error approving application:", error);
             alert("Failed to approve application. Please check the console.");
         }
     };
-
+ 
     // --- ✅ NEW LOGIC FOR REJECTING THE WHOLE APPLICATION ---
     const handleRejectApplication = async (reason) => {
         try {
@@ -82,13 +82,13 @@ const CaseDetailsPage = () => {
             alert("Application Rejected Successfully! Notifications have been sent.");
             setIsModalOpen(false); // Close Modal
             // ✅ FIX: Navigates to the exact path your Sidebar uses
-            navigate('/officer/rejected'); 
+            navigate('/officer/rejected');
         } catch (error) {
             console.error("Error rejecting application:", error);
             alert("Failed to reject application. Please check the console.");
         }
     };
-
+ 
     // --- ✅ ADDED: LOGIC FOR MOVING TO PENDING REVIEW ---
     const handleStartVerification = async () => {
         try {
@@ -101,24 +101,24 @@ const CaseDetailsPage = () => {
             alert("Failed to move case to pending status.");
         }
     };
-
+ 
     const handleDocAction = (docId, status) => {
         setDocStatuses(prev => ({ ...prev, [docId]: status }));
     };
-
+ 
     if (pageLoading) return <div className="p-10">Loading application details...</div>;
     if (!details) return <div className="p-10">Case details not found.</div>;
-
+ 
     return (
         <div className="application-page">
-
+ 
             <div className="app-header">
                 <button className="back-icon" onClick={() => navigate(-1)}>←</button>
                 <h2>Application Review</h2>
             </div>
-
+ 
             <div className="app-id">Application ID: {id}</div>
-
+ 
             {/* SERVICE OVERVIEW */}
             <div className="card">
                 <h3 className="card-title">Service Overview</h3>
@@ -129,14 +129,14 @@ const CaseDetailsPage = () => {
                         <p className="detail-value">
                             {/* 🚨 THE FIX: Dig deeper to find the real service name! */}
                             {
-                                details.serviceName || 
-                                details.application?.service?.serviceName || 
-                                details.application?.serviceName || 
+                                details.serviceName ||
+                                details.application?.service?.serviceName ||
+                                details.application?.serviceName ||
                                 'N/A'
                             }
                         </p>
                     </div>
-
+ 
                     {/* Department Name */}
                     <div>
                         <label>Department</label>
@@ -144,7 +144,7 @@ const CaseDetailsPage = () => {
                             {details.departmentName || details.department || 'Revenue Department'}
                         </p>
                     </div>
-
+ 
                     {/* Current Status */}
                     <div>
                         <label>Current Status</label>
@@ -152,19 +152,19 @@ const CaseDetailsPage = () => {
                             {details.status || 'Pending'}
                         </span>
                     </div>
-
+ 
                     {/* Submission Date */}
                     <div>
                         <label>Submission Date</label>
                         <p className="detail-value">
-                            {details.assignedDate 
-                                ? new Date(details.assignedDate).toLocaleString() 
+                            {details.assignedDate
+                                ? new Date(details.assignedDate).toLocaleString()
                                 : 'N/A'}
                         </p>
                     </div>
                 </div>
             </div>
-
+ 
             {/* CITIZEN DETAILS */}
             <div className="card">
                 <h3 className="card-title">Citizen Personal Details</h3>
@@ -180,8 +180,8 @@ const CaseDetailsPage = () => {
                     <div className="grid-item">
                         <label>Date of Birth</label>
                         <p>
-                            {details.dateOfBirth 
-                                ? new Date(details.dateOfBirth).toLocaleDateString() 
+                            {details.dateOfBirth
+                                ? new Date(details.dateOfBirth).toLocaleDateString()
                                 : '-'}
                         </p>
                     </div>
@@ -211,25 +211,25 @@ const CaseDetailsPage = () => {
                     </div>
                 </div>
             </div>
-
+ 
             {/* DOCUMENTS SECTION */}
             <div className="card">
                 <h3 className="card-title">Uploaded Documents</h3>
-                
+               
                 {/* ✅ ADDED: Start Verification Trigger Button Here */}
                 <div className="verification-trigger-section" style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '20px' }}>
                     {/* ✅ UPDATED: Smaller size and changed color */}
-                    <button 
+                    <button
                         className="verify-btn"
                         onClick={handleStartVerification}
-                        style={{ 
+                        style={{
                             backgroundColor: '#0ea5e9', /* A nice professional light blue. You can change this hex code! */
-                            color: 'white', 
+                            color: 'white',
                             padding: '6px 14px',        /* Reduced padding makes the button smaller */
                             fontSize: '13px',           /* Slightly smaller text */
-                            borderRadius: '6px', 
-                            border: 'none', 
-                            fontWeight: '600', 
+                            borderRadius: '6px',
+                            border: 'none',
+                            fontWeight: '600',
                             cursor: 'pointer',
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -242,25 +242,25 @@ const CaseDetailsPage = () => {
                         Clicking this will update the status to "Under Verification" and move it to your Pending Review list.
                     </p>
                 </div>
-
+ 
                 {documents.length > 0 ? (
                     <div className="document-section-layout">
                         <div className="document-list">
                             {documents.map((doc, index) => {
                                 const currentStatus = docStatuses[doc.documentId] || doc.status || 'Pending';
-
+ 
                                 // 1. Log the document so we can see exactly what the backend sends
                                 console.log("Document Data from backend:", doc);
-
+ 
                                 // 2. ✅ FIX: Look for ALL possible capitalizations of URI
                                 const filePath = doc.documentUrl || doc.uri || doc.URI || "";
-
+ 
                                 // 3. ✅ FIX: Only build the URL if the file path actually exists
                                 const cleanPath = filePath ? (filePath.startsWith('/') ? filePath : `/${filePath}`) : "";
                                 const fullUrl = cleanPath ? `https://localhost:7027${cleanPath}` : null;
-
+ 
                                 const isCurrentlyViewing = selectedDocUrl === fullUrl;
-
+ 
                                 return (
                                     <div key={doc.documentId || index} className={`doc-row ${isCurrentlyViewing ? 'active-row' : ''}`}>
                                         <div className="doc-info">
@@ -268,13 +268,13 @@ const CaseDetailsPage = () => {
                                             <span className="doc-name">{doc.documentName || `Document ${index + 1}`}</span>
                                         </div>
                                         <div className="doc-controls">
-                                            <button 
-                                                className="doc-action-btn view-btn" 
+                                            <button
+                                                className="doc-action-btn view-btn"
                                                 onClick={() => setSelectedDocUrl(fullUrl)}
                                             >
                                                 View
                                             </button>
-                    
+                   
                                         </div>
                                     </div>
                                 );
@@ -293,22 +293,23 @@ const CaseDetailsPage = () => {
                     <p className="no-doc">No documents uploaded.</p>
                 )}
             </div>
-
+ 
             {/* ✅ ACTIONS: NOW WIRED TO THE NEW LOCAL FUNCTIONS */}
             <div className="action-buttons">
                 <button className="approve-btn" onClick={handleApproveApplication}>Approve</button>
                 <button className="reject-btn" onClick={() => setIsModalOpen(true)}>Reject</button>
             </div>
-
+ 
             {/* ✅ ACTION MODAL: PASSING THE REJECT FUNCTION */}
             <ActionModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onConfirm={handleRejectApplication} 
+                onConfirm={handleRejectApplication}
                 title="Reason for Rejection"
             />
         </div>
     );
 };
-
+ 
 export default CaseDetailsPage;
+ 
