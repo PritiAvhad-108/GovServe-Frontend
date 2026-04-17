@@ -47,7 +47,7 @@ const CaseDetailsPage = () => {
         const fetchDocuments = async () => {
             try {
                 const response = await getDocumentsByApplicationId(applicationId);
-                // Ensure it sets an array even if the response is weird
+               
                 setDocuments(response.data || []); 
             } catch (error) {
                 console.error("Failed to fetch documents", error);

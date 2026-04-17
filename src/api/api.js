@@ -62,5 +62,3 @@ export const autoEscalateCases = () =>API.post("/Escalation/auto-escalate");
 export const getAllUsers = () => { return API.get("/User/all");};
 export const getRoles = () => API.get("/Roles");
 export const getServices = () => API.get("/Services");
- 
- 

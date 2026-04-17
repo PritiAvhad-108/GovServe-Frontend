@@ -26,7 +26,40 @@ body {
   flex: 1;
   padding: 20px ;
   margin-left: 240px;
+  margin-top: 70px;
   background-color: #f5f7fa;
   padding-top: 30px;
   overflow-y: auto;
 }
+
+/* =========================
+   SUPERVISOR FOOTER
+========================= */
+.grievance-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 40px;
+  background: #1e293b;
+  border-top: 1px solid #e2e8f0;
+  padding: 14px 24px;
+  z-index: 900;
+}
+ 
+ .footer-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.footer-text {
+  font-size: 13px;
+  color: #ffffff;
+  text-align: center;
+}
+ 
+ .footer-text strong {
+  font-weight: 600;
+}
+ 

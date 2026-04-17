@@ -12,17 +12,29 @@ const AppealDetailsCard = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ Officer side: appeal object list मधून येतो
+  //   appeal object list 
   const appeal = location.state;
 
   const [remarks, setRemarks] = useState("");
 
-  // ✅ Safety check
+  //  Safety check
   if (!appeal) {
     return <p className="loading">No appeal data available</p>;
   }
+  
 
-  // ✅ Officer Approve
+  const handleViewCase = () => {
+  if (!appeal || !appeal.applicationID) {
+    alert("Application ID not found");
+    return;
+  }
+
+  //  Navigate to existing GrievanceCaseDetail page
+  navigate(`/grievances/case/${appeal.applicationID}`);
+};
+
+
+  //  Officer Approve
   const handleApprove = async () => {
     if (!remarks.trim()) {
       alert("Please enter remarks");
@@ -34,7 +46,7 @@ const AppealDetailsCard = () => {
     navigate("/grievances/appeals");
   };
 
-  // ✅ Officer Reject
+  //  Officer Reject
   const handleReject = async () => {
     if (!remarks.trim()) {
       alert("Please enter remarks");
@@ -72,6 +84,17 @@ const AppealDetailsCard = () => {
           onChange={(e) => setRemarks(e.target.value)}
           disabled={appeal.status !== "Submitted"}
         />
+
+        <div className="view-case-btn-container">
+  <button
+    type="button"
+    className="view-case-btn"
+    onClick={handleViewCase}
+  >
+    View Case
+  </button>
+</div>
+
 
         <div className="action-buttons">
           <button

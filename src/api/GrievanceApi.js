@@ -1,60 +1,92 @@
 import axios from "axios";
 
-/* ✅ BASE URLS */
-const GRIEVANCE_BASE_URL = "https://localhost:7027/api/Grievance";
-const APPEAL_BASE_URL = "https://localhost:7027/api/Appeal";
+/* ===============================
+   ✅ AXIOS INSTANCE + JWT TOKEN
+================================ */
 
+const api = axios.create({
+  baseURL: "https://localhost:7027/api",
+});
 
-// Get all grievances
+// ✅ Auto add Bearer token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+/* ===============================
+   ✅ GRIEVANCE APIs
+================================ */
+
 export const getAllGrievances = () =>
-  axios.get(`${GRIEVANCE_BASE_URL}/all`);
+  api.get("/Grievance/all");
 
-// Get pending grievance count
 export const getPendingGrievanceCount = () =>
-  axios.get(`${GRIEVANCE_BASE_URL}/count/pending`);
+  api.get("/Grievance/count/pending");
 
-// Get resolved grievance count
 export const getResolvedGrievanceCount = () =>
-  axios.get(`${GRIEVANCE_BASE_URL}/count/resolved`);
+  api.get("/Grievance/count/resolved");
 
-// Resolve grievance
 export const resolveGrievance = (id, remarks) =>
-  axios.put(`${GRIEVANCE_BASE_URL}/resolve/${id}`, { remarks });
+  api.put(`/Grievance/resolve/${id}`, { remarks });
 
-// Reject grievance
 export const rejectGrievance = (id, remarks) =>
-  axios.put(`${GRIEVANCE_BASE_URL}/reject/${id}`, { remarks });
+  api.put(`/Grievance/reject/${id}`, { remarks });
 
-/* =========================
+export const getCaseIdByApplicationId = (applicationId) =>
+  api.get(`/Grievance/GetCaseIdByApplicationId/${applicationId}`);
+
+/* ===============================
+   ✅ CASE APIs
+================================ */
+
+export const getCaseDetailsByCaseId = (caseId) =>
+  api.get(`/Case/case-details/${caseId}`);
+
+/* ===============================
    ✅ APPEAL APIs
-========================= */
+================================ */
 
-// Get all submitted appeals
 export const getSubmittedAppeals = () =>
-  axios.get(`${APPEAL_BASE_URL}/submitted`);
+  api.get("/Appeal/submitted");
 
-// Get pending appeal count
 export const getPendingAppealCount = () =>
-  axios.get(`${APPEAL_BASE_URL}/count/pending`);
+  api.get("/Appeal/count/pending");
 
-// Get resolved appeal count
 export const getResolvedAppealCount = () =>
-  axios.get(`${APPEAL_BASE_URL}/count/Resolve`);
+  api.get("/Appeal/count/Resolve");
 
-// View appeal details by ID
 export const getAppealById = (id) =>
-  axios.get(`${APPEAL_BASE_URL}/status/${id}`);
+  api.get(`/Appeal/status/${id}`);
 
-// Approve appeal
 export const approveAppeal = (appealId, remarks) =>
-  axios.put(`${APPEAL_BASE_URL}/approve`, {
+  api.put("/Appeal/approve", {
     appealID: appealId,
     remarks,
   });
 
-// Reject appeal
 export const rejectAppeal = (appealId, remarks) =>
-  axios.put(`${APPEAL_BASE_URL}/reject`, {
+  api.put("/Appeal/reject", {
     appealID: appealId,
     remarks,
   });
+
+/* ===============================
+   ✅ NOTIFICATION APIs
+================================ */
+
+export const getUserNotifications = (userId) =>
+  api.get(`/Notification/user/${userId}`);
+
+/* ===============================
+   ✅ DOCUMENT APIs
+================================ */
+
+export const getDocumentsByApplicationId = (applicationId) =>
+  api.get(`/CitizenDocument/GetDocumentsByApplicationId/${applicationId}`);

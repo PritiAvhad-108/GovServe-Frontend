@@ -111,3 +111,67 @@
 .dropdown-item.logout {
   color: #dc2626;
 }
+/* Profile dropdown card */
+.profile-dropdown-card {
+  position: absolute;
+  top: 60px;
+  width: 300px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  text-align: center;
+}
+
+/* Close button */
+.dropdown-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+
+
+/* Greeting */
+.profile-greeting {
+  margin-top: 14px;
+  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Buttons */
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.profile-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #92a8d3;
+  background: #f4f2f2;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.profile-btn:hover {
+  background: #a2b6cb;
+}
+
+.profile-btn.logout {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* Footer */
+.profile-footer {
+  font-size: 12px;
+  color: #6b7280;
+}
