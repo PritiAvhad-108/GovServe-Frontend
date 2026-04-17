@@ -76,6 +76,7 @@ const AssignedGrievances = ({ grievances: dashboardGrievances }) => {
                           { state: g }
                         )
                       }
+                      
                     >
                       View
                     </button>
