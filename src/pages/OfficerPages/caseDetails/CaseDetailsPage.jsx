@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DocumentPreview from '../../../components/OfficerComponents/common/DocumentPreview';
 import ActionModal from '../../../components/OfficerComponents/common/ActionModal';
-// ✅ ADDED markCaseAsPending to the imports
-import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending } from '../../../api/officerApi';
+import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending } from '../../../api/officerapi';
 import './CaseDetails.css';
  
 const CaseDetailsPage = () => {
@@ -17,10 +16,6 @@ const CaseDetailsPage = () => {
  
     const [selectedDocUrl, setSelectedDocUrl] = useState(null);
     const [docStatuses, setDocStatuses] = useState({});
-   
-    // =================================================================
-    // ✅ FIX 1: Fetch the main Case Details when the page loads
-    // =================================================================
     useEffect(() => {
         const fetchMainDetails = async () => {
             try {
