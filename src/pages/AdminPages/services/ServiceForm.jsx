@@ -16,7 +16,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     status: "Active",
   });
 
-  /* ✅ Initialize form when editing */
+  /*  Initialize form when editing */
   useEffect(() => {
     if (isEdit) {
       setForm({
@@ -29,7 +29,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     }
   }, [isEdit, service]);
 
-  /* ✅ Load departments ONLY for CREATE */
+  /* Load departments ONLY for CREATE */
   useEffect(() => {
     if (!isEdit) {
       api
@@ -41,7 +41,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     }
   }, [isEdit]);
 
-  /* ✅ Validation */
+  /*  Validation */
   const validateForm = () => {
     const newErrors = {};
 

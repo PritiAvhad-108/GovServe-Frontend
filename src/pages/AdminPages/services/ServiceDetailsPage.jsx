@@ -35,7 +35,7 @@ export default function ServiceDetailsPage() {
       /* Eligibility Rules */
       try {
         const rulesRes = await api.get(
-          `/EligibilityRules/search?serviceName=${encodeURIComponent(
+          `/EligibilityRules/search?serviceName=${encodeURIComponent(  //encodeURIComponent to handle spaces/special chars in serviceName(prevent URL Issues)
             serviceName
           )}`
         );
