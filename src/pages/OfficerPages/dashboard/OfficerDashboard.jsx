@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { OfficerDashboardCount } from '../../../api/OfficerDashboard';
 import StatCard from '../../AdminPages/dashboard/StatCard'; 
 import './OfficerDashboard.css';
 
 const OfficerDashboard = () => {
+    const navigate = useNavigate(); 
+
     const [counts, setCounts] = useState({
         assigned: 0,
         pending: 0,
@@ -13,7 +16,6 @@ const OfficerDashboard = () => {
     });
     const [loading, setLoading] = useState(true);
 
-    // Get ID from localStorage, defaulting to 1 if not found
     const officerId = localStorage.getItem('userId') || 2; 
 
     useEffect(() => {
@@ -22,14 +24,7 @@ const OfficerDashboard = () => {
 
             try {
                 setLoading(true);
-                
-                // Fetch the response from your API utility
                 const response = await OfficerDashboardCount(officerId);
-                
-                // Logging for verification: Look for the 'data' property in the console
-                console.log("Axios Response:", response);
-
-                // Destructure the actual body sent by the backend (response.data)
                 const apiData = response.data;
 
                 if (apiData) {
@@ -68,36 +63,53 @@ const OfficerDashboard = () => {
             </header>
 
             <div className="stats-grid">
-                <StatCard 
-                    title="Assigned" 
-                    value={counts.assigned} 
-                    icon="📋" 
-                    color="#3498db" 
-                />
-                <StatCard 
-                    title="Pending" 
-                    value={counts.pending} 
-                    icon="⏳" 
-                    color="#f1c40f" 
-                />
-                <StatCard 
-                    title="Approved" 
-                    value={counts.approved} 
-                    icon="✅" 
-                    color="#2ecc71" 
-                />
-                <StatCard 
-                    title="Resubmitted" 
-                    value={counts.resubmitted} 
-                    icon="🔄" 
-                    color="#9b59b6" 
-                />
-                <StatCard 
-                    title="Rejected" 
-                    value={counts.rejected} 
-                    icon="❌" 
-                    color="#e74c3c" 
-                />
+                
+                {/* ✅ FIXED: Updated path to '/officer/assigned-cases' */}
+                <div onClick={() => navigate('/officer/assigned-cases')} style={{ cursor: 'pointer' }}>
+                    <StatCard 
+                        title="Assigned" 
+                        value={counts.assigned} 
+                        icon="📋" 
+                        color="#3498db" 
+                    />
+                </div>
+
+                {/* ✅ FIXED: Updated path to '/officer/pending-review' */}
+                <div onClick={() => navigate('/officer/pending-review')} style={{ cursor: 'pointer' }}>
+                    <StatCard 
+                        title="Pending" 
+                        value={counts.pending} 
+                        icon="⏳" 
+                        color="#f1c40f" 
+                    />
+                </div>
+
+                <div onClick={() => navigate('/officer/approved')} style={{ cursor: 'pointer' }}>
+                    <StatCard 
+                        title="Approved" 
+                        value={counts.approved} 
+                        icon="✅" 
+                        color="#2ecc71" 
+                    />
+                </div>
+
+                <div onClick={() => navigate('/officer/resubmitted')} style={{ cursor: 'pointer' }}>
+                    <StatCard 
+                        title="Resubmitted" 
+                        value={counts.resubmitted} 
+                        icon="🔄" 
+                        color="#9b59b6" 
+                    />
+                </div>
+
+                <div onClick={() => navigate('/officer/rejected')} style={{ cursor: 'pointer' }}>
+                    <StatCard 
+                        title="Rejected" 
+                        value={counts.rejected} 
+                        icon="❌" 
+                        color="#e74c3c" 
+                    />
+                </div>
             </div>
         </div>
     );

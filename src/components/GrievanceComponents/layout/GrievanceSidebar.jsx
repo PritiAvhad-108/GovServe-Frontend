@@ -12,7 +12,7 @@ const GrievanceSidebar = () => {
   const navigate = useNavigate();
 
   return (
-    <aside className="sidebar">
+    <aside className="grievance-sidebar">
       <ul className="sidebar-list">
         <li onClick={() => navigate("/grievances/dashboard")}>
           <MdDashboard size={18} />
