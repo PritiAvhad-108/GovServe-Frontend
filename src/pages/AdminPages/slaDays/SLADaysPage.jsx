@@ -100,7 +100,7 @@ export default function SLADaysPage() {
         />
 
         <button
-          className="btn btn-primary"
+          className="btn btn-primary create-btn"
           onClick={() => setShowForm({})}
         >
           <Plus size={16} /> Add SLA Days
