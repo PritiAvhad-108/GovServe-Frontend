@@ -75,7 +75,7 @@ const GrievanceDashboard = () => {
         <h2>Grievance Officer Dashboard</h2>
       </div>
 
-      {/* ✅ Grievance Cards */}
+      {/*  Grievance Cards */}
       <div className="dashboard-cards">
         <DashboardCard
           title="Total Grievances"
@@ -96,7 +96,7 @@ const GrievanceDashboard = () => {
         />
       </div>
 
-      {/* ✅ Appeal Cards */}
+      {/*  Appeal Cards */}
       <div className="dashboard-cards">
         <DashboardCard
           title="Total Appeals"
@@ -117,7 +117,7 @@ const GrievanceDashboard = () => {
         />
       </div>
 
-      {/* ✅ Officer Grievance List */}
+      {/*  Officer Grievance List */}
       <AssignedGrievances grievances={grievances} />
     </div>
   );

@@ -16,7 +16,7 @@
 }
 
 /* 🚨 FIX: Centers the Title and Breadcrumb perfectly */
-.sla-header {
+.officer-sla-header {
     display: flex;
     flex-direction: column;
     align-items: center;

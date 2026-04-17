@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import "./slaRecords.css";
-import { Plus, Trash2, Timer } from "lucide-react";
+import { Plus, Trash2, Timer, Edit } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import Pagination from "../../../components/AdminComponents/common/Pagination";
 import SLARecordForm from "./SLARecordForm";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend
+} from "chart.js";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function SLARecordsPage() {
@@ -22,12 +28,12 @@ export default function SLARecordsPage() {
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
-  const [showForm, setShowForm] = useState(null);
+  const [showForm, setShowForm] = useState(null); // ✅ controls create/edit modal
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  /* ========= LOAD DATA ========= */
+  /* ===================== LOAD DATA ===================== */
   const loadAll = async () => {
     try {
       const res = await api.get("/SLARecords");
@@ -53,7 +59,7 @@ export default function SLARecordsPage() {
     isPendingView ? loadPendingCases() : loadAll();
   }, [isPendingView]);
 
-  /* ========= FILTER ========= */
+  /* ===================== FILTER ===================== */
   useEffect(() => {
     if (isPendingView) return;
 
@@ -73,7 +79,7 @@ export default function SLARecordsPage() {
     setCurrentPage(1);
   }, [search, statusFilter, records, isPendingView]);
 
-  /* ========= PIE ========= */
+  /* ===================== PIE CHART ===================== */
   const onTimeCount = records.filter(r => r.status === "OnTime").length;
   const breachedCount = records.filter(r => r.status === "Breached").length;
 
@@ -87,13 +93,13 @@ export default function SLARecordsPage() {
     ]
   };
 
-  /* ========= PAGINATION ========= */
+  /* ===================== PAGINATION ===================== */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
-  /* ========= DELETE ========= */
+  /* ===================== DELETE ===================== */
   const deleteRecord = async (id) => {
     if (!window.confirm("Delete SLA record?")) return;
     try {
@@ -109,11 +115,13 @@ export default function SLARecordsPage() {
     <div className="sla-container">
       <ToastContainer />
 
-      {/* HEADER */}
+      {/* ===================== HEADER ===================== */}
       <div className="sla-header">
         <div>
           <h2 className="page-title">
-            {isPendingView ? "Cases Requiring SLA Setup" : "SLA Record Tracking"}
+            {isPendingView
+              ? "Cases Requiring SLA Setup"
+              : "SLA Record Tracking"}
           </h2>
           <p className="page-subtitle">
             {isPendingView
@@ -133,7 +141,7 @@ export default function SLARecordsPage() {
         </div>
       </div>
 
-      {/* ADD BUTTON (PENDING) */}
+      {/* ===================== ADD BUTTON (PENDING VIEW) ===================== */}
       {isPendingView && (
         <div className="sla-table-actions">
           <button
@@ -145,7 +153,7 @@ export default function SLARecordsPage() {
         </div>
       )}
 
-      {/* PIE + FILTER */}
+      {/* ===================== PIE + FILTER ===================== */}
       {!isPendingView && (
         <>
           <div className="sla-chart-card">
@@ -173,14 +181,17 @@ export default function SLARecordsPage() {
               <option value="Breached">Breached</option>
             </select>
 
-            <button className="btn btn-primary" onClick={() => setShowForm({})}>
+            <button
+              className="btn btn-primary"
+              onClick={() => setShowForm({})}
+            >
               <Plus size={16} /> Create SLA Record
             </button>
           </div>
         </>
       )}
 
-      {/* TABLE */}
+      {/* ===================== TABLE ===================== */}
       <table className="table-white">
         <thead>
           <tr>
@@ -202,7 +213,7 @@ export default function SLARecordsPage() {
                 <th>Start</th>
                 <th>End</th>
                 <th>SLA Status</th>
-                <th className="actions-col">Action</th>
+                <th className="actions-col">Actions</th>
               </>
             )}
           </tr>
@@ -211,7 +222,7 @@ export default function SLARecordsPage() {
         <tbody>
           {currentData.length === 0 ? (
             <tr>
-              <td colSpan={isPendingView ? 7 : 7} className="empty-msg">
+              <td colSpan={7} className="empty-msg">
                 No SLA records found.
               </td>
             </tr>
@@ -234,7 +245,9 @@ export default function SLARecordsPage() {
                   <td>
                     <span className="badge bg-danger">{item.status}</span>
                   </td>
-                  <td>{new Date(item.lastUpdated).toLocaleDateString()}</td>
+                  <td>
+                    {new Date(item.lastUpdated).toLocaleDateString()}
+                  </td>
                 </tr>
               ) : (
                 <tr key={item.slaRecordID}>
@@ -246,13 +259,20 @@ export default function SLARecordsPage() {
                   <td>
                     <span
                       className={`badge ${
-                        item.status === "OnTime" ? "bg-success" : "bg-danger"
+                        item.status === "OnTime"
+                          ? "bg-success"
+                          : "bg-danger"
                       }`}
                     >
                       {item.status}
                     </span>
                   </td>
                   <td className="actions-col">
+                    <Edit
+                      size={18}
+                      className="icon-edit"
+                      onClick={() => setShowForm(item)}
+                    />
                     <Trash2
                       size={18}
                       className="icon-delete"
@@ -272,8 +292,10 @@ export default function SLARecordsPage() {
         onPageChange={setCurrentPage}
       />
 
+      {/* ===================== CREATE / UPDATE MODAL ===================== */}
       {showForm && (
         <SLARecordForm
+          editData={showForm}
           onClose={() => setShowForm(null)}
           onSave={() => {
             setShowForm(null);

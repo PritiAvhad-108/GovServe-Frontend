@@ -15,7 +15,7 @@ function ApplyServices() {
 
   const navigate = useNavigate();
   const servicesPerPage = 4; 
-  const BASE_URL = "https://localhost:7027/api/Services";
+  const BASE_URL = "https://localhost:7027/api/Services/active";
 
   useEffect(() => {
     fetch(`${BASE_URL}/active`)
