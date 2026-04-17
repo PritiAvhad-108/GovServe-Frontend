@@ -9,6 +9,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgetPassword from "./pages/auth/ForgetPassword";
  
+import AuthGuard from "./components/Guards/AuthGaurd";
 import RoleGuard from "./components/Guards/RoleGuard";
 import Citizenroutes from "./routes/Citizenroutes";
 import AdminRoutes from "./routes/Adminroutes";
@@ -67,12 +68,15 @@ function App() {
         />
  
         {/* ADMIN */}
+       
         <Route
           path="/admin/*"
           element={
+             <AuthGuard>
             <RoleGuard allowedRoles={["Admin"]}>
               <AdminRoutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
  
