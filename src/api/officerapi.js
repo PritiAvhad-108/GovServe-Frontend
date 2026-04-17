@@ -51,11 +51,4 @@ export const getDocumentsByApplicationId = async (applicationId) => {
     return await api.get(`/CitizenDocument/GetDocumentsByApplicationId/${applicationId}`);
 };
 
-// // ✅ Changed "ApprovedDocument" to "ApproveDocument" to match your C# code above
-// export const approveDocument = async (docId, caseId) => {
-//     return await api.put(`/CitizenDocument/ApproveDocument/${docId}?id=${caseId}`);
-// };
 
-// export const rejectDocument = async (docId, caseId) => {
-//     return await api.put(`/CitizenDocument/RejectDocument/${docId}?id=${caseId}`);
-// };

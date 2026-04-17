@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCasesByStatus } from '../../../api/officerApi';
+import Pagination from '../../Pagination'; // 🚨 IMPORTANT: Make sure this path points to your Pagination.jsx file!
 import './ApprovedApplicationsPage.css'; 
 
 const ApprovedApplicationsPage = () => {
     const [caseList, setCaseList] = useState([]);
     const [loading, setLoading] = useState(true);
+    
+    // ✅ 1. ADD PAGINATION STATE
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; // You can change this to 10 if you want!
+
     const navigate = useNavigate();
     const officerId = localStorage.getItem('userId') || 2;
 
-   useEffect(() => {
+    useEffect(() => {
         const fetchApproved = async () => {
             try {
                 setLoading(true);
                 const data = await getCasesByStatus(officerId, 'Approved');
                 const finalData = data.data || data;
                 setCaseList(Array.isArray(finalData) ? finalData : []);
-                
-                // 👇 I ADDED THE LOG HERE! 👇
-                console.log("🕵️‍♂️ CASE DATA FROM C#:", finalData);
-                
             } catch (error) {
                 console.error('Error fetching approved cases:', error);
             } finally {
@@ -29,16 +31,19 @@ const ApprovedApplicationsPage = () => {
         fetchApproved();
     }, [officerId]);
 
+    // ✅ 2. CALCULATE WHICH ITEMS TO SHOW ON THE CURRENT PAGE
+    const totalPages = Math.ceil(caseList.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = caseList.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
         <div className="approved-container">
-            {/* Header */}
             <h2 className="page-title">Approved Applications</h2>
-            {/* <p className="custom-breadcrumb">Officer / Approved Cases</p> */}
             <p className="total-count">
                 Total: {caseList.length} Applications
             </p>
 
-            {/* Card */}
             <div className="approved-card">
                 {loading ? (
                     <div className="loading-text">Loading...</div>
@@ -56,12 +61,11 @@ const ApprovedApplicationsPage = () => {
                             </thead>
 
                             <tbody>
-                                {caseList.length > 0 ? (
-                                    caseList.map((item) => (
+                                {/* ✅ 3. USE 'currentItems' INSTEAD OF 'caseList' HERE */}
+                                {currentItems.length > 0 ? (
+                                    currentItems.map((item) => (
                                         <tr key={item.caseId}>
                                             <td>{item.caseId}</td>
-                                            
-                                            {/* ✅ FIXED: Use the exact same robust name checker we used on the other pages! */}
                                             <td>
                                                 {
                                                     item.user?.fullName || 
@@ -72,7 +76,6 @@ const ApprovedApplicationsPage = () => {
                                                     'N/A'
                                                 }
                                             </td>
-                                            
                                             <td>
                                                 {item.serviceName || item.application?.service?.serviceName || 'General Service'}
                                             </td>
@@ -82,9 +85,7 @@ const ApprovedApplicationsPage = () => {
                                             <td style={{ textAlign: 'right' }}>
                                                 <button
                                                     className="view-app-btn"
-                                                    onClick={() =>
-                                                        navigate(`/officer/case-details/${item.caseId}`)
-                                                    }
+                                                    onClick={() => navigate(`/officer/case-details/${item.caseId}`)}
                                                 >
                                                     View Application
                                                 </button>
@@ -101,17 +102,13 @@ const ApprovedApplicationsPage = () => {
                             </tbody>
                         </table>
 
-                        Updated: Pagination Section with Blue Button Labels
+                        {/* ✅ 4. FEED THE PROPS TO THE PAGINATION COMPONENT */}
                         {!loading && caseList.length > 0 && (
-                            <div className="custom-pagination">
-                                {/* <button className="page-nav-btn" >
-                                    Previous
-                                </button> */}
-                                {/* <span className="page-info">Page 1 of 1</span>
-                                <button className="page-nav-btn" disabled={caseList.length <= 10}>
-                                    Next
-                                </button> */}
-                            </div>
+                            <Pagination 
+                                currentPage={currentPage} 
+                                totalPages={totalPages} 
+                                onPageChange={(newPage) => setCurrentPage(newPage)} 
+                            />
                         )}
                     </>
                 )}
