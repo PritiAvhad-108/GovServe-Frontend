@@ -30,7 +30,6 @@ API.interceptors.response.use(
 );
  
 export default API;
-
 export const getDashboardStats = () => API.get("/Case/dashboard-stats");
 export const getApplications = () => API.get("/Application/all");
 export const getAllCases = () => API.get("/Case/all");
@@ -52,4 +51,5 @@ export const autoEscalateCases = () =>API.post("/Escalation/auto-escalate");
 export const getAllUsers = () => { return API.get("/User/all");};
 export const getRoles = () => API.get("/Roles");
 export const getServices = () => API.get("/Services");
-
+ 
+ 

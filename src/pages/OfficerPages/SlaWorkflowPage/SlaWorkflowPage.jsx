@@ -74,11 +74,20 @@ const SlaWorkflowPage = () => {
                                                         {c.status}
                                                     </span>
                                                 </td>
+                                                
+                                                {/* ✅ UPDATED: Conditional rendering for 0 days = Breached */}
                                                 <td>
-                                                    <span className={`sla-days ${getUrgencyColorClass(c.urgencyLevel)}`}>
-                                                        {c.daysRemaining} {c.daysRemaining === 1 ? 'Day' : 'Days'}
+                                                    <span 
+                                                        className={`sla-days ${getUrgencyColorClass(c.urgencyLevel)}`}
+                                                        style={c.daysRemaining === 0 ? { color: '#e74c3c', fontWeight: 'bold' } : {}}
+                                                    >
+                                                        {c.daysRemaining === 0 
+                                                            ? 'Breached' 
+                                                            : `${c.daysRemaining} ${c.daysRemaining === 1 ? 'Day' : 'Days'}`
+                                                        }
                                                     </span>
                                                 </td>
+                                                
                                             </tr>
                                         ))
                                     ) : (
