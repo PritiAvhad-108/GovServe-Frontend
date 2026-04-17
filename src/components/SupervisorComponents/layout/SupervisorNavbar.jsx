@@ -14,7 +14,7 @@ export default function SupervisorNavbar({ onToggleSidebar }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // ADDED: unread notification count
+  //  unread notification count
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {

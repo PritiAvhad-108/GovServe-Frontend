@@ -1,12 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {
-  FaThLarge,
-  FaFolder,
-  FaExclamationTriangle,
-  FaBell,
-  FaUsers,
-  FaChartBar
-} from "react-icons/fa";
+import {FaThLarge,FaFolder,FaExclamationTriangle,FaBell,FaUsers,FaChartBar} from "react-icons/fa";
 
 export default function SupervisorSidebar({ open }) {
   return (
