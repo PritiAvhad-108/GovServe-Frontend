@@ -1,58 +1,111 @@
 // src/components/AdminComponents/layout/OfficerLayout/OfficerNavbar.jsx
 
-import React,{ useState } from 'react';
-// ✅ IMPORT YOUR NEW COMPONENT HERE
-import NotificationBell from '../../../pages/OfficerPages/notifications/OfficerNotifications';
-import OfficerProfilePopup from '../../../pages/OfficerPages/OfficerProfile/ProfilePopup'; // <-- Adjust this path if needed!
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// ✅ Logo
+import logo from "../../../assets/landing/logo.png";
+
+// ✅ Components
+import NotificationBell from "../../../pages/OfficerPages/notifications/OfficerNotifications";
+import OfficerProfilePopup from "../../../pages/OfficerPages/OfficerProfile/ProfilePopup";
+
 const OfficerNavbar = () => {
+  const navigate = useNavigate();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
-    return (
-   
-        <nav style={{ 
-            height: '70px', 
-            background: '#1a3a8a', /* 🔵 GovServe Dark Blue Color */
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'space-between', 
-            padding: '0 30px',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-            color: 'white', 
-            position: 'sticky',
-            top: 0,
-            zIndex: 100
-        }}>
+  return (
+    <nav
+      style={{
+        height: "70px",
+        background: "#1a3a8a",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 30px",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        color: "white",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+      }}
+    >
+      {/* LEFT SIDE LOGO */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          cursor: "pointer",
+        }}
+        onClick={() => navigate("/officer/dashboard")}
+      >
+        <img
+          src={logo}
+          alt="GovServe"
+          style={{ height: "40px", width: "40px" }}
+        />
 
-           
-    
-            {/* Left side Logo */}
-            <div style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '1px' }}>
-                GovServe <span style={{fontSize: '14px', fontWeight: 'normal', opacity: 0.8}}>(Officer)</span>
-            </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <span style={{ fontSize: "18px", fontWeight: "700" }}>
+            GovServe
+          </span>
+          <span
+            style={{
+              fontSize: "12px",
+              opacity: 0.8,
+              lineHeight: "1",
+            }}
+          >
+            Government Services
+          </span>
+        </div>
+      </div>
 
-            {/* Right side Profile and Alerts */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                
-                {/* 🚨 This is your floating dropdown Bell! */}
-                <NotificationBell />
+      {/* RIGHT SIDE */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        {/* 🔔 NOTIFICATION BELL (FORCED VISIBLE) */}
+        <div
+          style={{
+            color: "#ffffff",
+            display: "flex",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <NotificationBell />
+        </div>
 
-                {/* Profile Badge */}
-                <div onClick={() => setIsProfileOpen(!isProfileOpen)}
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.1)', padding: '5px 15px', borderRadius: '20px' }}>
-                    <span className="material-icons">account_circle</span>
-                    <span style={{ fontWeight: '500' }}>Officer</span>
-                </div>
+        {/* 👤 PROFILE */}
+        <div
+          onClick={() => setIsProfileOpen(!isProfileOpen)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            background: "rgba(255,255,255,0.1)",
+            padding: "5px 15px",
+            borderRadius: "20px",
+            cursor: "pointer",
+          }}
+        >
+          <span className="material-icons">account_circle</span>
+          <span style={{ fontWeight: "500" }}>Officer</span>
+        </div>
 
-                {/* ✅ Conditionally render the popup if isProfileOpen is true */}
-                {isProfileOpen && (
-                    <OfficerProfilePopup 
-                        onClose={() => setIsProfileOpen(false)} 
-                    />
-                )}
-                
-            </div>
-        </nav>
-    );
+        {/* PROFILE POPUP */}
+        {isProfileOpen && (
+          <OfficerProfilePopup onClose={() => setIsProfileOpen(false)} />
+        )}
+      </div>
+    </nav>
+  );
 };
 
 export default OfficerNavbar;

@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+ //prpops: pendingUsers, breachedSLAs, pendingSlaCases (all numbers) - these will be passed from parent component (AdminDashboard) based on API data
 export default function AdminAttentionPanel({
   pendingUsers,
   breachedSLAs,
@@ -34,7 +34,7 @@ export default function AdminAttentionPanel({
       <div
         className="attention-item"
         onClick={() =>
-          navigate("/admin/sla-records", { state: { view: "pending" } })
+          navigate("/admin/sla-records", { state: { view: "pending" } }) //Navigate with state to show only pending cases (filter target page based on this state)
         }
       >
         <span>Cases Requiring SLA Setup</span>

@@ -15,7 +15,7 @@ export default function SLADaysPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  /* ✅ Load data */
+  /*  Load data */
   const loadData = async () => {
     try {
       const res = await api.get("/sladays");
@@ -30,7 +30,7 @@ export default function SLADaysPage() {
     loadData();
   }, []);
 
-  /* ✅ Search */
+  /*  Search */
   useEffect(() => {
     if (!search.trim()) {
       setFiltered(slaDays);
@@ -48,13 +48,13 @@ export default function SLADaysPage() {
     setCurrentPage(1);
   }, [search, slaDays]);
 
-  /* ✅ Pagination */
+  /*  Pagination */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
-  /* ✅ Delete */
+  /*  Delete */
   const deleteSlaDay = async (id) => {
     if (!window.confirm("Delete this SLA configuration?")) return;
     try {

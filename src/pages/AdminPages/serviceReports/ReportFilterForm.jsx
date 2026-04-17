@@ -13,7 +13,7 @@ export default function ReportFilterForm({ onGenerate, loading }) {
   });
 
   useEffect(() => {
-    // ✅ CORRECT ENDPOINTS
+    //  CORRECT ENDPOINTS
     api.get("/Department").then(res => setDepartments(res.data));
     api.get("/Services").then(res => setServices(res.data));
   }, []);

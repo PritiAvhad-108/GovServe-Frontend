@@ -9,13 +9,17 @@ const ApprovedApplicationsPage = () => {
     const navigate = useNavigate();
     const officerId = localStorage.getItem('userId') || 2;
 
-    useEffect(() => {
+   useEffect(() => {
         const fetchApproved = async () => {
             try {
                 setLoading(true);
                 const data = await getCasesByStatus(officerId, 'Approved');
                 const finalData = data.data || data;
                 setCaseList(Array.isArray(finalData) ? finalData : []);
+                
+                // 👇 I ADDED THE LOG HERE! 👇
+                console.log("🕵️‍♂️ CASE DATA FROM C#:", finalData);
+                
             } catch (error) {
                 console.error('Error fetching approved cases:', error);
             } finally {
@@ -55,13 +59,22 @@ const ApprovedApplicationsPage = () => {
                                 {caseList.length > 0 ? (
                                     caseList.map((item) => (
                                         <tr key={item.caseId}>
-                                            <td>#{item.caseId}</td>
+                                            <td>{item.caseId}</td>
+                                            
+                                            {/* ✅ FIXED: Use the exact same robust name checker we used on the other pages! */}
                                             <td>
-                                                {/* FIXED: Priority mapping for Applicant Name */}
-                                                {item.user?.fullName || item.fullName || item.application?.citizenDetails?.fullName || 'N/A'}
+                                                {
+                                                    item.user?.fullName || 
+                                                    item.User?.fullName || 
+                                                    item.application?.citizenDetails?.fullName || 
+                                                    item.application?.User?.fullName || 
+                                                    item.fullName || 
+                                                    'N/A'
+                                                }
                                             </td>
+                                            
                                             <td>
-                                                {item.serviceName || 'General Service'}
+                                                {item.serviceName || item.application?.service?.serviceName || 'General Service'}
                                             </td>
                                             <td className="status-approved">
                                                 Approved
@@ -88,16 +101,16 @@ const ApprovedApplicationsPage = () => {
                             </tbody>
                         </table>
 
-                        {/* Updated: Pagination Section with Blue Button Labels */}
+                        Updated: Pagination Section with Blue Button Labels
                         {!loading && caseList.length > 0 && (
                             <div className="custom-pagination">
-                                <button className="page-nav-btn" disabled>
+                                {/* <button className="page-nav-btn" >
                                     Previous
-                                </button>
-                                <span className="page-info">Page 1 of 1</span>
+                                </button> */}
+                                {/* <span className="page-info">Page 1 of 1</span>
                                 <button className="page-nav-btn" disabled={caseList.length <= 10}>
                                     Next
-                                </button>
+                                </button> */}
                             </div>
                         )}
                     </>

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiUser, FiLogOut, FiX } from "react-icons/fi";
-import "./AdminProfilePopup.css";
+import "../../styles/CitizenStyles/pages/CitizenProfilePopup.css";
 
-export default function AdminProfilePopup({ user, onClose }) {
+export default function CitizenProfilePopup({ user, onClose }) {
   const navigate = useNavigate();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login", { replace: true }); 
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -20,17 +20,17 @@ export default function AdminProfilePopup({ user, onClose }) {
         </button>
 
         <div className="avatar">
-          {user?.fullName?.charAt(0)?.toUpperCase() || "A"}
+          {(user?.fullName || user?.email)?.charAt(0)?.toUpperCase() || "U"}
         </div>
 
-        <h4>Hi, {user?.fullName || "Admin"}</h4>
+        <h4>Hi, {user?.fullName || user?.email || "Citizen"}</h4>
 
         <div className="popup-actions">
           <button
             className="action-btn"
             onClick={() => {
               onClose();
-              navigate("/admin/profile");
+              navigate("/citizen/profile"); 
             }}
           >
             <FiUser size={16} />

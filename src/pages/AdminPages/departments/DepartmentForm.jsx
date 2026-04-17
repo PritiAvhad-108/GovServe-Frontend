@@ -47,7 +47,10 @@ export default function DepartmentForm({ department, onClose, onSave }) {
         await api.post("/Department", payload);
         toast.success("Department created successfully.");
       }
-      onSave();
+
+      onSave();   // refresh list
+      onClose();  //  CLOSE MODAL AUTOMATICALLY
+
     } catch {
       toast.error("Department with this name already exists.");
     }

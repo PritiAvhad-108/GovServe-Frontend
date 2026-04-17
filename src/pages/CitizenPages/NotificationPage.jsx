@@ -2,121 +2,136 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/CitizenStyles/pages/NotificationPage.css";
 
-const NotificationPage = () => {
+// Assuming 'api' is your axios instance configuration
+const api = axios.create({
+  baseURL: "https://localhost:7027/api", 
+});
+
+export default function NotificationsPage() {
   const [notifications, setNotifications] = useState([]);
-  const [summary, setSummary] = useState({ total: 0, unread: 0, read: 0 });
-  const [activeTab, setActiveTab] = useState("all");
+  const [filter, setFilter] = useState("ALL"); // ALL | UNREAD | READ
+  const [loading, setLoading] = useState(true);
 
+  // ✅ Get dynamic userId from localStorage
   const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("jwtToken");
 
-  const API_BASE = "https://localhost:7027/api/Notification";
-
-  const loadData = async () => {
-    if (!userId || userId === "undefined" || !token) {
-      console.warn("NotificationPage: Missing userId or Token");
+  /* ===============================
+      Load notifications (backend-driven)
+  =============================== */
+  const loadNotifications = async () => {
+    // Check if userId exists to avoid API errors
+    if (!userId || userId === "undefined") {
+      console.warn("No userId found in localStorage");
+      setLoading(false);
       return;
     }
 
     try {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
+      setLoading(true);
+      let res;
 
-      const res = await axios.get(`${API_BASE}/${userId}`, config);
-      const data = Array.isArray(res.data) ? res.data : [];
-      
-      const unreadRes = await axios.get(`${API_BASE}/unread/${userId}`, config);
-      const unreadCount = typeof unreadRes.data === "number" ? unreadRes.data : 0;
+      // Using dynamic userId in URLs
+      if (filter === "UNREAD") {
+        res = await api.get(`/Notification/unread/${userId}`);
+      } else if (filter === "READ") {
+        res = await api.get(`/Notification/read/${userId}`);
+      } else {
+        res = await api.get(`/Notification/all/${userId}`);
+      }
 
-      setNotifications(data);
-      setSummary({
-        total: data.length,
-        unread: unreadCount,
-        read: data.length - unreadCount,
-      });
+      setNotifications(res.data);
     } catch (err) {
-      console.error("Error loading notification data:", err);
+      console.error("Failed to load notifications", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadData();
-  }, [userId, token]);
+    loadNotifications();
+  }, [filter, userId]); // Added userId as dependency
 
-  const handleMarkRead = async (id) => {
-    if (!token) return;
+  /* ===============================
+      Mark as read
+  =============================== */
+  const markAsRead = async (notificationId) => {
     try {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
-      await axios.put(`${API_BASE}/mark-read/${id}`, {}, config);
-      loadData(); 
+      await api.put(`/Notification/mark-read/${notificationId}`);
+      loadNotifications();
+      window.dispatchEvent(new Event("notifications-updated"));
     } catch (err) {
-      console.error("Error marking as read:", err);
+      console.error("Failed to mark as read", err);
     }
   };
 
-  const handleMarkAllRead = async () => {
-    if (!token) return;
-    try {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
-      const unreadIds = notifications.filter((n) => !n.isRead).map((n) => n.id);
-      if (unreadIds.length === 0) return;
-      
-    
-      await Promise.all(unreadIds.map((id) => axios.put(`${API_BASE}/mark-read/${id}`, {}, config)));
-      loadData();
-    } catch (err) {
-      console.error("Error marking all as read:", err);
-    }
-  };
-
-  const filteredNotifications = notifications.filter((n) => {
-    if (activeTab === "unread") return !n.isRead;
-    if (activeTab === "read") return n.isRead;
-    return true;
-  });
+  if (loading) {
+    return <p className="notification-empty">Loading…</p>;
+  }
 
   return (
-    <div className="content-wrapper">
-      <h2 className="page-title">Notifications</h2>
-      <p className="subtitle">Stay updated with your application status</p>
+    <div className="notifications-page">
+      <h2>Notifications</h2>
 
-      <div className="notification-actions">
-        <div className="tabs">
-          <button className={activeTab === "all" ? "active" : ""} onClick={() => setActiveTab("all")}>All ({summary.total})</button>
-          <button className={activeTab === "unread" ? "active" : ""} onClick={() => setActiveTab("unread")}>Unread ({summary.unread})</button>
-          <button className={activeTab === "read" ? "active" : ""} onClick={() => setActiveTab("read")}>Read ({summary.read})</button>
-        </div>
-        <button className="mark-all-btn" onClick={handleMarkAllRead}>Mark All as Read</button>
+      {/* FILTER TABS */}
+      <div className="notification-filters">
+        <button
+          className={filter === "ALL" ? "active" : ""}
+          onClick={() => setFilter("ALL")}
+        >
+          All
+        </button>
+        <button
+          className={filter === "UNREAD" ? "active" : ""}
+          onClick={() => setFilter("UNREAD")}
+        >
+          Unread
+        </button>
+        <button
+          className={filter === "READ" ? "active" : ""}
+          onClick={() => setFilter("READ")}
+        >
+          Read
+        </button>
       </div>
 
-      <div className="notification-list">
-        {filteredNotifications.length === 0 ? (
-          <div className="no-data">No notifications available</div>
-        ) : (
-          filteredNotifications.map((n) => (
+      {/* LIST */}
+      {notifications.length === 0 ? (
+        <p className="notification-empty">
+          No {filter.toLowerCase()} notifications
+        </p>
+      ) : (
+        <div className="notification-list">
+          {notifications.map((n) => (
             <div
-              key={n.id}
-              className={`notification-item-card ${n.isRead ? "read" : "unread"}`}
-              onClick={() => handleMarkRead(n.id)}
+              key={n.notificationId}
+              className={`notification-card ${
+                !n.isRead ? "unread" : ""
+              }`}
+              onClick={() => {
+                if (!n.isRead && filter !== "READ") {
+                  markAsRead(n.notificationId);
+                }
+              }}
             >
-              <div className="notif-header">
-                <span className="notif-title">
-                  {n.title} {!n.isRead && <span className="new-dot"></span>}
+              <div className="notification-content">
+                <p className="notification-message">{n.message}</p>
+                <span className="notification-date">
+                  {new Date(n.createdDate).toLocaleString()}
                 </span>
-                <span className="notif-date">{new Date(n.submittedDate).toLocaleDateString()}</span>
               </div>
-              <p className="notif-message">{n.message || "No details available"}</p>
+
+              {/* ✅ STATUS BADGE */}
+              <span
+                className={`status-badge ${
+                  n.isRead ? "read" : "unread"
+                }`}
+              >
+                {n.isRead ? "Read" : "Unread"}
+              </span>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
-};
-
-export default NotificationPage;
+}

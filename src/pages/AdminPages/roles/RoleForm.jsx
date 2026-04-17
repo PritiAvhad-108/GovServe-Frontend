@@ -12,7 +12,7 @@ export default function RoleForm({ role = {}, onClose, onSave }) {
     setError("");
   }, [role]);
 
-  /* ✅ VALIDATION */
+  /* VALIDATION */
   const validate = () => {
     if (!roleName.trim()) {
       return "Role name is required.";

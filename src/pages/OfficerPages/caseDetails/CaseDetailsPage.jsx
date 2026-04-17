@@ -6,10 +6,6 @@ import ActionModal from '../../../components/OfficerComponents/common/ActionModa
 import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending } from '../../../api/officerApi';
 import './CaseDetails.css';
 
-
-
-
-
 const CaseDetailsPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -32,6 +28,10 @@ const CaseDetailsPage = () => {
                 // Call your API to get the case data based on the URL id
                 const response = await getCaseDetails(id); 
                 setDetails(response.data || response); 
+
+                // 👇 ADDED: Log the exact data structure from C# to the console
+                console.log("🕵️‍♂️ RAW DATA FROM C#:", response.data || response);
+
             } catch (error) {
                 console.error("Failed to fetch case details:", error);
             } finally {
@@ -127,7 +127,13 @@ const CaseDetailsPage = () => {
                     <div>
                         <label>Applied Service</label>
                         <p className="detail-value">
-                            {details.serviceName || 'Income Certificate'}
+                            {/* 🚨 THE FIX: Dig deeper to find the real service name! */}
+                            {
+                                details.serviceName || 
+                                details.application?.service?.serviceName || 
+                                details.application?.serviceName || 
+                                'N/A'
+                            }
                         </p>
                     </div>
 
@@ -213,25 +219,25 @@ const CaseDetailsPage = () => {
                 {/* ✅ ADDED: Start Verification Trigger Button Here */}
                 <div className="verification-trigger-section" style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '20px' }}>
                     {/* ✅ UPDATED: Smaller size and changed color */}
-<button 
-    className="verify-btn"
-    onClick={handleStartVerification}
-    style={{ 
-        backgroundColor: '#0ea5e9', /* A nice professional light blue. You can change this hex code! */
-        color: 'white', 
-        padding: '6px 14px',        /* Reduced padding makes the button smaller */
-        fontSize: '13px',           /* Slightly smaller text */
-        borderRadius: '6px', 
-        border: 'none', 
-        fontWeight: '600', 
-        cursor: 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '6px'                  /* Space between the icon and the text */
-    }}
->
-     Start Document Verification
-</button>
+                    <button 
+                        className="verify-btn"
+                        onClick={handleStartVerification}
+                        style={{ 
+                            backgroundColor: '#0ea5e9', /* A nice professional light blue. You can change this hex code! */
+                            color: 'white', 
+                            padding: '6px 14px',        /* Reduced padding makes the button smaller */
+                            fontSize: '13px',           /* Slightly smaller text */
+                            borderRadius: '6px', 
+                            border: 'none', 
+                            fontWeight: '600', 
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'                  /* Space between the icon and the text */
+                        }}
+                    >
+                     Start Document Verification
+                    </button>
                     <p style={{ fontSize: '13px', color: '#64748b', marginTop: '8px' }}>
                         Clicking this will update the status to "Under Verification" and move it to your Pending Review list.
                     </p>
@@ -243,17 +249,17 @@ const CaseDetailsPage = () => {
                             {documents.map((doc, index) => {
                                 const currentStatus = docStatuses[doc.documentId] || doc.status || 'Pending';
 
-// 1. Log the document so we can see exactly what the backend sends
-console.log("Document Data from backend:", doc);
+                                // 1. Log the document so we can see exactly what the backend sends
+                                console.log("Document Data from backend:", doc);
 
-// 2. ✅ FIX: Look for ALL possible capitalizations of URI
-const filePath = doc.documentUrl || doc.uri || doc.URI || "";
+                                // 2. ✅ FIX: Look for ALL possible capitalizations of URI
+                                const filePath = doc.documentUrl || doc.uri || doc.URI || "";
 
-// 3. ✅ FIX: Only build the URL if the file path actually exists
-const cleanPath = filePath ? (filePath.startsWith('/') ? filePath : `/${filePath}`) : "";
-const fullUrl = cleanPath ? `https://localhost:7027${cleanPath}` : null;
+                                // 3. ✅ FIX: Only build the URL if the file path actually exists
+                                const cleanPath = filePath ? (filePath.startsWith('/') ? filePath : `/${filePath}`) : "";
+                                const fullUrl = cleanPath ? `https://localhost:7027${cleanPath}` : null;
 
-const isCurrentlyViewing = selectedDocUrl === fullUrl;
+                                const isCurrentlyViewing = selectedDocUrl === fullUrl;
 
                                 return (
                                     <div key={doc.documentId || index} className={`doc-row ${isCurrentlyViewing ? 'active-row' : ''}`}>

@@ -1,37 +1,52 @@
 import { useState, useRef, useEffect } from "react";
 import { FiBell, FiUser, FiMenu } from "react-icons/fi";
 import { FaChartBar } from "react-icons/fa";
-import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useAuth } from "../../../context/AuthContext";
+import { getNotificationsByUser } from "../../../api/api"; 
 import logo from "../../../assets/landing/logo.png";
+import SupervisorProfilePopup from "../../../pages/Supervisor/profile/SupervisorProfilePopup";
 
 export default function SupervisorNavbar({ onToggleSidebar }) {
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
 
   const [open, setOpen] = useState(false);
-  const [showProfileCard, setShowProfileCard] = useState(false);
-
   const dropdownRef = useRef(null);
 
-  const handleLogout = () => {
-    logout();
-    toast.success("Logout successful");
-    navigate("/");
-  };
+  // ADDED: unread notification count
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
-    const closeDropdown = (e) => {
+    const closePopup = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpen(false);
-        setShowProfileCard(false); // ✅ close profile card too
       }
     };
-    document.addEventListener("mousedown", closeDropdown);
-    return () => document.removeEventListener("mousedown", closeDropdown);
+    window.addEventListener("click", closePopup);
+    return () => window.removeEventListener("click", closePopup);
   }, []);
+
+  // ADDED: fetch unread notifications
+  useEffect(() => {
+    if (!user?.userId) return;
+
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await getNotificationsByUser(user.userId);
+        const unread = (res.data || []).filter(n => !n.isRead);
+        setUnreadCount(unread.length);
+      } catch (err) {
+        console.error("Failed to fetch notification count", err);
+      }
+    };
+
+    fetchUnreadCount();
+
+    // optional auto-refresh
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, [user]);
 
   return (
     <header className="sup-topbar">
@@ -54,57 +69,39 @@ export default function SupervisorNavbar({ onToggleSidebar }) {
       {/* RIGHT */}
       <div className="sup-topbar-right">
         <FaChartBar onClick={() => navigate("/supervisor/reports")} />
-        <FiBell onClick={() => navigate("/supervisor/notifications")} />
 
-        {/* USER DROPDOWN */}
+        {/* UPDATED BELL WITH BADGE */}
+        <div
+          className="notification-bell"
+          onClick={() => navigate("/supervisor/notifications")}
+        >
+          <FiBell />
+          {unreadCount > 0 && (
+            <span className="notification-badge">{unreadCount}</span>
+          )}
+        </div>
+
+        {/* USER */}
         <div
           className="sup-user"
           ref={dropdownRef}
-          onClick={() => setOpen(!open)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen(!open);
+          }}
         >
           <FiUser />
           <span>{user?.fullName || "Supervisor"}</span>
 
           {open && (
-            <div className="sup-dropdown">
-              <div
-                onClick={(e) => {
-                  e.stopPropagation(); // ✅ prevent closing dropdown
-                  setShowProfileCard(!showProfileCard);
-                }}
-              >
-                My Profile
-              </div>
-
-              <div className="logout" onClick={handleLogout}>
-                <LogOut size={14} /> Logout
-              </div>
-
-              {showProfileCard && (
-                <div className="sup-profile-card">
-                  <div className="profile-row">
-                    <span className="label">Name</span>
-                    <span className="value">
-                      {user?.fullName || "—"}
-                    </span>
-                  </div>
-
-                  <div className="profile-row">
-                    <span className="label">Email</span>
-                    <span className="value">
-                      {user?.email || "—"}
-                    </span>
-                  </div>
-
-                  <div className="profile-row">
-                    <span className="label">Role</span>
-                    <span className="value">
-                      {user?.role || "Supervisor"}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
+            <SupervisorProfilePopup
+              user={{
+                fullName: user?.fullName,
+                email: user?.email,
+                role: user?.role || "Supervisor",
+              }}
+              onClose={() => setOpen(false)}
+            />
           )}
         </div>
       </div>

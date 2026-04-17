@@ -6,20 +6,26 @@
 
 .page-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;     /* 🚨 Stacks the title and breadcrumb vertically */
+    align-items: flex-start;    /* 🚨 Forces everything to the left edge */
+    justify-content: flex-start;
     margin-bottom: 25px;
+    text-align: left;           /* Kills any global centering */
+    width: 100%;
 }
 
-.page-header h1 {
+/* ✅ Added h2 here just in case your page uses h2 instead of h1 */
+.page-header h1, .page-header h2 {
     font-size: 24px;
     color: #1e293b;
     margin: 0;
+    text-align: left;
 }
 
 .page-header p {
     color: #64748b;
     margin: 5px 0 0;
+    text-align: left;
 }
 
 .refresh-btn {

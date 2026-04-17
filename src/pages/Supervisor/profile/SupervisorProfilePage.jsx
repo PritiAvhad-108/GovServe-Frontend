@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import "../../../styles/Profile.css"; 
 import { FaUser, FaEnvelope, FaPhone, FaUserTag, FaBuilding } from 'react-icons/fa';
 import { useAuth } from "../../../context/AuthContext"; 
-import "./AdminProfile.css";
+//import "./AdminProfile.css";
 
 const Profile = () => {
     const { user: authUser } = useAuth(); 
@@ -76,7 +77,13 @@ const Profile = () => {
                         </div>
                     </div>
 
-                   
+                    <div className="info-item">
+                        <div className="icon-box"><FaBuilding /></div>
+                        <div className="info-detail">
+                            <label>Status</label>
+                            <span>{user?.status}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

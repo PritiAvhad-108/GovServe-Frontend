@@ -13,7 +13,7 @@ export default function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  /* ✅ LOAD USERS */
+  /*  LOAD USERS */
   const loadUsers = async () => {
     try {
       const res = pendingOnly
@@ -29,7 +29,7 @@ export default function UsersPage() {
     loadUsers();
   }, [pendingOnly]);
 
-  /* ✅ ACTIONS */
+  /*  ACTIONS */
   const approveUser = async (id) => {
     await api.put(`/User/approve/${id}`);
     toast.success("User approved");
@@ -49,7 +49,7 @@ export default function UsersPage() {
     loadUsers();
   };
 
-  /* ✅ FILTER */
+  /*  FILTER */
   const filtered = users.filter(u =>
     [u.fullName, u.email, u.roleName]
       .join(" ")
@@ -57,7 +57,7 @@ export default function UsersPage() {
       .includes(search.toLowerCase())
   );
 
-  /* ✅ PAGINATION */
+  /*  PAGINATION */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
@@ -67,7 +67,7 @@ export default function UsersPage() {
     <div className="users-container">
       <ToastContainer />
 
-      {/* ✅ HEADER */}
+      {/*  HEADER */}
       <div className="users-header">
         <div>
           <h2 className="page-title">User Management</h2>
@@ -87,7 +87,7 @@ export default function UsersPage() {
         </div>
       </div>
 
-      {/* ✅ FILTER ROW */}
+      {/*  FILTER ROW */}
       <div className="filter-row">
         <input
           className="form-control"
@@ -106,7 +106,7 @@ export default function UsersPage() {
         </select>
       </div>
 
-      {/* ✅ TABLE */}
+      {/*  TABLE */}
       <div className="table-wrapper">
         <table className="table-white">
           <thead>
@@ -146,7 +146,7 @@ export default function UsersPage() {
                     </span>
                   </td>
 
-                  {/* ✅ ACTIONS */}
+                  {/*  ACTIONS */}
                   <td className="actions-col">
                     {user.status === "Pending" && (
                       <>

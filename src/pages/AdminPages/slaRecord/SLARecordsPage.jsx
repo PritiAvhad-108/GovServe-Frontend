@@ -180,7 +180,7 @@ export default function SLARecordsPage() {
         </>
       )}
 
-      {/* ✅ SERVICE-STYLE TABLE */}
+      {/* TABLE */}
       <table className="table-white">
         <thead>
           <tr>

@@ -1,21 +1,23 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, Bell, User, LogOut, Home } from "lucide-react";
+import { Menu, Bell, User, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; 
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; 
 import logo from "../../assets/landing/logo.png"; 
 import "../../styles/CitizenStyles/common/global.css"; 
 
+import CitizenProfilePopup from "../../pages/CitizenPages/CitizenProfilePopup";
+
 function Navbar({ toggleSidebar }) {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth(); 
   const profileRef = useRef();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    toast.success("Logged out successfully!");
-    navigate("/");
+  const handleHomeClick = () => {
+    logout(); 
+    toast.success("Logged out and redirected to Home!"); 
+    navigate("/", { replace: true }); 
   };
 
   useEffect(() => {
@@ -29,8 +31,8 @@ function Navbar({ toggleSidebar }) {
   }, []);
 
   return (
-    <nav className="navbar">
-      {/* LEFT: Logo & Brand */}
+    /* Unique class 'cz-navbar' height fix sathi */
+    <nav className="cz-navbar">
       <div className="nav-left">
         <Menu className="menu-icon" onClick={toggleSidebar} />
         <div className="brand-wrapper" onClick={() => navigate("/citizen")}>
@@ -42,9 +44,13 @@ function Navbar({ toggleSidebar }) {
         </div>
       </div>
 
-      
       <div className="nav-right">
-        <div className="nav-action-item" onClick={() => navigate("/")} title="Home">
+        <div 
+          className="nav-action-item" 
+          onClick={handleHomeClick} 
+          title="Logout & Home"
+          style={{ cursor: "pointer" }}
+        >
           <Home size={20} />
           <span>Home</span>
         </div>
@@ -53,20 +59,17 @@ function Navbar({ toggleSidebar }) {
           <Bell size={20} />
         </div>
 
-        <div className="profile-container" ref={profileRef} onClick={() => setOpen(!open)}>
-          <div className="profile-badge">
+        <div className="profile-container" ref={profileRef}>
+          <div className="profile-badge" onClick={() => setOpen(!open)}>
             <User size={18} />
-            <span>{user?.fullName ? user.fullName.split('@')[0] : "User"}</span>
+            <span>{user?.fullName ? user.fullName.split(' ')[0] : "User"}</span>
           </div>
 
           {open && (
-            <div className="profile-dropdown">
-              <div className="dropdown-item" onClick={() => navigate("/citizen/profile")}>My Profile</div>
-              <hr />
-              <div className="dropdown-item logout-red" onClick={handleLogout}>
-                <LogOut size={16} /> Logout
-              </div>
-            </div>
+            <CitizenProfilePopup 
+              user={user} 
+              onClose={() => setOpen(false)} 
+            />
           )}
         </div>
       </div>

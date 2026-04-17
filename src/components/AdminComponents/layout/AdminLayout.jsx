@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
+import Navbar from "./Header";
 import Footer from "./Footer";
 import "./layout.css";
 
 export default function AdminLayout() {
   return (
-    <div className="app-layout">
+    <div className="admin-app app-layout">
       {/* Sidebar */}
       <Sidebar />
 
@@ -20,8 +20,7 @@ export default function AdminLayout() {
           <Outlet />
         </div>
 
-        {/* ✅ FOOTER */}
-        
+        {/* Footer */}
         <Footer />
       </div>
     </div>
