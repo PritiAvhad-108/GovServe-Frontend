@@ -16,8 +16,12 @@ import { useAuth } from "../context/AuthContext";
 import Profile from "../pages/Profile";
 
 const GrievanceRoute = () => {
+ 
+ 
+
   const { userRole } = useAuth();
   return (    
+
     <Routes>
       {/* ✅ Layout wrapper (ONLY ONCE) */}
       <Route element={<GrievanceLayout />}>
