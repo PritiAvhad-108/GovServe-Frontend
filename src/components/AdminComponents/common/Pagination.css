@@ -1,7 +1,7 @@
 .pagination-container {
   width: 100%;
   display: flex;
-  justify-content: center;     /* ✅ Center pagination */
+  justify-content: center;     /*  Center pagination */
   align-items: center;
   margin-top: 20px;
   gap: 8px;

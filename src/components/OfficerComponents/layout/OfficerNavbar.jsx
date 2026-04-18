@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// ✅ Logo
+// Logo
 import logo from "../../../assets/landing/logo.png";
 
-// ✅ Components
+// Components
 import NotificationBell from "../../../pages/OfficerPages/notifications/OfficerNotifications";
 import OfficerProfilePopup from "../../../pages/OfficerPages/OfficerProfile/ProfilePopup";
 

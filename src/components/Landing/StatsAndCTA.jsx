@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // 1. Import Link from react-router-dom
-
+import { Link } from "react-router-dom"; 
 const StatsAndCTA = () => {
   return (
     <>

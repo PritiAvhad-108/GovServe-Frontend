@@ -85,7 +85,7 @@ export default function Navbar() {
     <header className="topbar">
       <div className="topbar-inner">
 
-        {/* ✅ LEFT BRAND */}
+        {/*  LEFT BRAND */}
         <div className="navbar-brand">
           <img src={logo} alt="GovServe Logo" className="navbar-logo" />
           <div className="navbar-brand-text">
