@@ -2,24 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/CitizenStyles/pages/NotificationPage.css";
 
-// Assuming 'api' is your axios instance configuration
+
 const api = axios.create({
   baseURL: "https://localhost:7027/api", 
 });
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState([]);
-  const [filter, setFilter] = useState("ALL"); // ALL | UNREAD | READ
+  const [filter, setFilter] = useState("ALL"); 
   const [loading, setLoading] = useState(true);
 
-  // ✅ Get dynamic userId from localStorage
+ 
   const userId = localStorage.getItem("userId");
 
-  /* ===============================
-      Load notifications (backend-driven)
-  =============================== */
+  
   const loadNotifications = async () => {
-    // Check if userId exists to avoid API errors
+    
     if (!userId || userId === "undefined") {
       console.warn("No userId found in localStorage");
       setLoading(false);
@@ -30,7 +28,6 @@ export default function NotificationsPage() {
       setLoading(true);
       let res;
 
-      // Using dynamic userId in URLs
       if (filter === "UNREAD") {
         res = await api.get(`/Notification/unread/${userId}`);
       } else if (filter === "READ") {
@@ -49,11 +46,8 @@ export default function NotificationsPage() {
 
   useEffect(() => {
     loadNotifications();
-  }, [filter, userId]); // Added userId as dependency
+  }, [filter, userId]); 
 
-  /* ===============================
-      Mark as read
-  =============================== */
   const markAsRead = async (notificationId) => {
     try {
       await api.put(`/Notification/mark-read/${notificationId}`);
@@ -72,7 +66,7 @@ export default function NotificationsPage() {
     <div className="notifications-page">
       <h2>Notifications</h2>
 
-      {/* FILTER TABS */}
+     
       <div className="notification-filters">
         <button
           className={filter === "ALL" ? "active" : ""}
@@ -94,7 +88,7 @@ export default function NotificationsPage() {
         </button>
       </div>
 
-      {/* LIST */}
+    
       {notifications.length === 0 ? (
         <p className="notification-empty">
           No {filter.toLowerCase()} notifications
@@ -120,7 +114,7 @@ export default function NotificationsPage() {
                 </span>
               </div>
 
-              {/* ✅ STATUS BADGE */}
+             
               <span
                 className={`status-badge ${
                   n.isRead ? "read" : "unread"

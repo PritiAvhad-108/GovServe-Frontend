@@ -46,7 +46,7 @@ function ApplyServices() {
 
   return (
     <div className="content-wrapper">
-      {/* Search Input Section */}
+ 
       <div className="search-section">
         <div className="search-box-attractive">
           <SearchIcon size={20} className="search-icon-color" />
@@ -110,17 +110,13 @@ function ApplyServices() {
               className="p-btn" 
               disabled={currentPage === 1} 
               onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              Previous
-            </button>
+            >Previous </button>
             <span className="p-info">Page {currentPage} of {totalPages}</span>
             <button 
               className="p-btn" 
               disabled={currentPage === totalPages} 
               onClick={() => setCurrentPage(currentPage + 1)}
-            >
-              Next
-            </button>
+            > Next</button>
           </div>
         </>
       )}
