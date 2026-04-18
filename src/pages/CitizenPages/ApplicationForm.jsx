@@ -17,7 +17,7 @@ import "../../styles/CitizenStyles/pages/ApplicationForm.css";
 const ApplicationForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const isEditMode = Boolean(id);
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [apiError, setApiError] = useState(null);
