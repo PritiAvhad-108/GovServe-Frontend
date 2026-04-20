@@ -21,7 +21,7 @@ const RejectedCasesPage = () => {
                     const strictlyRejected = data.filter(item => item.status === 'Rejected');
                     setRejectedCases(strictlyRejected);
 
-                    // 👇 ADDED: Console log to inspect the C# response
+          
                     console.log("🕵️‍♂️ REJECTED LIST DATA FROM C#:", strictlyRejected);
 
                 } else {
@@ -39,14 +39,14 @@ const RejectedCasesPage = () => {
     }, [officerId]);
 
     return (
-        /* ✅ NEW: Global wrapper to center the page horizontally */
+        
         <div className="rejected-page-wrapper">
             <div className="rejected-page-container">
                 
-                {/* 🚨 FIX: Centered Header */ }
+                
                 <div className="rejected-header">
                     <h2>Rejected Applications</h2>
-                    {/* <p className="custom-breadcrumb">s</p> */}
+                    
                 </div>
 
                 <div className="table-responsive">
@@ -70,7 +70,7 @@ const RejectedCasesPage = () => {
                                         <tr key={item.caseId}>
                                             <td style={{ fontWeight: '600' }}>{item.caseId}</td>
                                             
-                                            {/* 🚨 THE FIX FOR THE MISSING NAME 🚨 */}
+                                           
                                             <td>
                                                 {
                                                     item.user?.fullName || 

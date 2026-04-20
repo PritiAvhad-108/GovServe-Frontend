@@ -7,7 +7,8 @@
     flex-direction: column;
     flex-shrink: 0;
 
-    margin-top: -10px !important; 
+    /* ✅ REMOVED: The negative margin that was pulling it up */
+    margin-top: 0; 
     
     height: 100%; 
     
@@ -17,7 +18,8 @@
 }
 
 .sidebar-brand {
-    padding: 0px 20px 20px 20px;
+    /* ✅ CHANGED: Added 20px of padding to the top to push "Officer Panel" down */
+    padding: 20px 20px 20px 20px; 
     border-bottom: 1px solid #f3f4f6;
     display: flex;
     align-items: center; 

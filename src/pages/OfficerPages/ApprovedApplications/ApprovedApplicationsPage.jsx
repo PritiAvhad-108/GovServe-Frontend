@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCasesByStatus } from '../../../api/officerApi';
-import Pagination from '../../Pagination'; // 🚨 IMPORTANT: Make sure this path points to your Pagination.jsx file!
+import Pagination from '../../Pagination';
 import './ApprovedApplicationsPage.css'; 
 
 const ApprovedApplicationsPage = () => {
     const [caseList, setCaseList] = useState([]);
     const [loading, setLoading] = useState(true);
     
-    // ✅ 1. ADD PAGINATION STATE
+   
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // You can change this to 10 if you want!
+    const itemsPerPage = 5; 
 
     const navigate = useNavigate();
     const officerId = localStorage.getItem('userId') || 2;
@@ -31,7 +31,7 @@ const ApprovedApplicationsPage = () => {
         fetchApproved();
     }, [officerId]);
 
-    // ✅ 2. CALCULATE WHICH ITEMS TO SHOW ON THE CURRENT PAGE
+   
     const totalPages = Math.ceil(caseList.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -61,7 +61,7 @@ const ApprovedApplicationsPage = () => {
                             </thead>
 
                             <tbody>
-                                {/* ✅ 3. USE 'currentItems' INSTEAD OF 'caseList' HERE */}
+                              
                                 {currentItems.length > 0 ? (
                                     currentItems.map((item) => (
                                         <tr key={item.caseId}>
@@ -102,7 +102,7 @@ const ApprovedApplicationsPage = () => {
                             </tbody>
                         </table>
 
-                        {/* ✅ 4. FEED THE PROPS TO THE PAGINATION COMPONENT */}
+                     
                         {!loading && caseList.length > 0 && (
                             <Pagination 
                                 currentPage={currentPage} 

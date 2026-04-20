@@ -1,11 +1,12 @@
 import { createContext, useState, useContext, useEffect } from "react";
  
-const AuthContext = createContext();
+const AuthContext = createContext(); //-- Create the AuthContext
  
+//component
 export const AuthProvider = ({ children }) => {
+  //state variables
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     const role = localStorage.getItem("userRole");
@@ -37,6 +38,7 @@ export const AuthProvider = ({ children }) => {
   };
  
   return (
+    //Provide Context Values
     <AuthContext.Provider
       value={{
         user,
@@ -52,9 +54,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
  
+//custome hook 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (!context) {                        //safety check
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;

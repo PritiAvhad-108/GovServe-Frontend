@@ -30,15 +30,14 @@ const PendingCasesPage = () => {
     }, [officerId]);
 
     return (
-        /* ✅ NEW: Wraps the whole page to center it horizontally */
+        
         <div className="pending-page-wrapper">
             <div className="pending-container">
                 
-                {/* 🚨 FIX: Grouped the title, breadcrumb, and count in the new centered header class */}
+                
                 <div className="pending-header">
                     <h2 className="page-title">Pending Applications</h2>
-                    {/* <p className="breadcrumb">Officer / Pending Review</p> */}
-                    {/* <p className="total-count">Total: {pendingCases.length} Applications</p> */}
+    
                 </div>
 
                 {/* Card Table */}
@@ -63,7 +62,7 @@ const PendingCasesPage = () => {
                                         <tr key={item.caseId}>
                                             <td style={{ fontWeight: '600' }}> {item.caseId}</td>
                                             
-                                            {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
+                                          
                                             <td>
                                                 {
                                                     item.user?.fullName || 
@@ -85,7 +84,7 @@ const PendingCasesPage = () => {
                                                     className="view-btn"
                                                     onClick={() => navigate(`/officer/case-details/${item.caseId}`)}
                                                 >
-                                                    view Application
+                                                    View Application
                                                 </button>
                                             </td>
                                         </tr>
