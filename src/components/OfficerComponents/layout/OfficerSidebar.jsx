@@ -19,7 +19,7 @@ const OfficerSidebar = () => {
   ];
 
   return (
-    <div className="sidebar">
+    <div className="officer-sidebar">
       
       {/* Header */}
       <div className="sidebar-brand">

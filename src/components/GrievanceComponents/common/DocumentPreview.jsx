@@ -12,7 +12,7 @@ const DocumentPreview = ({ fileUrl }) => {
     return (
         <div className="preview-container" style={{ width: '100%', height: '600px', backgroundColor: '#f8fafc', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {isImage ? (
-                /*  FIX: Use an img tag for images so they fit perfectly! */
+                /*  Use an img tag for images so they fit perfectly! */
                 <img 
                     src={cleanUrl} 
                     alt="Document Preview" 
