@@ -6,16 +6,19 @@ export default function SLARecordForm({
   onClose,
   onSave,
   caseId,
-  editData // present when editing
+  editData // ✅ present only when editing
 }) {
   const [cases, setCases] = useState([]);
   const [stages, setStages] = useState([]);
   const [errors, setErrors] = useState({});
 
+  /* ===========================
+     FORM STATE (SAFE INIT)
+  =========================== */
   const [form, setForm] = useState({
     caseId: editData?.caseID || caseId || "",
     stageId: editData?.stageID || "",
-    startDate: editData
+    startDate: editData?.startDate
       ? editData.startDate.split("T")[0]
       : ""
   });
@@ -48,14 +51,14 @@ export default function SLARecordForm({
     if (!validate()) return;
 
     try {
-      if (editData) {
-        // UPDATE
+      if (editData?.slaRecordID) {
+        // ✅ UPDATE
         await api.put(`/SLARecords/${editData.slaRecordID}`, {
           startDate: form.startDate
         });
         toast.success("SLA record updated successfully");
       } else {
-        // CREATE
+        // ✅ CREATE
         await api.post("/SLARecords", {
           caseId: Number(form.caseId),
           stageId: Number(form.stageId),
@@ -73,7 +76,7 @@ export default function SLARecordForm({
   return (
     <div className="form-modal">
       <div className="modal-card">
-        <h4>{editData ? "Edit SLA Record" : "Add SLA Record"}</h4>
+        <h4>{editData?.slaRecordID ? "Edit SLA Record" : "Add SLA Record"}</h4>
 
         <form onSubmit={handleSubmit}>
           {/* ================= CASE ================= */}
@@ -81,7 +84,7 @@ export default function SLARecordForm({
           <select
             className={`form-control ${errors.caseId ? "is-invalid" : ""}`}
             value={form.caseId}
-            disabled={!!editData || !!caseId}
+            disabled={!!editData?.slaRecordID || !!caseId}
             onChange={(e) =>
               setForm({ ...form, caseId: e.target.value })
             }
@@ -94,7 +97,7 @@ export default function SLARecordForm({
             ))}
           </select>
 
-          {editData && (
+          {editData?.slaRecordID && (
             <small className="info-text">
               Case cannot be changed once an SLA record is created.
             </small>
@@ -109,7 +112,7 @@ export default function SLARecordForm({
           <select
             className={`form-control ${errors.stageId ? "is-invalid" : ""}`}
             value={form.stageId}
-            disabled={!!editData}
+            disabled={!!editData?.slaRecordID}
             onChange={(e) =>
               setForm({ ...form, stageId: e.target.value })
             }
@@ -122,7 +125,7 @@ export default function SLARecordForm({
             ))}
           </select>
 
-          {editData && (
+          {editData?.slaRecordID && (
             <small className="info-text">
               Workflow stage cannot be modified after SLA creation.
             </small>
@@ -143,7 +146,7 @@ export default function SLARecordForm({
             }
           />
 
-          {editData && (
+          {editData?.slaRecordID && (
             <small className="info-text">
               Changing the start date will automatically recalculate the SLA end
               date and compliance status.
@@ -164,7 +167,7 @@ export default function SLARecordForm({
               Cancel
             </button>
             <button className="btn btn-primary" type="submit">
-              {editData ? "Update" : "Create"}
+              {editData?.slaRecordID ? "Update" : "Create"}
             </button>
           </div>
         </form>

@@ -79,7 +79,7 @@ export default function ServiceDetailsPage() {
       {/*  HEADER */}
       <div className="details-header">
         <ArrowLeft
-          className="back-icon"
+          className="Admin-back-icon"
           size={22}
           onClick={() => navigate(-1)}
         />

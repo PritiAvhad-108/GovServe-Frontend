@@ -33,8 +33,9 @@ const Cases = () => {
   const loadData = async () => {
     const caseRes = await axios.get("https://localhost:7027/api/Case/all");
     const appRes = await getApplications();
-    const deptRes = await axios.get("https://localhost:7027/api/Department");
-    //  fetch services
+    const deptRes = await axios.get("https://localhost:7027/api/Department/active");
+
+    // NEW: fetch services
     const serviceRes = await axios.get("https://localhost:7027/api/Services");
 
 
