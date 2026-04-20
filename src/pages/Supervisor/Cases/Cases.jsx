@@ -38,10 +38,17 @@ const Cases = () => {
     // NEW: fetch services
     const serviceRes = await axios.get("https://localhost:7027/api/Services");
 
-
-    
- 
     setCases(caseRes.data);
+  const slaRes = await axios.get("https://localhost:7027/api/Case/sla-breached");
+  const breachedCaseIds = new Set(
+  (slaRes.data || []).map(s => s.caseId)
+  );
+  const updatedCases = caseRes.data.map(c => ({
+  ...c,
+  isEscalated: c.isEscalated || breachedCaseIds.has(c.caseId)
+  }));
+
+    setCases(updatedCases);
     setDepartments(deptRes.data);
     setServices(serviceRes.data);
  
@@ -231,8 +238,8 @@ const Cases = () => {
                 <td>{c.serviceName}</td>
                 <td>{c.departmentName}</td>
                 <td>{c.officerName}</td>
-                <td>{c.status}</td>
-                <td>
+                <td>{c.isEscalated ? "Escalated" : c.status}</td>
+               <td>
                   <button
                     className="outline-btn"
                     onClick={() => navigate(`../case-details/${c.caseId}`)}

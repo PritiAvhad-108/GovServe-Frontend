@@ -22,10 +22,15 @@ const Escalations = () => {
 
   const loadInitialData = async () => {
     const caseRes = await API.get("/Case/all");
+    const slaRes = await API.get("/Case/sla-breached");
+    const breachedIds = new Set(
+  (slaRes.data || []).map(s => s.caseId));
+   const casesWithEscalation = caseRes.data.map(c => ({ ...c,isEscalated: c.isEscalated || breachedIds.has(c.caseId)
+}));
     const officerRes = await getOfficerStatistics();
-
-    setEscalatedCases(caseRes.data.filter(c => c.status === "Escalated"));
-    setAllOfficers(officerRes.data);
+  setEscalatedCases(casesWithEscalation.filter(c => c.status === "Escalated" || c.isEscalated === true
+  )
+);    setAllOfficers(officerRes.data);
   };
 
   const handleCaseChange = (e) => {

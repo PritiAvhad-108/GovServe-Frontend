@@ -33,10 +33,23 @@ const SupervisorDashboard = () => {
     loadActiveSLABreaches();
     loadSLABreachedCases();
   }, [location.pathname]);
+  const attachEscalationFlag = async (cases) => {
+  const slaRes = await getSLABreachedCases();
+
+  const breachedCaseIds = new Set(
+    (slaRes.data || []).map(s => s.caseId)
+  );
+
+  return cases.map(c => ({
+    ...c,
+    isEscalated: c.isEscalated === true || breachedCaseIds.has(c.caseId)
+  }));
+};
   const loadDashboardStats = async () => {
     try {
-      const res = await getAllCases();
-      const cases = Array.isArray(res.data) ? res.data : [];
+     const res = await getAllCases();
+    let cases = Array.isArray(res.data) ? res.data : [];
+    cases = await attachEscalationFlag(cases);
 
       setStats({
         total: cases.length,
@@ -45,8 +58,9 @@ const SupervisorDashboard = () => {
         completed: cases.filter(
           c => c.status === "Approved" || c.status === "Completed"
         ).length,
-        escalated: cases.filter(c => c.status === "Escalated").length
-      });
+        escalated: cases.filter(
+       c => c.status === "Escalated" || c.isEscalated === true
+     ).length      });
     } catch {
       setStats({
         total: 0,
@@ -57,37 +71,22 @@ const SupervisorDashboard = () => {
       });
     }
   };
-  const loadActiveSLABreaches = async () => {
-    try {
-      const [slaRes, caseRes] = await Promise.all([
-        getSLABreachedCases(),
-        getAllCases()
-      ]);
+const loadActiveSLABreaches = async () => {
+  try {
+    const slaRes = await getSLABreachedCases();
 
-      if (!Array.isArray(slaRes.data) || !Array.isArray(caseRes.data)) {
-        setSlaBreached(0);
-        return;
-      }
-
-      const escalatedCaseIds = new Set(
-        caseRes.data
-          .filter(c => c.status === "Escalated")
-          .map(c => c.caseId)
-      );
-
-      const uniqueCaseIds = new Set();
-
-      slaRes.data.forEach(row => {
-        if (escalatedCaseIds.has(row.caseId)) {
-          uniqueCaseIds.add(row.caseId);
-        }
-      });
-
-      setSlaBreached(uniqueCaseIds.size);
-    } catch {
+    if (!Array.isArray(slaRes.data)) {
       setSlaBreached(0);
+      return;
     }
-  };
+
+    // SLA Breach count comes ONLY from SLA
+    setSlaBreached(slaRes.data.length);
+
+  } catch {
+    setSlaBreached(0);
+  }
+};
   const loadRecentApplications = async () => {
     const [appRes, caseRes] = await Promise.all([
       getApplications(),
@@ -114,35 +113,18 @@ const SupervisorDashboard = () => {
   };
 const loadSLABreachedCases = async () => {
   try {
-    const [slaRes, caseRes] = await Promise.all([
-      getSLABreachedCases(),
-      getAllCases()
+    const [slaRes] = await Promise.all([
+      getSLABreachedCases()
     ]);
 
-    // safety check
-    if (!Array.isArray(slaRes.data) || !Array.isArray(caseRes.data)) {
+    if (!Array.isArray(slaRes.data)) {
       setSlaCases([]);
       return;
     }
 
-    // collect only escalated case IDs
-    const escalatedCaseIds = new Set(
-      caseRes.data
-        .filter(c => c.status === "Escalated")
-        .map(c => c.caseId)
-    );
+    // SLA table shows ALL breached SLA records
+    setSlaCases(slaRes.data);
 
-    // remove duplicate SLA rows by caseId
-    const uniqueMap = {};
-
-    slaRes.data.forEach(row => {
-      if (escalatedCaseIds.has(row.caseId) && !uniqueMap[row.caseId]) {
-        uniqueMap[row.caseId] = row;
-      }
-    });
-
-    // set final SLA cases (can be empty)
-    setSlaCases(Object.values(uniqueMap));
   } catch (error) {
     console.error("Failed to load SLA breached cases", error);
     setSlaCases([]);
