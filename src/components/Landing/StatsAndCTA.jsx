@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // 1. Import Link from react-router-dom
-
+import { Link } from "react-router-dom"; 
 const StatsAndCTA = () => {
   return (
     <>
@@ -36,7 +35,7 @@ const StatsAndCTA = () => {
 
         <div className="cta-buttons">
           
-          <Link to="/register" className="primary-btn">
+          <Link to="/register" className="primary-btnn">
             Create Account
           </Link>
           

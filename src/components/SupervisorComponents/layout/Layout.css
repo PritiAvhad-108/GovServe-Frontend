@@ -2,8 +2,6 @@
   min-height: 100vh;
   background: #eef3f8;
 }
-
-/* ===== TOPBAR (FIXED & ALIGNED) ===== */
 .sup-topbar {
   position: fixed;
   top: 0;
@@ -174,10 +172,6 @@
   max-width: 150px;
   word-break: break-word;
 }
-
-/* =========================
-   SUPERVISOR FOOTER 
-========================= */
 .supervisor-footer {
   position: fixed;
   bottom: 0;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAssignedCases } from '../../../api/officerApi';
+import { getAssignedCases } from '../../../api/officerapi';
 import './AssignedCases.css';
  
 const AssignedCasesPage = () => {

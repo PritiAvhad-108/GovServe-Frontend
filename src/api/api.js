@@ -1,16 +1,9 @@
 import axios from "axios";
  
-/* ===============================
-   AXIOS INSTANCE
-=============================== */
 const API = axios.create({
   baseURL: "https://localhost:7027/api",
 });
  
-/* ===============================
-   REQUEST INTERCEPTOR
-   → ATTACH JWT TOKEN
-=============================== */
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("jwtToken");
@@ -24,10 +17,6 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
  
-/* ===============================
-   RESPONSE INTERCEPTOR
-   → HANDLE TOKEN EXPIRY (401)
-=============================== */
 API.interceptors.response.use(
   (response) => response,
   (error) => {
