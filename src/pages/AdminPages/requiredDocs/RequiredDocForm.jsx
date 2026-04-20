@@ -18,7 +18,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
   useEffect(() => {
     if (!isEdit) {
       api
-        .get("/Services")
+        .get("/Services/active")
         .then(res => setServices(res.data))
         .catch(() => toast.error("Unable to load services."));
     }

@@ -13,7 +13,7 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
   });
 
   useEffect(() => {
-    api.get("/Services").then(res => setServices(res.data));
+    api.get("/Services/active").then(res => setServices(res.data));
     api.get("/Roles").then(res => setRoles(res.data));
   }, []);
 

@@ -33,7 +33,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
   useEffect(() => {
     if (!isEdit) {
       api
-        .get("/Department")
+        .get("/Department/active")
         .then(res => setDepartments(res.data))
         .catch(() =>
           toast.error("Unable to load departments. Please try again.")
