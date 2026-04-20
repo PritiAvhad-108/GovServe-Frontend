@@ -11,7 +11,7 @@ const OfficerSidebar = () => {
     { path: '/officer/pending-review', label: 'Pending Review', icon: 'hourglass_empty' },
     
     
-    { path: '/officer/resubmitted', label: 'Resubmitted', icon: 'history' },
+    
     { path: '/officer/approved', label: 'Approved', icon: 'check_circle' },
     { path: '/officer/rejected', label: 'Rejected', icon: 'cancel' },
     

@@ -142,11 +142,10 @@ const CaseDetailsPage = () => {
         }
     };
 
-    // ✅ DIRECT APPROVE/REJECT LOGIC
-    // ✅ DIRECT APPROVE/REJECT LOGIC
+    
     const handleDocumentStatusUpdate = async (primaryKeyId, newStatus) => {
         
-        // 🚨 SAFETY CHECK: Only check if it exists, don't block small numbers!
+    
         if (!primaryKeyId) {
             Swal.fire("Error", `Could not find the ID. Check console!`, "error");
             return;
@@ -267,7 +266,7 @@ const CaseDetailsPage = () => {
                                 const fullUrl = cleanPath ? `https://localhost:7027${cleanPath}` : null;
                                 const isCurrentlyViewing = selectedDocUrl === fullUrl;
                                 
-                                // 🕵️‍♂️ THE FOOLPROOF ID FINDER: Ignores capitalization entirely
+                                
                                 let primaryKey = null;
                                 for (let key in doc) {
                                     if (key.toLowerCase() === 'citizendocumentid') {
@@ -276,7 +275,7 @@ const CaseDetailsPage = () => {
                                     }
                                 }
 
-                                // Fallback just in case, but warn loudly in console
+                                
                                 if (!primaryKey) {
                                     console.error("COULD NOT FIND CitizenDocumentID! Object looks like:", doc);
                                     primaryKey = doc.documentId; 

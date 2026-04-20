@@ -4,7 +4,7 @@
     padding-bottom: 40px;
 }
 
-/* Blue Header */
+
 .app-header {
     background: #1e3a8a;
     color: white;
@@ -100,7 +100,7 @@
     transition: background-color 0.2s;
 }
 
-/* Highlight the row being viewed */
+
 .active-row {
     background-color: #f0f9ff;
     border-left: 4px solid #0ea5e9;
@@ -121,7 +121,7 @@
     font-weight: 600;
     font-size: 13px;
     cursor: pointer;
-    background-color: #1e3a8a; /* Default Blue */
+    background-color: #1e3a8a; 
     color: white;
     display: flex;
     align-items: center;
@@ -129,34 +129,33 @@
     transition: all 0.3s ease;
 }
 
-/* Smaller square buttons for icons */
 .icon-btn {
     width: 36px;
     padding: 0;
-    background-color: #e2e8f0; /* Light gray neutral state */
+    background-color: #e2e8f0; 
     color: #475569;
 }
 
-/* Hover effect for neutral buttons */
+
 .icon-btn:hover {
     background-color: #cbd5e1;
 }
 
-/* Success State: Green for Approved */
+
 .active-green {
     background-color: #16a34a !important;
     color: white !important;
     box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
 }
 
-/* Danger State: Red for Rejected */
+
 .active-red {
     background-color: #dc2626 !important;
     color: white !important;
     box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
 }
 
-/* Main Application Action Buttons */
+
 .action-buttons {
     display: flex;
     justify-content: center;
