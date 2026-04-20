@@ -1,14 +1,14 @@
-/* src/components/AdminComponents/layout/OfficerLayout/OfficerLayout.css */
+
 
 .officer-main-wrapper {
   display: flex;
   flex: 1;
   overflow: hidden;
   
-  /* 🚨 FIX 1: Add this! It removes any invisible padding pushing the sidebar down */
+  
   padding: 0 !important; 
   margin: 0;
-  align-items: stretch; /* Forces children to stretch to the top and bottom */
+  align-items: stretch; 
 }
 
 .officer-main-wrapper {
