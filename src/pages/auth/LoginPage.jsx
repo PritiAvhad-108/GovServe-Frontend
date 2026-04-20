@@ -88,7 +88,6 @@ function LoginPage() {
   return (
     <>
       <Navbar />
-   
       {isAuthenticated && (
         <div className="info-banner">
           You are already logged in.

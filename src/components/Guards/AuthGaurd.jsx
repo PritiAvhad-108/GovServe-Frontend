@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 function AuthGuard({ children }) {
-  // cheack token in local storage 
+ 
   const token = localStorage.getItem("jwtToken");
 
   if (!token) {

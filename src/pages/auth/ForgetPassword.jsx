@@ -85,7 +85,7 @@ function ForgetPassword() {
 
             <button type="submit" className="auth-btn">Reset Password</button>
 
-                        {statusMessage && (
+          {statusMessage && (
               <div 
                 className={`error-text ${statusMessage.includes("successfully") ? "text-success" : ""}`} 
                 style={{ 
@@ -98,7 +98,7 @@ function ForgetPassword() {
                   borderRadius: '6px'
                 }}
               >
-                {statusMessage}
+                    {statusMessage}
               </div>
             )}
           </form>
@@ -108,7 +108,6 @@ function ForgetPassword() {
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );

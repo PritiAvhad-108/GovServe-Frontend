@@ -227,12 +227,12 @@ const ApplicationForm = () => {
                 <div className="v-input-group">
                   <label>Full Name *</label>
                   <input value={citizen.fullName} onChange={e => setCitizen({...citizen, fullName: e.target.value})} placeholder="As per Aadhaar" />          
-                  {errors.fullName && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  {errors.fullName && <small style={{color:"red", fontSize: "11px"}}>Full Name is Required</small>}
                 </div>
                 <div className="v-input-group">
                   <label>Father's Name *</label>
                   <input value={citizen.fatherName} onChange={e => setCitizen({...citizen, fatherName: e.target.value})} placeholder="Full name of Father" />
-                  {errors.fatherName && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  {errors.fatherName && <small style={{color:"red", fontSize: "11px"}}>Father Name is Required</small>}
                 </div>
               </div>
  
@@ -240,7 +240,7 @@ const ApplicationForm = () => {
                 <div className="v-input-group">
                   <label>Mother's Name *</label>
                   <input value={citizen.motherName} onChange={e => setCitizen({...citizen, motherName: e.target.value})} placeholder="Full name of Mother" />
-                  {errors.motherName && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  {errors.motherName && <small style={{color:"red", fontSize: "11px"}}>Mother Name is Required</small>}
                 </div>
                 <div className="v-input-group">
                   <label>Gender *</label>
@@ -250,7 +250,7 @@ const ApplicationForm = () => {
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
-                    {errors.gender && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                    {errors.gender && <small style={{color:"red", fontSize: "11px"}}>Select Gender</small>}
                 </div>
               </div>
  
@@ -258,12 +258,12 @@ const ApplicationForm = () => {
                 <div className="v-input-group">
                   <label>Date of Birth *</label>
                   <input type="date" value={citizen.dateOfBirth} onChange={e => setCitizen({...citizen, dateOfBirth: e.target.value})} />
-                   {errors.dateOfBirth && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                   {errors.dateOfBirth && <small style={{color:"red", fontSize: "11px"}}>Date of Birth is Required</small>}
                 </div>
                 <div className="v-input-group">
                   <label>Aadhaar Number *</label>
-                  <input maxLength="12" value={citizen.aadhaarNumber} onChange={e => setCitizen({...citizen, aadhaarNumber: e.target.value})} placeholder="12 Digit UIDAI No" />
-                   {errors.aadhaarNumber && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  <input maxLength="12" value={citizen.aadhaarNumber} onChange={e => setCitizen({...citizen, aadhaarNumber: e.target.value})} placeholder="12 Digit UIDAI/Adhar No" />
+                   {errors.aadhaarNumber && <small style={{color:"red", fontSize: "11px"}}>Adhar number is Required</small>}
                 </div>
               </div>
  
@@ -271,40 +271,40 @@ const ApplicationForm = () => {
                 <div className="v-input-group">
                   <label>Phone Number *</label>
                   <input maxLength="10" value={citizen.phone} onChange={e => setCitizen({...citizen, phone: e.target.value})} placeholder="10 Digit Mobile" />
-                   {errors.phone && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                   {errors.phone && <small style={{color:"red", fontSize: "11px"}}>Phone Number Required</small>}
                 </div>
                 <div className="v-input-group">
                   <label>Email Address *</label>
                   <input type="email" value={citizen.email} onChange={e => setCitizen({...citizen, email: e.target.value})} placeholder="example@mail.com" />
-                   {errors.email && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                   {errors.email && <small style={{color:"red", fontSize: "11px"}}> Email is Required  </small>}
                 </div>
               </div>
  
               <div className="v-input-group full">
                 <label>Address Line 1 *</label>
                 <input value={citizen.addressLine1} onChange={e => setCitizen({...citizen, addressLine1: e.target.value})} placeholder="House No, Building, Area" />
-                 {errors.addressLine1 && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                 {errors.addressLine1 && <small style={{color:"red", fontSize: "11px"}}>Address is Required</small>}
               </div>
               <div className="v-input-group full">
                 <label>Address Line 2 *</label>
                 <input value={citizen.addressLine2} onChange={e => setCitizen({...citizen, addressLine2: e.target.value})} placeholder="House No, Building, Area" />
-                 {errors.addressLine2 && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                 {errors.addressLine2 && <small style={{color:"red", fontSize: "11px"}}>Address is Required</small>}
               </div>
               <div className="v-row">
                 <div className="v-input-group">
                   <label>City / Village *</label>
                   <input value={citizen.city} onChange={e => setCitizen({...citizen, city: e.target.value})} placeholder="Enter City" />
-                  {errors.city && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  {errors.city && <small style={{color:"red", fontSize: "11px"}}>City/ Village is Required</small>}
                 </div>
                 <div className="v-input-group">
                   <label>State *</label>
                   <input value={citizen.state} onChange={e => setCitizen({...citizen, state: e.target.value})} placeholder="Enter State" />
-                  {errors.state && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  {errors.state && <small style={{color:"red", fontSize: "11px"}}>State is Required</small>}
                 </div>
                 <div className="v-input-group">
                   <label>Pincode * </label>
                   <input maxLength="6" value={citizen.pincode} onChange={e => setCitizen({...citizen, pincode: e.target.value})} placeholder="6 Digits" />
-                  {errors.pincode && <small style={{color:"red", fontSize: "11px"}}>Required</small>}
+                  {errors.pincode && <small style={{color:"red", fontSize: "11px"}}>Pincode is Required</small>}
                 </div>
               </div>
             </div>

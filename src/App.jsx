@@ -19,11 +19,10 @@ import GrievanceRoute from "./routes/GrievanceRoute";
 
  
 function App() {
-  const { isAuthenticated, userRole, loading } = useAuth();
+  const {userRole, loading } = useAuth();
  
   if (loading) return null;
  
-  // ✅ FIXED REDIRECT PATHS
   const getRedirectPath = () => {
     if (userRole === "Admin") return "/admin/dashboard";
     if (userRole === "Supervisor") return "/supervisor";
