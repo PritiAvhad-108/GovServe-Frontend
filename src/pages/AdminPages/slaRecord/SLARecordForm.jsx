@@ -1,101 +1,93 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import { toast } from "react-toastify";
-
-export default function SLARecordForm({ onClose, onSave, record }) {
-  const isEditMode = !!record?.slaRecordID;
-
+ 
+export default function SLARecordForm({
+  onClose,
+  onSave,
+  caseId,
+  editData // ✅ present only when editing
+}) {
   const [cases, setCases] = useState([]);
   const [stages, setStages] = useState([]);
   const [errors, setErrors] = useState({});
-
+ 
+  /* ===========================
+     FORM STATE (SAFE INIT)
+  =========================== */
   const [form, setForm] = useState({
-    caseId: record?.caseID || "",
-    stageId: record?.stageID || "",
-    startDate: record?.startDate
-      ? record.startDate.split("T")[0]
+    caseId: editData?.caseID || caseId || "",
+    stageId: editData?.stageID || "",
+    startDate: editData?.startDate
+      ? editData.startDate.split("T")[0]
       : ""
   });
-
-  /* ================= LOAD DATA ================= */
+ 
+  /* ===========================
+     LOAD CASES & STAGES
+  =========================== */
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const caseRes = await api.get("/Case/all");
-        const stageRes = await api.get("/WorkflowStages");
-
-        let availableCases = caseRes.data;
-
-        // ✅ REMOVE CASES THAT ALREADY HAVE SLA (ONLY IN ADD MODE)
-        if (!isEditMode) {
-          const slaRes = await api.get("/SLARecords");
-          const caseIdsWithSla = slaRes.data.map(r => r.caseID);
-          availableCases = availableCases.filter(
-            c => !caseIdsWithSla.includes(c.caseId)
-          );
-        }
-
-        setCases(availableCases);
-        setStages(stageRes.data);
-      } catch {
-        toast.error("Failed to load data");
-      }
-    };
-
-    loadData();
-  }, [isEditMode]);
-
-  /* ================= VALIDATE ================= */
+    api.get("/Case/all").then(res => setCases(res.data));
+    api.get("/WorkflowStages").then(res => setStages(res.data));
+  }, []);
+ 
+  /* ===========================
+     VALIDATION
+  =========================== */
   const validate = () => {
     const e = {};
-    if (!form.caseId) e.caseId = "Case is required";
-    if (!form.stageId) e.stageId = "Workflow stage is required";
-    if (!form.startDate) e.startDate = "Start date is required";
+    if (!form.caseId) e.caseId = "Case is required.";
+    if (!form.stageId) e.stageId = "Workflow stage is required.";
+    if (!form.startDate) e.startDate = "Start date is required.";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
-
-  /* ================= SUBMIT ================= */
+ 
+  /* ===========================
+     SUBMIT (CREATE / UPDATE)
+  =========================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-
+ 
     try {
-      if (isEditMode) {
-        // ✅ UPDATE START DATE
-        await api.put(`/SLARecords/${record.slaRecordID}`, {
-          startDate: new Date(form.startDate).toISOString()
+      if (editData?.slaRecordID) {
+        // ✅ UPDATE
+        await api.put(`/SLARecords/${editData.slaRecordID}`, {
+          startDate: form.startDate
         });
-        toast.success("SLA start date updated");
+        toast.success("SLA record updated successfully");
       } else {
-        // ✅ CREATE SLA RECORD
+        // ✅ CREATE
         await api.post("/SLARecords", {
           caseId: Number(form.caseId),
           stageId: Number(form.stageId),
-          startDate: new Date(form.startDate).toISOString()
+          startDate: form.startDate
         });
-        toast.success("SLA record created");
+        toast.success("SLA record created successfully");
       }
-
+ 
       onSave();
     } catch {
-      toast.error("Operation failed");
+      toast.error("Failed to save SLA record");
     }
   };
-
+ 
   return (
     <div className="form-modal">
       <div className="modal-card">
-        <h4>{isEditMode ? "Update SLA Start Date" : "Add SLA Record"}</h4>
-
+        <h4>{editData?.slaRecordID ? "Edit SLA Record" : "Add SLA Record"}</h4>
+ 
         <form onSubmit={handleSubmit}>
-          {/* CASE */}
+          {/* ================= CASE ================= */}
           <label>Case</label>
           <select
             className={`form-control ${errors.caseId ? "is-invalid" : ""}`}
             value={form.caseId}
-            disabled={isEditMode}
-            onChange={e => setForm({ ...form, caseId: e.target.value })}
+            disabled={!!editData?.slaRecordID || !!caseId}
+            onChange={(e) =>
+              setForm({ ...form, caseId: e.target.value })
+            }
           >
             <option value="">Select Case</option>
             {cases.map(c => (
@@ -104,15 +96,26 @@ export default function SLARecordForm({ onClose, onSave, record }) {
               </option>
             ))}
           </select>
-          {errors.caseId && <small className="error-text">{errors.caseId}</small>}
-
-          {/* WORKFLOW STAGE */}
+ 
+          {editData?.slaRecordID && (
+            <small className="info-text">
+              Case cannot be changed once an SLA record is created.
+            </small>
+          )}
+ 
+          {errors.caseId && (
+            <small className="error-text">{errors.caseId}</small>
+          )}
+ 
+          {/* ================= WORKFLOW STAGE ================= */}
           <label>Workflow Stage</label>
           <select
             className={`form-control ${errors.stageId ? "is-invalid" : ""}`}
             value={form.stageId}
-            disabled={isEditMode}
-            onChange={e => setForm({ ...form, stageId: e.target.value })}
+            disabled={!!editData?.slaRecordID}
+            onChange={(e) =>
+              setForm({ ...form, stageId: e.target.value })
+            }
           >
             <option value="">Select Stage</option>
             {stages.map(s => (
@@ -121,26 +124,50 @@ export default function SLARecordForm({ onClose, onSave, record }) {
               </option>
             ))}
           </select>
-          {errors.stageId && <small className="error-text">{errors.stageId}</small>}
-
-          {/* START DATE */}
+ 
+          {editData?.slaRecordID && (
+            <small className="info-text">
+              Workflow stage cannot be modified after SLA creation.
+            </small>
+          )}
+ 
+          {errors.stageId && (
+            <small className="error-text">{errors.stageId}</small>
+          )}
+ 
+          {/* ================= START DATE ================= */}
           <label>Start Date</label>
           <input
             type="date"
             className={`form-control ${errors.startDate ? "is-invalid" : ""}`}
             value={form.startDate}
-            onChange={e => setForm({ ...form, startDate: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, startDate: e.target.value })
+            }
           />
+ 
+          {editData?.slaRecordID && (
+            <small className="info-text">
+              Changing the start date will automatically recalculate the SLA end
+              date and compliance status.
+            </small>
+          )}
+ 
           {errors.startDate && (
             <small className="error-text">{errors.startDate}</small>
           )}
-
+ 
+          {/* ================= ACTIONS ================= */}
           <div className="actions-row">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={onClose}
+            >
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary">
-              {isEditMode ? "Update" : "Create"}
+            <button className="btn btn-primary" type="submit">
+              {editData?.slaRecordID ? "Update" : "Create"}
             </button>
           </div>
         </form>

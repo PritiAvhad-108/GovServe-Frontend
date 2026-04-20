@@ -19,7 +19,7 @@
     margin-top: 0;
 }
 
-/* Breadcrumb block Bootstrap */
+
 .custom-breadcrumb {
     font-size: 14px;
     color: #64748b;
@@ -27,7 +27,6 @@
     padding: 0;
 }
 
-/* Table Container (The Card) */
 .table-responsive {
     background: #ffffff;
     border-radius: 12px;
@@ -37,7 +36,7 @@
     width: 100%;
 }
 
-/* The Reference Table Style */
+
 .reference-table {
     width: 100%;
     border-collapse: collapse; 
@@ -69,10 +68,10 @@
     border-bottom: none;
 }
 
-/* 🚨 THE FIX FOR THE BLURRED TEXT 🚨 */
+
 .rejected-pill {
-    background-color: #fee2e2; /* Light Red */
-    color: #ef4444; /* Dark Red - highly visible! */
+    background-color: #fee2e2; 
+    color: #ef4444; 
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;

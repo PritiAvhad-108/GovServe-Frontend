@@ -1,5 +1,4 @@
-/* ✅ 1. The Wrapper: Force alignment to the left */
-/* ✅ 1. The Wrapper: Remove 'flex' entirely so it stops trying to center things */
+
 .officer-dashboard-wrapper {
     display: block; 
     width: 100%;
@@ -9,13 +8,12 @@
 
 .officer-dashboard {
     width: 100%;
-    max-width: 1200px;     /* ✅ ADD THIS BACK */
-    margin: 0 auto;        /* ✅ This centers the dashboard */
+    max-width: 1200px;     
+    margin: 0 auto;       
     padding: 10px 20px;
 }
 
-/* ... keep all the rest of your CSS exactly the same ... */
-/* ✅ Header styling */
+
 .dashboard-header {
     margin-bottom: 2rem;
 }
@@ -31,14 +29,14 @@
     margin-top: 6px;
 }
 
-/* ✅ Stable responsive grid */
+
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
 }
 
-/* ✅ Existing StatCard styles (unchanged) */
+
 .stat-card {
     background: #ffffff;
     padding: 25px;
@@ -82,9 +80,9 @@
     color: #1a3a8a;
 }
 
-/* Removes the blue border and background from the first StatCard */
+
 .stats-grid > div {
-    border: none !important; /* Removes the blue line */
-    background-color: #ffffff !important; /* Makes the background pure white */
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05); /* Keeps the soft shadow */
+    border: none !important; 
+    background-color: #ffffff !important; 
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05); 
 }

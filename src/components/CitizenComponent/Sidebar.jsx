@@ -12,7 +12,7 @@ import "../../styles/CitizenStyles/common/global.css";
 
 function Sidebar({ isOpen, unreadCount = 0 }) {
   return (
-    /* Unique class 'cz-sidebar' added for scoping */
+   
     <div className={`cz-sidebar ${isOpen ? "cz-open" : "cz-closed"}`}>
       
       <NavLink 

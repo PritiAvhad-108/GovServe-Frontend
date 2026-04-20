@@ -20,7 +20,7 @@ import GrievanceRoute from "./routes/GrievanceRoute";
 
  
 function App() {
-  const { isAuthenticated, userRole, loading } = useAuth();
+  const {userRole, loading } = useAuth();
  
   if (loading) return null;
  

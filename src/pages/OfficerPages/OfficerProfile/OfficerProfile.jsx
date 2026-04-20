@@ -10,7 +10,7 @@ const OfficerProfile = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            // ✅ Fallback to localStorage if authUser is slow to load
+            
             const userId = authUser?.userId || localStorage.getItem('userId') || 2; 
             
             try {
@@ -86,16 +86,6 @@ const OfficerProfile = () => {
                         </div>
                     </div>
 
-                    {/* ✅ Used a Check Circle for the active status */}
-                    {/* <div className="info-item">
-                        <div className="icon-box"><FaCheckCircle /></div>
-                        <div className="info-detail">
-                            <label>Status</label>
-                            <span className="status-badge">
-                                {user?.status || "Active"}
-                            </span>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div>

@@ -1,11 +1,11 @@
-/* ✅ NEW: Centers the whole page content */
+
 .assigned-page {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-/* ✅ UPDATED: limit width & center */
+
 .assigned-container {
     width: 100%;
     max-width: 1200px; /* ✅ key line */
@@ -13,7 +13,7 @@
     background-color: #f8fafc;
 }
 
-/* ✅ KEEP table clean & centered */
+
 .table-wrapper {
     background: white;
     border-radius: 12px;
@@ -22,7 +22,7 @@
     margin-top: 1rem;
 }
 
-/* ✅ Table styles unchanged */
+
 .assigned-table {
     width: 100%;
     border-collapse: collapse;

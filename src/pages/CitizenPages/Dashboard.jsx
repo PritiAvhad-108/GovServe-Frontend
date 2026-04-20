@@ -33,7 +33,7 @@ function Dashboard() {
             <h3>Apply Services</h3>
             <div className="card-footer">
               <hr className="footer-line" />
-              <p className="desc">Apply for services</p>
+              <p className="desc">Apply for Government services</p>
             </div>
           </div>
 
@@ -42,7 +42,7 @@ function Dashboard() {
             <h3>My Applications</h3>
             <div className="card-footer">
               <hr className="footer-line" />
-              <p className="desc">Track status</p>
+              <p className="desc">Track status of your applications</p>
             </div>
           </div>
 
@@ -51,7 +51,7 @@ function Dashboard() {
             <h3>Documents</h3>
             <div className="card-footer">
               <hr className="footer-line" />
-              <p className="desc">Manage files</p>
+              <p className="desc">Manage files and track your document status </p>
             </div>
           </div>
 
@@ -60,7 +60,7 @@ function Dashboard() {
             <h3>Grievance</h3>
             <div className="card-footer">
               <hr className="footer-line" />
-              <p className="desc">Raise complaints</p>
+              <p className="desc">Raise complaints if any issue</p>
             </div>
           </div>
           

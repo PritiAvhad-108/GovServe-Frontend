@@ -1,4 +1,4 @@
-/* ✅ NEW: Wraps the whole page to center it horizontally */
+
 .sla-page-wrapper {
     display: flex;
     justify-content: center;
@@ -11,7 +11,7 @@
 .sla-workflow-container {
     padding: 28px;
     width: 100%;
-    max-width: 1200px; /* ✅ Matches the width of your other pages */
+    max-width: 1200px; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -29,7 +29,7 @@
 .sla-header h2 {
     font-size: 28px;
     font-weight: 700;
-    color: #0b1c3c; /* Dark navy text */
+    color: #0b1c3c; 
     margin: 0;
 }
 
@@ -99,30 +99,30 @@
     color: #4a5568;
 }
 
-/* Specific Status Colors */
+
 .status-pending { background-color: #1a3b8a; color: #ffffff; }
 .status-approved { background-color: #def7ec; color: #03543f; }
 .status-rejected { background-color: #fde8e8; color: #9b1c1c; }
 
-/* Priority Level Colors (Days Remaining) */
+
 .sla-days {
     font-size: 15px;
     font-weight: 700;
 }
 
 .urgency-breached {
-    color: #e53e3e; /* Bright Red */
+    color: #e53e3e; 
 }
 
 .urgency-critical {
-    color: #dd6b20; /* Orange */
+    color: #dd6b20; 
 }
 
 .urgency-ontime {
-    color: #38a169; /* Green */
+    color: #38a169; 
 }
 
-/* Empty State / Loading */
+
 .sla-loading, .sla-empty {
     color: #718096;
     text-align: center;

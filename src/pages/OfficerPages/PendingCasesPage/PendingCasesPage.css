@@ -1,20 +1,20 @@
-/* Page Wrapper - Centers the whole container */
+
 .pending-page-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-/* Page Container - Limits width to match Assigned Cases */
+
 .pending-container {
     width: 100%;
-    max-width: 1200px; /* Matches Assigned Cases width */
+    max-width: 1200px; 
     padding: 28px;
     background-color: #f8fafc;
     min-height: 100vh;
 }
 
-/* 🚨 NEW FIX: Centers the Title, Breadcrumb, and Count */
+
 .pending-header {
     display: flex;
     flex-direction: column;
@@ -75,12 +75,12 @@
     border-top: 1px solid #e5e7eb;
 }
 
-/* Ensure the table cell itself has no weird background */
+
 .pending-table tbody td.status-pending {
     background-color: transparent;
 }
 
-/* Style the span inside as a professional badge */
+
 .status-pending span {
     background-color: #fef3c7; 
     color: #b45309;           
