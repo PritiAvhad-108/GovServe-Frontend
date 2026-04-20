@@ -26,7 +26,6 @@ API.interceptors.request.use(
  
 /* ===============================
    RESPONSE INTERCEPTOR
-   → HANDLE TOKEN EXPIRY (401)
 =============================== */
 API.interceptors.response.use(
   (response) => response,

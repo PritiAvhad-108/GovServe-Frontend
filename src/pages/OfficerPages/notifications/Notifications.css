@@ -1,11 +1,11 @@
-/* Wrapper to hold the button and dropdown together */
+
 .notification-wrapper {
     position: relative;
     display: inline-block;
-    z-index: 9999; /* ✅ ensure above navbar & sidebar */
+    z-index: 9999; 
 }
 
-/* The Bell Button in the Navbar */
+
 .bell-trigger-btn {
     background: transparent;
     border: none;
@@ -18,24 +18,23 @@
     justify-content: center;
 }
 
-/* ✅ FIX: Force SVG bell visibility */
-/* The Bell Button in the Navbar */
+
 .bell-trigger-btn {
     background: transparent;
     border: none;
     cursor: pointer;
-    position: relative; /* Crucial for positioning the badge relative to this button */
-    padding: 8px; /* Gives some breathing room around the bell */
+    position: relative; 
+    padding: 8px; 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* ✅ FIX: Force SVG bell visibility and color */
+
 .bell-trigger-btn svg {
-    width: 24px;  /* Slightly larger for better visibility */
+    width: 24px;  
     height: 24px;
-    color: #ffffff; /* White color to contrast with the blue navbar */
+    color: #ffffff; 
     fill: #ffffff;
     display: block;
 }
@@ -44,36 +43,34 @@
     opacity: 0.8;
 }
 
-/* ✅ FIX: Moved the red unread count badge to the top right corner */
-/* ✅ FIX: Smaller badge, perfectly positioned */
+
 .unread-badge {
     position: absolute;
-    /* Adjust these to move the badge exactly where you want it */
+    
     top: -2px; 
     right: -2px; 
     
-    background-color: #ef4444; /* Alert red */
+    background-color: #ef4444; 
     color: white;
     
-    /* Smaller text and perfectly round shape */
+    
     font-size: 10px; 
     font-weight: bold;
     height: 10px; 
     width: 10px;
     border-radius: 50%;
     
-    /* Center the number inside the circle */
+    
     display: flex;
     align-items: center;
     justify-content: center;
     
-    /* Important: Remove default line-height to keep the number vertically centered */
     line-height: 1; 
     
-    /* The border cuts out the background, making it look professional */
-    border: 2px solid #1e3a8a; /* Ensure this matches your navbar background hex code! */
+   
+    border: 2px solid #1e3a8a; 
 }
-/* The Floating Dropdown Box */
+
 .notification-dropdown {
     position: absolute;
     top: 45px;
@@ -87,7 +84,7 @@
     overflow: hidden;
 }
 
-/* Header inside Dropdown */
+
 .notifications-header {
     display: flex;
     justify-content: space-between;
@@ -106,7 +103,7 @@
     font-weight: bold;
 }
 
-/* Scrollable List area */
+
 .notifications-list {
     max-height: 400px;
     overflow-y: auto;
@@ -114,7 +111,6 @@
     flex-direction: column;
 }
 
-/* Individual Card */
 .notification-card {
     display: flex;
     align-items: center;

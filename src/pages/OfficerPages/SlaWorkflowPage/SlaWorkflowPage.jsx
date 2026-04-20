@@ -38,17 +38,17 @@ const SlaWorkflowPage = () => {
     };
 
     return (
-        /* ✅ NEW: Global wrapper to center the page */
+  
         <div className="sla-page-wrapper">
             <div className="sla-workflow-container">
                 
-                {/* 🚨 FIX: Header is now grouped and centered via CSS */}
+               
                 <div className="sla-header">
                     <h2>SLA Record</h2>
                     <div className="custom-breadcrumb"></div>
                 </div>
 
-                {/* The white card */}
+               
                 <div className="sla-card">
                     {loading ? (
                         <div className="sla-loading">Loading SLA metrics...</div>
@@ -74,9 +74,7 @@ const SlaWorkflowPage = () => {
                                                         {c.status}
                                                     </span>
                                                 </td>
-                                                
-                                                {/* ✅ UPDATED: Conditional rendering for 0 days = Breached */}
-                                               {/* ✅ UPDATED: Conditional rendering for 0 OR LESS days = Breached */}
+                                              
 <td>
     <span 
         className={`sla-days ${getUrgencyColorClass(c.urgencyLevel)}`}

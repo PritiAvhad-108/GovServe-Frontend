@@ -8,7 +8,7 @@ const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false); 
     
     const dropdownRef = useRef(null); 
-    // Using 2 as fallback for testing, but ensure localStorage.userId is set during login
+    
     const officerId = localStorage.getItem('userId') || 2;
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const NotificationBell = () => {
                 setLoading(true);
                 const response = await getOfficerNotifications(officerId);
                 
-                // ✅ Extracting data correctly: handle both raw array and axios wrapper
+                
                 const data = response.data || response;
                 setNotifications(Array.isArray(data) ? data : []);
             } catch (error) {
@@ -40,7 +40,7 @@ const NotificationBell = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // ✅ Case-insensitive check for badge count
+    
     const unreadCount = notifications.filter(n => 
         n.status && n.status.toLowerCase() === 'unread'
     ).length;

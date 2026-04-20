@@ -80,7 +80,7 @@ function LoginPage() {
  
         else if (userRoleFromToken === "Grievance Officer") navigate("/grievances");
 
-        else if(userRoleFromToken === "Grievance Officer") navigate("/grievances");
+        // else if(userRoleFromToken === "Grievance Officer") navigate("/grievances");
 
         else navigate("/");
       }, 1000);
@@ -112,8 +112,6 @@ function LoginPage() {
                 ? "/supervisor"
                 : userRole === "Officer"
                 ? "/officer"
-
-               
 
                 : userRole === "Grievance Officer"
 

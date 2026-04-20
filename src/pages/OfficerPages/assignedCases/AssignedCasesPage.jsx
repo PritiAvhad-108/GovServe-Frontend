@@ -21,7 +21,7 @@ const AssignedCasesPage = () => {
             setLoading(true);
             const response = await getAssignedCases(officerId);
             
-            // Handle both scenarios: if interceptor returns data directly OR full response object
+           
             const finalData = response.data || response;
             setCaseList(Array.isArray(finalData) ? finalData : []);
             
@@ -36,10 +36,10 @@ const AssignedCasesPage = () => {
     return (
         <div className="assigned-container">
             
-            {/* 🚨 FIX: Replaced the old flex/justify classes with our centered class! */}
+           
             <div className="assigned-header">
                 <h1 className="text-2xl font-bold text-gray-800">Assigned Cases</h1>
-                {/* <span className="text-sm text-gray-500">Total: {caseList.length} Applications</span> */}
+               
             </div>
 
             <div className="table-wrapper">
@@ -62,7 +62,7 @@ const AssignedCasesPage = () => {
                                     <tr key={item.caseId}>
                                         <td className="font-medium">{item.caseId}</td>
                                         
-                                        {/* ✅ FIX 1: Look in multiple places to guarantee we find the name! */}
+                                        
                                         <td>
                                             {
                                                 item.user?.fullName || 
@@ -73,7 +73,7 @@ const AssignedCasesPage = () => {
                                             }
                                         </td>
                                         
-                                        {/* ✅ FIX 2: Look inside the Application object for the Service Name */}
+                                       
                                         <td>{item.application?.service?.serviceName || 'General Service'}</td>
                                         
                                         <td>
@@ -85,7 +85,7 @@ const AssignedCasesPage = () => {
                                         <td>
                                             <div className="flex gap-2 justify-center">
                                                 
-                                                {/* Button 1: Points to ApplicationDetails Page */}
+                                               
                                                 <button 
                                                     onClick={() => navigate(`/officer/case-details/${item.caseId}`)}
                                                     className="view-btn"
