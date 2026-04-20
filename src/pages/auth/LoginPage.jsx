@@ -39,7 +39,6 @@ function LoginPage() {
  
       const { token } = response.data;
  
-      // ✅ DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
  
       const userId =
@@ -53,9 +52,6 @@ function LoginPage() {
         decodedToken.role;
 
 
-        
- 
-      // ✅ NOW UPDATE AUTH CONTEXT (IMPORTANT)
       login({
         token,
         roleName: userRoleFromToken,
@@ -92,7 +88,7 @@ function LoginPage() {
   return (
     <>
       <Navbar />
-      {/* ✅ ALREADY LOGGED IN BANNER */}
+   
       {isAuthenticated && (
         <div className="info-banner">
           You are already logged in.

@@ -29,7 +29,7 @@ function ForgetPassword() {
 
     try {
       const response = await axios.post("https://localhost:7027/api/Auth/ForgotPassword", formData);
-      setStatusMessage(response.data); // "Password reset successfully"
+      setStatusMessage(response.data); 
       setErrors({});
     } catch (error) {
       if (error.response) {

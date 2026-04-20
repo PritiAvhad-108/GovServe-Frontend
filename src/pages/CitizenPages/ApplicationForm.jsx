@@ -64,7 +64,7 @@ const ApplicationForm = () => {
     "pincode"
   ];
 
-  /* validation */
+  /* STEP‑2 validation */
   const validateStep2 = () => {
     const newErrors = {};
     mandatoryFields.forEach(f => {
@@ -76,7 +76,7 @@ const ApplicationForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  /* fetch service + docs */
+  /* fetch service + required docs */
   useEffect(() => {
     if (!currentUserId || !token) {
       navigate("/login");
@@ -89,7 +89,10 @@ const ApplicationForm = () => {
 
         const [svc, docs] = await Promise.all([
           axios.get(`https://localhost:7027/api/Services/${id}`, config),
-          axios.get(`https://localhost:7027/api/CitizenDocument/required-documents/${id}`, config)
+          axios.get(
+            `https://localhost:7027/api/CitizenDocument/required-documents/${id}`,
+            config
+          )
         ]);
 
         setServiceData(svc.data);
@@ -102,7 +105,7 @@ const ApplicationForm = () => {
     fetchData();
   }, [id, token, currentUserId, navigate]);
 
-  /* submit */
+  /* submit application */
   const handleSubmit = async () => {
     setSubmitting(true);
     setApiError(null);
@@ -135,7 +138,7 @@ const ApplicationForm = () => {
         config
       );
 
-      /* upload docs */
+      /* upload documents */
       if (Object.keys(files).length > 0) {
         const uploads = Object.entries(files).map(([docId, file]) => {
           const formData = new FormData();
@@ -201,7 +204,9 @@ const ApplicationForm = () => {
               </div>
               <div className="v-input-group">
                 <label>Issuing Department</label>
-                <div className="v-readonly-box">{serviceData.departmentName}</div>
+                <div className="v-readonly-box">
+                  {serviceData.departmentName}
+                </div>
               </div>
             </div>
 
@@ -318,36 +323,72 @@ const ApplicationForm = () => {
             </div>
           </div>
         )}
- 
+ {/* STEP 3 – Upload Docs */}
         {step === 3 && (
           <div className="step-card fade-in">
-            <div className="card-title"><ClipboardList size={16}/> <h3>Upload Proofs</h3></div>
+            <div className="card-title">
+              <ClipboardList size={16} />
+              <h3>Upload Proofs</h3>
+            </div>
+
             <div className="upload-list">
               {requiredDocs.map(doc => (
                 <div key={doc.documentID} className="upload-item-box">
                   <div className="upload-text">
                     <span className="doc-label">{doc.documentName}</span>
-                    {files[doc.documentID] && <span className="file-name">{files[doc.documentID].name}</span>}
-                    {isEditMode && files[doc.documentID] && <span className="file-name status-pending">Existing document attached</span>}
+                    {files[doc.documentID] && (
+                      <span className="file-name">
+                        {files[doc.documentID].name}
+                      </span>
+                    )}
                   </div>
-                  <label className={`upload-btn-label ${files[doc.documentID] ? 'uploaded' : ''}`}>
-                    {files[doc.documentID] ? <CheckCircle size={16}/> : <Upload size={16}/>}
-                    <input type="file" hidden onChange={e => setFiles({...files, [doc.documentID]: e.target.files[0]})} />
+
+                  <label
+                    className={`upload-btn-label ${
+                      files[doc.documentID] ? "uploaded" : ""
+                    }`}
+                  >
+                    {files[doc.documentID] ? (
+                      <CheckCircle size={16} />
+                    ) : (
+                      <Upload size={16} />
+                    )}
+                    <input
+                      type="file"
+                      hidden
+                      onChange={e =>
+                        setFiles({
+                          ...files,
+                          [doc.documentID]: e.target.files[0]
+                        })
+                      }
+                    />
                   </label>
                 </div>
               ))}
             </div>
+
             <div className="card-actions">
-              <button className="btn-back" onClick={() => setStep(2)}>Back</button>
-              <button className="btn-submit" onClick={handleSubmit} disabled={submitting}>
-                {submitting ? <Loader2 className="spin" size={16}/> : (isEditMode ? "Update & Resubmit" : "Final Submission")}
+              <button className="btn-back" onClick={() => setStep(2)}>
+                Back
+              </button>
+              <button
+                className="btn-submit"
+                onClick={handleSubmit}
+                disabled={submitting}
+              >
+                {submitting ? (
+                  <Loader2 className="spin" size={16} />
+                ) : (
+                  "Final Submission"
+                )}
               </button>
             </div>
           </div>
         )}
       </div>
- 
-     {showSuccess && (
+
+      {showSuccess && (
         <div className="modal-overlay">
           <div className="success-card">
             <div className="success-check-circle">
@@ -355,7 +396,9 @@ const ApplicationForm = () => {
             </div>
             <h3>Application Successful!</h3>
             <p>Your request has been submitted for verification.</p>
-            <div className="app-id-badge">Application ID: {generatedAppId}</div>
+            <div className="app-id-badge">
+              Application ID: {generatedAppId}
+            </div>
             <button
               className="btn-modal-close"
               onClick={() => navigate("/citizen/my-applications")}
@@ -370,4 +413,3 @@ const ApplicationForm = () => {
 };
 
 export default ApplicationForm;
- 
