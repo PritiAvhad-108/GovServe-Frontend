@@ -45,7 +45,7 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-/* ✅ ICON BACKGROUND – SAME AS ROLES */
+/*  ICON BACKGROUND – SAME AS ROLES */
 .sla-days-count-card .icon-bg {
   background: #e6f0ff;
   padding: 10px;
@@ -55,7 +55,7 @@
   justify-content: center;
 }
 
-/* ✅ COUNT TEXT */
+/*  COUNT TEXT */
 .sla-days-count-card p {
   font-size: 14px;
   color: #475569;
@@ -161,7 +161,7 @@
   z-index: 1001;
 }
 
-/* ✅ Dropdown visibility fixes */
+/*  Dropdown visibility fixes */
 .modal-card select {
   position: relative;
   z-index: 1002;
@@ -242,7 +242,7 @@ Action icons
   display: block;
 }
 
-/* ✅ FIXED (READ-ONLY) FIELDS */
+/* FIXED (READ-ONLY) FIELDS */
 .fixed-field:disabled {
   background-color: #f3f4f6;
   color: #374151;

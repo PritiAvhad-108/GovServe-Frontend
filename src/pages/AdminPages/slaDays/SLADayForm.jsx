@@ -22,7 +22,7 @@ export default function SLADayForm({ data = {}, onClose, onSave }) {
     api.get("/Roles").then(res => setRoles(res.data));
   }, [isEdit]);
 
-  /* ✅ VALIDATION */
+  /*  VALIDATION */
   const validateForm = () => {
     const newErrors = {};
 
@@ -80,7 +80,7 @@ export default function SLADayForm({ data = {}, onClose, onSave }) {
       <div className="modal-card">
         <h4>{isEdit ? "Edit SLA Days" : "Add SLA Days"}</h4>
 
-        {/* ✅ SERVICE */}
+        {/*  SERVICE */}
         <label>Service</label>
         {isEdit ? (
           <>
@@ -113,7 +113,7 @@ export default function SLADayForm({ data = {}, onClose, onSave }) {
           </>
         )}
 
-        {/* ✅ ROLE */}
+        {/*  ROLE */}
         <label>Role</label>
         <select
           className={`form-control ${errors.roleID ? "is-invalid" : ""}`}
@@ -131,7 +131,7 @@ export default function SLADayForm({ data = {}, onClose, onSave }) {
           <small className="error-text">{errors.roleID}</small>
         )}
 
-        {/* ✅ SLA DAYS */}
+        {/* SLA DAYS */}
         <label>SLA Days</label>
         <input
           type="number"

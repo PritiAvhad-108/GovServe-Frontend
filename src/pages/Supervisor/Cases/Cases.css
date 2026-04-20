@@ -28,8 +28,6 @@
   border-radius: 8px;
   border: none;
 }
-
-/*  UPDATED TABLE STYLE — SAME CLASS NAME */
 .cases-table {
   width: 100%;
   background: white;
@@ -58,7 +56,6 @@
   border-top: 1px solid #e5e7eb;
 }
 
-/* KEEP REST SAME */
 .link-text {
   color: #2563eb;
   font-weight: 600;
@@ -116,48 +113,31 @@
   background: #fee2e2;
   color: #991b1b;
 }
-/* ================= SPACING ADJUSTMENTS ================= */
-
-/* Reduce outer page padding */
 .cases-page {
   padding: 16px; 
 }
-
-/* Reduce card spacing */
 .cases-card {
   padding: 16px;       
   margin-bottom: 16px;  
 }
-
-/* Reduce heading gaps */
 .cases-card h3 {
   margin-bottom: 8px;   
 }
-
-/* Reduce space between inputs */
 .cases-card select,
 .search-input {
   margin-bottom: 6px;   
   padding: 8px;         
 }
-
-/* Reduce button vertical size */
 .primary-btn {
   margin-top: 6px;
   padding: 8px 14px;    
 }
-
-/* Reduce table gap */
 .cases-table {
   margin-top: 6px;    
 }
-
-/* Reduce pagination gap */
 .pagination {
   margin-top: 10px;    
 }
-
-/* Remove default h2 top margin */
 .cases-page h2 {
   margin-top: 0;
   margin-bottom: 12px;

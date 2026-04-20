@@ -1,12 +1,14 @@
 /* SIDEBAR CONTAINER */
-.sidebar {
+.grievance-sidebar {
   width: 240px;
   background-color: #e7f3f6;
   min-width: 240px;
-  height: 100%;
+  height: calc(100vh - 110px);
   border-right: 1px solid #e5e7eb;
   padding-top: 30px;
   overflow-y: auto;
+  margin-top:70px;
+  
 }
 
 /* MENU LIST */
@@ -36,7 +38,7 @@
   color: #1e3a8a;
 }
 
-/* ACTIVE STATE (future-safe) */
+/* ACTIVE STATE  */
 .sidebar-list li.active {
  background: #bfdbfe;
   font-weight: 600;

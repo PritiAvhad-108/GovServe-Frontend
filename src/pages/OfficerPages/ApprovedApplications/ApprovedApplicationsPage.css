@@ -95,6 +95,8 @@
 
 /* --- NEW: Pagination Styles to fix the "Invisible Buttons" --- */
 
+/* --- NEW: Pagination Styles to fix the "Invisible Buttons" --- */
+
 .custom-pagination {
     display: flex;
     justify-content: center;
@@ -105,43 +107,39 @@
     background-color: #ffffff;
 }
 
-/* Ensure the button is blue and text is white */
+/* Base button styling (Active State) */
 .page-nav-btn {
-    background-color: #2563eb !important; 
-    color: #ffffff !important;
-    border: 1px solid #2563eb;
+    background-color: #ffffff; /* White background */
+    color: #3374de;            /* Dark text so it's visible */
+    border: 1px solid #cbd5e1;
     padding: 10px 20px;
     border-radius: 8px;
-    display: inline-flex; /* Helps center text inside */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .page-nav-btn:hover:not(:disabled) {
-    background-color: #e2e8f0;
-    color: #1e293b;
-    border-color: #cbd5e1;
+    background-color: #f1f5f9;
 }
 
+/* DISABLED State (Dark Gray) */
 .page-nav-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.8; /* Increased opacity so it looks solid */
     cursor: not-allowed;
-    background-color: #f8fafc;
+    background-color: #3e6fb3; /* Darker gray background */
+    color: #ffffff;            /* White text on dark gray */
+    border-color: #94a3b8;
 }
 
 .page-info {
     font-size: 14px;
-    color: #64748b;
+    color: #3e6fb3;
     font-weight: 500;
     min-width: 80px;
     text-align: center;
-}
-
-/* Loading / Empty */
-.loading-text,
-.empty-text {
-    text-align: center;
-    padding: 32px;
-    font-size: 15px;
-    color: #64748b;
 }

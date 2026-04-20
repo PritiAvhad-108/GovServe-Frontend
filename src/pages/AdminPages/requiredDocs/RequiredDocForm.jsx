@@ -14,7 +14,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
     mandatory: doc.mandatory === "Yes" || doc.mandatory === true
   });
 
-  /* ✅ Load services ONLY for CREATE */
+  /*  Load services ONLY for CREATE */
   useEffect(() => {
     if (!isEdit) {
       api
@@ -24,7 +24,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
     }
   }, [isEdit]);
 
-  /* ✅ Validation */
+  /* Validation */
   const validateForm = () => {
     const newErrors = {};
 
@@ -47,7 +47,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  /* ✅ Submit */
+  /*  Submit */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -85,7 +85,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
         <h4>{isEdit ? "Edit Document" : "Add Document"}</h4>
 
         <form onSubmit={handleSubmit}>
-          {/* ✅ Service */}
+          {/*  Service */}
           <label>Service</label>
           {isEdit ? (
             <>
@@ -122,7 +122,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
             </>
           )}
 
-          {/* ✅ Document Name */}
+          {/*  Document Name */}
           <label>Document Name</label>
           <input
             className={`form-control ${
@@ -137,7 +137,7 @@ export default function RequiredDocForm({ doc = {}, onClose, onSave }) {
             <small className="error-text">{errors.documentName}</small>
           )}
 
-          {/* ✅ Mandatory */}
+          {/* Mandatory */}
           <label>Mandatory</label>
           <select
             className={`form-control ${

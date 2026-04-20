@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaTasks, FaClock, FaCheckCircle } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 import DashboardCard from "../../components/GrievanceComponents/common/DashboardCard";
-import AssignedGrievances from "./AssignedGrievances";
 
 import "../../styles/GrievanceStyles/dashboard.css";
 
@@ -18,6 +17,9 @@ import {
 const GrievanceDashboard = () => {
   const [grievances, setGrievances] = useState([]);
 
+  const [dashboardQueues, setDashboardQueues] = useState([]);
+
+
   const [pendingCount, setPendingCount] = useState(0);
   const [resolvedCount, setResolvedCount] = useState(0);
 
@@ -25,6 +27,7 @@ const GrievanceDashboard = () => {
   const [pendingAppeals, setPendingAppeals] = useState(0);
   const [resolvedAppeals, setResolvedAppeals] = useState(0);
 
+  const navigate = useNavigate();
   useEffect(() => {
     loadDashboardData();
   }, []);
@@ -47,7 +50,37 @@ const GrievanceDashboard = () => {
         getResolvedAppealCount(),
       ]);
 
+
+
       setGrievances(grievancesRes?.data || []);
+
+      const submittedGrievances = (grievancesRes?.data || [])
+  .filter(g => g.status === "Submitted")
+  .map(g => ({
+    type: "Grievance",
+    id: g.grievanceId,
+    applicationId: g.applicationID,
+    reason: g.reason,
+    filedDate: g.filedDate,
+    refId: g.grievanceId,
+    raw: g
+  }));
+
+const submittedAppeals = (appealsRes?.data || [])
+  .map(a => ({
+    type: "Appeal",
+    id: a.appealID,
+    applicationId: a.applicationID,
+    reason: a.reason,
+    filedDate: a.filedDate,
+    refId: a.appealID,
+    raw: a
+  }));
+
+setDashboardQueues([
+  ...submittedGrievances,
+  ...submittedAppeals
+]);
 
       setPendingCount(
         pendingRes?.data?.pendingGrievanceCount || 0
@@ -117,8 +150,73 @@ const GrievanceDashboard = () => {
         />
       </div>
 
-      {/*  Officer Grievance List */}
-      <AssignedGrievances grievances={grievances} />
+      <h3 style={{ marginTop: "20px" }}>
+  Pending Actions (Grievances & Appeals)
+</h3>
+
+<table className="grievance-table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Reference ID</th>
+      <th>Application ID</th>
+      <th>Reason</th>
+      <th>Filed Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {dashboardQueues.length === 0 ? (
+      <tr>
+        <td colSpan="6" style={{ textAlign: "center" }}>
+          No pending items
+        </td>
+      </tr>
+    ) : (
+      dashboardQueues.map((item, index) => (
+        <tr key={index}>
+          <td>
+            <span
+              style={{
+                fontWeight: "bold",
+                color: item.type === "Grievance" ? "#1d4ed8" : "#7c2d12"
+              }}
+            >
+              {item.type}
+            </span>
+          </td>
+
+          <td>{item.refId}</td>
+          <td>{item.applicationId}</td>
+          <td>{item.reason}</td>
+          <td>
+            {item.filedDate
+              ? new Date(item.filedDate).toLocaleDateString()
+              : "-"}
+          </td>
+
+          <td>
+            <button
+              className="view-btn"
+              onClick={() =>
+                navigate(
+                  item.type === "Grievance"
+                    ? `/grievances/view/${item.refId}`
+                    : `/grievances/appeal-view/${item.refId}`,
+                  { state: item.raw }
+                )
+              }
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      ))
+    )}
+  </tbody>
+</table>
+
     </div>
   );
 };

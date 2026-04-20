@@ -4,15 +4,24 @@ import "./notifications.css";
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState([]);
-  const [filter, setFilter] = useState("ALL"); // ALL | UNREAD | READ
+  const [filter, setFilter] = useState("ALL");
   const [loading, setLoading] = useState(true);
 
-  const ADMIN_USER_ID = 2;
+  /* ===============================
+     Get admin userId from localStorage
+  =============================== */
+  const ADMIN_USER_ID = Number(localStorage.getItem("userId"));
 
   /* ===============================
-     Load notifications (backend-driven)
+     Load notifications
   =============================== */
   const loadNotifications = async () => {
+    if (!ADMIN_USER_ID) {
+      console.error("Admin userId not found");
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       let res;
@@ -35,20 +44,7 @@ export default function NotificationsPage() {
 
   useEffect(() => {
     loadNotifications();
-  }, [filter]);
-
-  /* ===============================
-     Mark as read
-  =============================== */
-  const markAsRead = async (notificationId) => {
-    try {
-      await api.put(`/Notification/mark-read/${notificationId}`);
-      loadNotifications();
-      window.dispatchEvent(new Event("notifications-updated"));
-    } catch (err) {
-      console.error("Failed to mark as read", err);
-    }
-  };
+  }, [filter, ADMIN_USER_ID]);
 
   if (loading) {
     return <p className="notification-empty">Loading…</p>;
@@ -58,7 +54,6 @@ export default function NotificationsPage() {
     <div className="notifications-page">
       <h2>Notifications</h2>
 
-      {/* FILTER TABS */}
       <div className="notification-filters">
         <button
           className={filter === "ALL" ? "active" : ""}
@@ -80,7 +75,6 @@ export default function NotificationsPage() {
         </button>
       </div>
 
-      {/* LIST */}
       {notifications.length === 0 ? (
         <p className="notification-empty">
           No {filter.toLowerCase()} notifications
@@ -90,12 +84,11 @@ export default function NotificationsPage() {
           {notifications.map((n) => (
             <div
               key={n.notificationId}
-              className={`notification-card ${
-                !n.isRead ? "unread" : ""
-              }`}
+              className={`notification-card ${!n.isRead ? "unread" : ""}`}
               onClick={() => {
                 if (!n.isRead && filter !== "READ") {
-                  markAsRead(n.notificationId);
+                  api.put(`/Notification/mark-read/${n.notificationId}`)
+                    .then(loadNotifications);
                 }
               }}
             >
@@ -106,12 +99,7 @@ export default function NotificationsPage() {
                 </span>
               </div>
 
-              {/* ✅ STATUS BADGE */}
-              <span
-                className={`status-badge ${
-                  n.isRead ? "read" : "unread"
-                }`}
-              >
+              <span className={`status-badge ${n.isRead ? "read" : "unread"}`}>
                 {n.isRead ? "Read" : "Unread"}
               </span>
             </div>

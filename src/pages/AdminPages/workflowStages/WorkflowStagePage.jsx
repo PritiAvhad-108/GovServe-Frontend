@@ -124,7 +124,7 @@ export default function WorkflowStagesPage() {
 
         {/* ACTION BUTTONS */}
         <div style={{ display: "flex", gap: "10px" }}>
-          {/* ✅ SLA DAYS CONFIGURATION */}
+          {/*  SLA DAYS CONFIGURATION */}
           <button
             className="btn btn-primary create-btn"
             onClick={() => navigate("/admin/sla-days")}
@@ -133,7 +133,7 @@ export default function WorkflowStagesPage() {
             SLA Days Configuration
           </button>
 
-          {/* ✅ ADD WORKFLOW STAGE */}
+          {/*  ADD WORKFLOW STAGE */}
           <button
             className="btn btn-primary create-btn"
             onClick={() => setShowForm({})}

@@ -17,6 +17,7 @@ import RecentCasesTable from "./RecentCasesTable";
 import AdminAttentionPanel from "./AdminAttentionPanel";
 
 export default function AdminDashboard() {
+  //derieved from API data - counts for each KPI stat (departments, services, users, applications, activeSLAs, breachedSLAs)
   const [stats, setStats] = useState({
     departments: 0,
     services: 0,
@@ -35,12 +36,12 @@ export default function AdminDashboard() {
     pendingSlaCases: 0
   });
 
-  /* ✅ SOURCE OF TRUTH FOR PIE */
+  /*  SOURCE OF TRUTH FOR PIE */
   const [slaRecords, setSlaRecords] = useState([]);
 
   useEffect(() => {
     loadDashboardData();
-  }, []);
+  }, []);  //runs once when  page loads
 
   const loadDashboardData = async () => {
     try {
@@ -53,18 +54,18 @@ export default function AdminDashboard() {
         caseRes,
         slaRecordsRes,
         pendingSlaRes
-      ] = await Promise.all([
+      ] = await Promise.all([ //batch all API calls together for faster load
         api.get("/Department"),
         api.get("/Services"),
         api.get("/User/all"),
         api.get("/User/pending-users"),
         api.get("/Application/all"),
         api.get("/Case/all"),
-        api.get("/SLARecords"),              // ✅ ALL records
+        api.get("/SLARecords"),              
         api.get("/SLARecords/pending-cases")
       ]);
 
-      /* ✅ KPI stats */
+      /*  KPI stats calculate counts */
       setStats({
         departments: deptRes.data.length,
         services: serviceRes.data.length,
@@ -82,7 +83,7 @@ export default function AdminDashboard() {
       setCases(caseRes.data);
       setSlaRecords(slaRecordsRes.data);
 
-      /* ✅ Admin Attention */
+      /*  Admin Attention */
       setAttention({
         pendingUsers: pendingUserRes.data.length,
         breachedSLAs: slaRecordsRes.data.filter(
@@ -96,7 +97,7 @@ export default function AdminDashboard() {
     }
   };
 
-  /* ✅ SAME PIE LOGIC AS SLA RECORDS PAGE */
+  /*  SAME PIE LOGIC AS SLA RECORDS PAGE */
   const onTimeCount = slaRecords.filter(
     r => r.status === "OnTime"
   ).length;

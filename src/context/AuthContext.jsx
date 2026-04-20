@@ -1,31 +1,32 @@
 import { createContext, useState, useContext, useEffect } from "react";
-
-const AuthContext = createContext();
-
+ 
+const AuthContext = createContext(); //-- Create the AuthContext
+ 
+//component
 export const AuthProvider = ({ children }) => {
+  //state variables
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // ✅ Load user from localStorage on refresh
+  //  Load user from localStorage on refresh
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     const role = localStorage.getItem("userRole");
     const userId = localStorage.getItem("userId");
     const email = localStorage.getItem("userEmail");
 
+    // Restore user state if token exists
     if (token && role && userId) {
       setUser({ token, role, userId, email });
     }
     setLoading(false);
   }, []);
-
-  // ✅ LOGIN (sync localStorage + React state)
+  //  LOGIN Function (sync localStorage + React state)
   const login = (userData) => {
     localStorage.setItem("jwtToken", userData.token);
     localStorage.setItem("userRole", userData.roleName);
     localStorage.setItem("userId", userData.userId);
     localStorage.setItem("userEmail", userData.email);
-
+ 
     setUser({
       token: userData.token,
       role: userData.roleName,
@@ -33,14 +34,14 @@ export const AuthProvider = ({ children }) => {
       email: userData.email,
     });
   };
-
-  // ✅ LOGOUT
+  // LOGOUT
   const logout = () => {
     localStorage.clear();
     setUser(null);
   };
-
+ 
   return (
+    //Provide Context Values
     <AuthContext.Provider
       value={{
         user,
@@ -55,11 +56,13 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
+ 
+//custome hook 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (!context) {                        //safety check
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
+ 

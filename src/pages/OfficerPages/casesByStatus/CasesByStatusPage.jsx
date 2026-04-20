@@ -10,7 +10,6 @@ const CasesByStatusPage = ({ statusTitle }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Determine status: props मधून किंवा URL मधून ओळखा
     const currentStatus = statusTitle || (location.pathname.includes('approved') ? 'Approved' : 'Rejected');
     
     const officerId = localStorage.getItem('userId') || 2;
@@ -26,8 +25,7 @@ const CasesByStatusPage = ({ statusTitle }) => {
             const finalData = response.data || response;
 
             if (Array.isArray(finalData)) {
-                // 🚨 CRITICAL FIX: Force the frontend to ONLY keep cases that match the current tab
-                // This prevents "Approved" cases from showing on the "Rejected" page!
+    
                 const strictlyFilteredCases = finalData.filter(c => c.status === currentStatus);
                 setCases(strictlyFilteredCases);
             } else {
@@ -70,21 +68,29 @@ const CasesByStatusPage = ({ statusTitle }) => {
                             {cases.length > 0 ? (
                                 cases.map((c) => (
                                     <tr key={c.caseId}>
-                                        <td style={{ fontWeight: '600' }}># {c.caseId}</td>
+                                        <td style={{ fontWeight: '600' }}> {c.caseId}</td>
                                         
-                                        {/* ✅ UPDATED: Look inside the user object for the name */}
-                                        <td>{c.user?.fullName || 'N/A'}</td>
+                            
+                                        <td>
+                                            {
+                                                c.user?.fullName || 
+                                                c.User?.fullName || 
+                                                c.application?.citizenDetails?.fullName || 
+                                                c.application?.User?.fullName || 
+                                                c.fullName || 
+                                                'N/A'
+                                            }
+                                        </td>
                                         
                                         {/* ✅ UPDATED: Look inside the application object for the service */}
                                         <td>{c.application?.service?.serviceName || c.application?.serviceName || 'General'}</td>
                                         
-                                        {/* ✅ UPDATED: Use completedDate or assignedDate directly from database */}
-                                        {/* ✅ NEW DATE CODE (Shows the exact applied date) */}
-<td>
-    {c.application?.submittedDate 
-        ? new Date(c.application.submittedDate).toLocaleDateString('en-GB') 
-        : 'N/A'}
-</td>
+    
+                                        <td>
+                                            {c.application?.submittedDate 
+                                                ? new Date(c.application.submittedDate).toLocaleDateString('en-GB') 
+                                                : 'N/A'}
+                                        </td>
                                         <td>
                                             {/* 🚨 CRITICAL FIX: Changed from "badge" to "status-pill" to block Bootstrap */}
                                             <span className={`status-pill status-${c.status.toLowerCase()}`}>

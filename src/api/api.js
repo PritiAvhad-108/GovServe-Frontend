@@ -13,7 +13,11 @@ const API = axios.create({
 =============================== */
 API.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("jwtToken");
+    // const token = localStorage.getItem("jwtToken");
+   
+const storedJWT = JSON.parse(localStorage.getItem("JWT"));
+const token = storedJWT?.jwtToken;
+
  
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -62,3 +66,5 @@ export const autoEscalateCases = () =>API.post("/Escalation/auto-escalate");
 export const getAllUsers = () => { return API.get("/User/all");};
 export const getRoles = () => API.get("/Roles");
 export const getServices = () => API.get("/Services");
+ 
+ 

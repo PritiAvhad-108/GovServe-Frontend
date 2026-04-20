@@ -3,12 +3,12 @@ import GrievanceLayout from "../components/GrievanceComponents/layout/GrievanceL
 import GrievanceNotifications from "../pages/GrievancesPages/GrievanceNotifications";
 import GrievanceCaseDetail from "../pages/GrievancesPages/GrievanceCaseDetail";
 
-/* ✅ Grievance Pages */
+/*  Grievance Pages */
 import GrievanceDashboard from "../pages/GrievancesPages/GrievanceDashboard";
 import AssignedGrievances from "../pages/GrievancesPages/AssignedGrievances";
 import GrievanceDetails from "../pages/GrievancesPages/GrievanceDetails";
 
-/* ✅ Appeal Pages */
+/*  Appeal Pages */
 import AppealDashboard from "../pages/GrievancesPages/AppealDashboard";
 import AppealDetailsCard from "../pages/GrievancesPages/AppealDetailsCard";
 import { useAuth } from "../context/AuthContext";
@@ -19,10 +19,10 @@ const GrievanceRoute = () => {
   const { userRole } = useAuth();
   return (    
     <Routes>
-      {/* ✅ Layout wrapper (ONLY ONCE) */}
+      {/*  Layout wrapper (ONLY ONCE) */}
       <Route element={<GrievanceLayout />}>
 
-        {/* ✅ Default dashboard */}
+        {/*  Default dashboard */}
         <Route index element={<GrievanceDashboard />} />
         <Route path="dashboard" element={<GrievanceDashboard />} />
 
@@ -31,15 +31,15 @@ const GrievanceRoute = () => {
        
         <Route path="/grievances/case/:id" element={<GrievanceCaseDetail />}/>
 
-        {/* ✅ Grievance */}
+        {/*  Grievance */}
         <Route path="assigned" element={<AssignedGrievances />} />
         <Route path="view/:id" element={<GrievanceDetails />} />
 
-        {/* ✅ Appeals */}
+        {/*  Appeals */}
         <Route path="appeals" element={<AppealDashboard />} />
         <Route path="appeal-view/:id" element={<AppealDetailsCard />} />
 
-        {/* ✅ Profile */}
+        {/* Profile */}
         <Route path="profile" element={<Profile />} />
 
         <Route path="notifications" element={<GrievanceNotifications />} />
