@@ -1,75 +1,70 @@
 import React, { useEffect, useState } from "react";
 import "./Escalations.css";
 import API, { getOfficerStatistics } from "../../../api/api";
-
+ 
 const Escalations = () => {
   const [form, setForm] = useState({
     caseId: "",
     newOfficerId: ""
   });
-
+ 
   const [escalatedCases, setEscalatedCases] = useState([]);
   const [allOfficers, setAllOfficers] = useState([]);
   const [filteredOfficers, setFilteredOfficers] = useState([]);
-
+ 
   const [currentOfficerName, setCurrentOfficerName] = useState(null);
   const [statusMsg, setStatusMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-
+ 
   useEffect(() => {
     loadInitialData();
   }, []);
-
+ 
   const loadInitialData = async () => {
     const caseRes = await API.get("/Case/all");
-    const slaRes = await API.get("/Case/sla-breached");
-    const breachedIds = new Set(
-  (slaRes.data || []).map(s => s.caseId));
-   const casesWithEscalation = caseRes.data.map(c => ({ ...c,isEscalated: c.isEscalated || breachedIds.has(c.caseId)
-}));
     const officerRes = await getOfficerStatistics();
-  setEscalatedCases(casesWithEscalation.filter(c => c.status === "Escalated" || c.isEscalated === true
-  )
-);    setAllOfficers(officerRes.data);
+ 
+    setEscalatedCases(caseRes.data.filter(c => c.status === "Escalated"));
+    setAllOfficers(officerRes.data);
   };
-
+ 
   const handleCaseChange = (e) => {
     const caseId = Number(e.target.value);
-
+ 
     setForm({ caseId, newOfficerId: "" });
     setFilteredOfficers([]);
     setStatusMsg("");
     setErrorMsg("");
-
+ 
     if (!caseId) return;
-
+ 
     const selectedCase = escalatedCases.find(c => c.caseId === caseId);
     if (!selectedCase) {
       setErrorMsg("Selected case not found or not escalated.");
       return;
     }
-
+ 
     setCurrentOfficerName(selectedCase.officerName);
-
+ 
     const officersInDepartment = allOfficers.filter(
       o =>
         o.department === selectedCase.departmentName &&
         o.officerName !== selectedCase.officerName
     );
-
+ 
     if (officersInDepartment.length === 0) {
       setErrorMsg("No alternative officers available for this department.");
       return;
     }
-
+ 
     setFilteredOfficers(officersInDepartment);
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatusMsg("");
     setErrorMsg("");
-
+ 
     try {
       const res = await API.post("/Case/reassign-escalated", null, {
         params: {
@@ -77,26 +72,26 @@ const Escalations = () => {
           newOfficerId: form.newOfficerId
         }
       });
-
+ 
       setStatusMsg(res.data || "Case reassigned successfully");
       setEscalatedCases(prev =>
         prev.filter(c => c.caseId !== form.caseId)
       );
-
+ 
       setForm({ caseId: "", newOfficerId: "" });
       setFilteredOfficers([]);
     } catch {
       setErrorMsg("Failed to reassign escalated case.");
     }
   };
-
+ 
   return (
     <div className="escalations-container">
       <h2 className="page-title">Escalations</h2>
-
+ 
       <div className="card">
         <h3>Reassign Escalated Case</h3>
-
+ 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Case ID</label>
@@ -109,7 +104,7 @@ const Escalations = () => {
               ))}
             </select>
           </div>
-
+ 
           <div className="form-group">
             <label>New Officer</label>
             <select
@@ -128,16 +123,16 @@ const Escalations = () => {
               ))}
             </select>
           </div>
-
+ 
           <button type="submit" disabled={!form.newOfficerId}>
             Reassign Case
           </button>
         </form>
-
+ 
         {statusMsg && <p className="success">{statusMsg}</p>}
         {errorMsg && <p className="error">{errorMsg}</p>}
       </div>
-
+ 
       <div className="card">
         <h3>Escalated Cases</h3>
         <table>
@@ -159,7 +154,7 @@ const Escalations = () => {
           </tbody>
         </table>
       </div>
-
+ 
       <div className="card">
         <h3>Escalation Timeline</h3>
         <ul className="timeline">
@@ -168,7 +163,7 @@ const Escalations = () => {
           <li>Case Escalated</li>
           <li>Supervisor Reassignment</li>
         </ul>
-
+ 
         <h4>Reassignment Guidelines</h4>
         <ul>
           <li>Only escalated cases can be reassigned</li>
@@ -181,5 +176,6 @@ const Escalations = () => {
     </div>
   );
 };
-
+ 
 export default Escalations;
+ 

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./SupervisorDashboard.css";
-import {FaFolder,FaClock,FaUserCheck,FaCheckCircle,FaArrowUp,FaHourglassEnd} from "react-icons/fa";
-import {getCitizenByApplication,getSLABreachedCases,getApplications,getAllCases} from "../../../api/api";
-import { useNavigate, useLocation } from "react-router-dom"; 
+import {FaFolder,FaClock,FaUserCheck,FaCheckCircle,FaArrowUp} from "react-icons/fa";
+import {getApplications,getAllCases} from "../../../api/api";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SupervisorDashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
   const [stats, setStats] = useState({
     total: 0,
@@ -20,36 +20,17 @@ const SupervisorDashboard = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const [slaBreached, setSlaBreached] = useState(0);
-  const [slaCases, setSlaCases] = useState([]);
-  const [slaPage, setSlaPage] = useState(1);
-
   const itemsPerPage = 5;
-  const slaItemsPerPage = 5;
 
   useEffect(() => {
     loadDashboardStats();
     loadRecentApplications();
-    loadActiveSLABreaches();
-    loadSLABreachedCases();
   }, [location.pathname]);
-  const attachEscalationFlag = async (cases) => {
-  const slaRes = await getSLABreachedCases();
 
-  const breachedCaseIds = new Set(
-    (slaRes.data || []).map(s => s.caseId)
-  );
-
-  return cases.map(c => ({
-    ...c,
-    isEscalated: c.isEscalated === true || breachedCaseIds.has(c.caseId)
-  }));
-};
   const loadDashboardStats = async () => {
     try {
-     const res = await getAllCases();
-    let cases = Array.isArray(res.data) ? res.data : [];
-    cases = await attachEscalationFlag(cases);
+      const res = await getAllCases();
+      const cases = Array.isArray(res.data) ? res.data : [];
 
       setStats({
         total: cases.length,
@@ -58,9 +39,8 @@ const SupervisorDashboard = () => {
         completed: cases.filter(
           c => c.status === "Approved" || c.status === "Completed"
         ).length,
-        escalated: cases.filter(
-       c => c.status === "Escalated" || c.isEscalated === true
-     ).length      });
+        escalated: cases.filter(c => c.status === "Escalated").length
+      });
     } catch {
       setStats({
         total: 0,
@@ -71,22 +51,7 @@ const SupervisorDashboard = () => {
       });
     }
   };
-const loadActiveSLABreaches = async () => {
-  try {
-    const slaRes = await getSLABreachedCases();
 
-    if (!Array.isArray(slaRes.data)) {
-      setSlaBreached(0);
-      return;
-    }
-
-    // SLA Breach count comes ONLY from SLA
-    setSlaBreached(slaRes.data.length);
-
-  } catch {
-    setSlaBreached(0);
-  }
-};
   const loadRecentApplications = async () => {
     const [appRes, caseRes] = await Promise.all([
       getApplications(),
@@ -111,36 +76,17 @@ const loadActiveSLABreaches = async () => {
 
     setApplications(updated);
   };
-const loadSLABreachedCases = async () => {
-  try {
-    const [slaRes] = await Promise.all([
-      getSLABreachedCases()
-    ]);
 
-    if (!Array.isArray(slaRes.data)) {
-      setSlaCases([]);
-      return;
-    }
-
-    // SLA table shows ALL breached SLA records
-    setSlaCases(slaRes.data);
-
-  } catch (error) {
-    console.error("Failed to load SLA breached cases", error);
-    setSlaCases([]);
-  }
-};
   const filteredApps = applications.filter(app =>
     app.applicationId.toString().includes(search)
   );
 
   const appStart = (page - 1) * itemsPerPage;
-  const currentApps = filteredApps.slice(appStart, appStart + itemsPerPage);
+  const currentApps = filteredApps.slice(
+    appStart,
+    appStart + itemsPerPage
+  );
   const totalPages = Math.ceil(filteredApps.length / itemsPerPage);
-
-  const slaStart = (slaPage - 1) * slaItemsPerPage;
-  const currentSla = slaCases.slice(slaStart, slaStart + slaItemsPerPage);
-  const slaTotalPages = Math.ceil(slaCases.length / slaItemsPerPage);
 
   return (
     <div className="supervisor-dashboard-wrapper">
@@ -177,13 +123,8 @@ const loadSLABreachedCases = async () => {
           <h4>Escalated Cases</h4>
           <p>{stats.escalated}</p>
         </div>
-
-        <div className="supervisor-card clickable warning">
-          <div className="icon-box red"><FaHourglassEnd /></div>
-          <h4>SLA Breached</h4>
-          <p>{slaBreached}</p>
-        </div>
       </div>
+
       <div className="supervisor-recent">
         <h2>Recent Applications</h2>
 
@@ -224,68 +165,21 @@ const loadSLABreachedCases = async () => {
         </table>
 
         <div className="supervisor-pagination">
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
             Previous
           </button>
           <span>Page {page} of {totalPages}</span>
-          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
             Next
           </button>
         </div>
       </div>
-<div className="supervisor-recent">
-  <h2>SLA Breached Cases</h2>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Case ID</th>
-        <th>Application ID</th>
-        <th>Department ID</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {currentSla.length === 0 ? (
-        <tr>
-          <td colSpan="4" className="empty-text">
-            No cases available
-          </td>
-        </tr>
-      ) : (
-        currentSla.map(c => (
-          <tr key={c.caseId}>
-            <td>CASE-{c.caseId}</td>
-            <td>APP-{c.applicationID}</td>
-            <td>{c.departmentID}</td>
-            <td>
-              <span className="status-rejected">Breached</span>
-            </td>
-          </tr>
-        ))
-      )}
-    </tbody>
-  </table>
-
-  <div className="supervisor-pagination">
-    <button
-      disabled={slaPage === 1 || currentSla.length === 0}
-      onClick={() => setSlaPage(slaPage - 1)}
-    >
-      Previous
-    </button>
-
-    <span>Page {slaPage} of {slaTotalPages || 1}</span>
-
-    <button
-      disabled={slaPage === slaTotalPages || currentSla.length === 0}
-      onClick={() => setSlaPage(slaPage + 1)}
-    >
-      Next
-    </button>
-  </div>
-</div>
     </div>
   );
 };
