@@ -50,4 +50,20 @@ export const getDocumentsByApplicationId = async (applicationId) => {
     return await api.get(`/CitizenDocument/GetDocumentsByApplicationId/${applicationId}`);
 };
 
+// // ✅ Approve single document (Uses your API instance)
+// export const approveDocument = async (documentId) => {
+//     const response = await api.put(`/CitizenDocument/ApproveDocument/${documentId}`);
+//     return response.data;
+// };
 
+// ✅ Approve single document (Sends ID in path AND query to fix backend mismatch)
+export const approveDocument = async (documentId) => {
+    const response = await api.put(`/CitizenDocument/ApproveDocument/${documentId}?id=${documentId}`);
+    return response.data;
+};
+
+// ❌ Reject single document (Sends ID in path AND query to fix backend mismatch)
+export const rejectDocument = async (documentId) => {
+    const response = await api.put(`/CitizenDocument/RejectDocument/${documentId}?id=${documentId}`);
+    return response.data;
+};

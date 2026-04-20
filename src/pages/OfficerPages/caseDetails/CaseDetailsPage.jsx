@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import DocumentPreview from '../../../components/OfficerComponents/common/DocumentPreview';
 
 import Swal from 'sweetalert2';
+import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending, approveDocument, rejectDocument } from '../../../api/officerApi';
 
-import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending } from '../../../api/officerApi';
 import './CaseDetails.css';
 
 const CaseDetailsPage = () => {
@@ -15,7 +15,6 @@ const CaseDetailsPage = () => {
     const [documents, setDocuments] = useState([]);
     const [pageLoading, setPageLoading] = useState(true);
     
-
     const [selectedDocUrl, setSelectedDocUrl] = useState(null); 
     const [docStatuses, setDocStatuses] = useState({}); 
     
@@ -34,8 +33,8 @@ const CaseDetailsPage = () => {
         fetchMainDetails();
     }, [id]);
     
-   
     const applicationId = details?.applicationID || details?.application?.applicationID;
+    
     useEffect(() => {
         const fetchDocuments = async () => {
             try {
@@ -89,25 +88,20 @@ const CaseDetailsPage = () => {
         }
     };
 
-    // ✅ UPDATED: SweetAlert Reject Logic
     const handleRejectApplication = async () => {
         const { value: reason, isConfirmed } = await Swal.fire({
             title: "Reject Application",
             input: "textarea",
             inputLabel: "Reason for Rejection *",
             inputPlaceholder: "Type your reason here...",
-            inputAttributes: {
-                "aria-label": "Type your reason here"
-            },
+            inputAttributes: { "aria-label": "Type your reason here" },
             showCancelButton: true,
             confirmButtonColor: "#dc3545",
             cancelButtonColor: "#6c757d",
             confirmButtonText: "Submit Rejection",
             cancelButtonText: "Cancel",
             inputValidator: (value) => {
-                if (!value) {
-                    return "You need to write a reason!";
-                }
+                if (!value) return "You need to write a reason!";
             }
         });
 
@@ -118,7 +112,7 @@ const CaseDetailsPage = () => {
             
             await Swal.fire({
                 title: "Rejected!",
-                text: "Application Rejected Successfully! Notifications have been sent.",
+                text: "Application Rejected Successfully!",
                 icon: "success",
                 confirmButtonColor: "#1e3a8a",
                 timer: 2000,
@@ -128,42 +122,58 @@ const CaseDetailsPage = () => {
             navigate('/officer/rejected'); 
         } catch (error) {
             console.error("Error rejecting application:", error);
-            Swal.fire({
-                title: "Error",
-                text: "Failed to reject application. Please check the console.",
-                icon: "error",
-                confirmButtonColor: "#dc3545"
-            });
+            Swal.fire("Error", "Failed to reject application.", "error");
         }
     };
 
     const handleStartVerification = async () => {
         try {
             await markCaseAsPending(id);
-            
             await Swal.fire({
                 title: "Verification Started!",
                 text: "This case is now in your Pending Review list.",
                 icon: "info",
-                confirmButtonColor: "#1e3a8a",
                 timer: 2000,
                 showConfirmButton: false
             });
-
             setDetails(prev => ({ ...prev, status: 'Under Verification' }));
         } catch (error) {
-            console.error("Error updating to pending:", error);
-            Swal.fire({
-                title: "Error",
-                text: "Failed to move case to pending status.",
-                icon: "error",
-                confirmButtonColor: "#dc3545"
-            });
+            Swal.fire("Error", "Failed to move case to pending status.", "error");
         }
     };
 
-    const handleDocAction = (docId, status) => {
-        setDocStatuses(prev => ({ ...prev, [docId]: status }));
+    // ✅ DIRECT APPROVE/REJECT LOGIC
+    // ✅ DIRECT APPROVE/REJECT LOGIC
+    const handleDocumentStatusUpdate = async (primaryKeyId, newStatus) => {
+        
+        // 🚨 SAFETY CHECK: Only check if it exists, don't block small numbers!
+        if (!primaryKeyId) {
+            Swal.fire("Error", `Could not find the ID. Check console!`, "error");
+            return;
+        }
+
+        try {
+            if (newStatus === 'Approved') {
+                await approveDocument(primaryKeyId);
+            } else if (newStatus === 'Rejected') {
+                await rejectDocument(primaryKeyId);
+            }
+
+            setDocStatuses(prev => ({ ...prev, [primaryKeyId]: newStatus }));
+            
+            Swal.fire({
+                title: `Document ${newStatus}!`,
+                icon: newStatus === 'Approved' ? 'success' : 'error',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+        } catch (error) {
+            console.error(`Error updating document:`, error);
+            Swal.fire("Error", "Failed to update document status in the database.", "error");
+        }
     };
 
     if (pageLoading) return <div className="p-10">Loading application details...</div>;
@@ -191,9 +201,7 @@ const CaseDetailsPage = () => {
                     </div>
                     <div>
                         <label>Department</label>
-                        <p className="detail-value">
-                            {details.departmentName || details.department || 'Revenue Department'}
-                        </p>
+                        <p className="detail-value">{details.departmentName || details.department || 'Revenue Department'}</p>
                     </div>
                     <div>
                         <label>Current Status</label>
@@ -258,20 +266,65 @@ const CaseDetailsPage = () => {
                                 const cleanPath = filePath ? (filePath.startsWith('/') ? filePath : `/${filePath}`) : "";
                                 const fullUrl = cleanPath ? `https://localhost:7027${cleanPath}` : null;
                                 const isCurrentlyViewing = selectedDocUrl === fullUrl;
+                                
+                                // 🕵️‍♂️ THE FOOLPROOF ID FINDER: Ignores capitalization entirely
+                                let primaryKey = null;
+                                for (let key in doc) {
+                                    if (key.toLowerCase() === 'citizendocumentid') {
+                                        primaryKey = doc[key];
+                                        break;
+                                    }
+                                }
+
+                                // Fallback just in case, but warn loudly in console
+                                if (!primaryKey) {
+                                    console.error("COULD NOT FIND CitizenDocumentID! Object looks like:", doc);
+                                    primaryKey = doc.documentId; 
+                                }
+                                
+                                const currentStatus = docStatuses[primaryKey] || doc.verificationStatus || doc.VerificationStatus || doc.status || doc.Status || 'Pending';
 
                                 return (
-                                    <div key={doc.documentId || index} className={`doc-row ${isCurrentlyViewing ? 'active-row' : ''}`}>
+                                    <div key={primaryKey || index} className={`doc-row ${isCurrentlyViewing ? 'active-row' : ''}`}>
                                         <div className="doc-info">
                                             <span className="doc-icon">📄</span>
                                             <span className="doc-name">{doc.documentName || `Document ${index + 1}`}</span>
                                         </div>
-                                        <div className="doc-controls">
+                                        
+                                        <div className="doc-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            
                                             <button 
                                                 className="doc-action-btn view-btn" 
                                                 onClick={() => setSelectedDocUrl(fullUrl)}
+                                                style={{ backgroundColor: '#2563eb', color: 'white', padding: '6px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '13px' }}
                                             >
                                                 View
                                             </button>
+
+                                            <button 
+                                                onClick={() => handleDocumentStatusUpdate(primaryKey, 'Approved')}
+                                                title="Approve Document"
+                                                style={{ backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '4px', padding: '6px 10px', cursor: 'pointer' }}
+                                            >
+                                                ✅
+                                            </button>
+
+                                            <button 
+                                                onClick={() => handleDocumentStatusUpdate(primaryKey, 'Rejected')}
+                                                title="Reject Document"
+                                                style={{ backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', padding: '6px 10px', cursor: 'pointer' }}
+                                            >
+                                                ❌
+                                            </button>
+
+                                            <span style={{ 
+                                                fontWeight: 'bold', fontSize: '13px', padding: '4px 8px', borderRadius: '12px',
+                                                backgroundColor: currentStatus === 'Approved' ? '#dcfce7' : currentStatus === 'Rejected' ? '#fee2e2' : '#f1f5f9',
+                                                color: currentStatus === 'Approved' ? '#166534' : currentStatus === 'Rejected' ? '#991b1b' : '#475569'
+                                            }}>
+                                                {currentStatus}
+                                            </span>
+
                                         </div>
                                     </div>
                                 );
@@ -293,7 +346,6 @@ const CaseDetailsPage = () => {
 
             <div className="action-buttons">
                 <button className="approve-btn" onClick={handleApproveApplication}>Approve</button>
-    
                 <button className="reject-btn" onClick={handleRejectApplication}>Reject</button>
             </div>
 
