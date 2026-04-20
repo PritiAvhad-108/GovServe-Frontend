@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     padding: 40px;
-    background-color: #e4ebef; /* Slightly lighter, more modern background */
+    background-color: #e4ebef; 
     min-height: 100vh;
 }
 
@@ -97,15 +97,3 @@
     color: #334155;
     font-weight: 600;
 }
-
-/* ✅ Updated Status Badge for a cleaner look */
-/* .status-badge {
-    display: inline-block;
-    background: #dcfce7;
-    color: #166534;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 700;
-    margin-top: 2px;
-} */

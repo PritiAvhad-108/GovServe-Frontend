@@ -63,8 +63,7 @@ const OfficerDashboard = () => {
             </header>
 
             <div className="stats-grid">
-                
-                {/* ✅ FIXED: Updated path to '/officer/assigned-cases' */}
+         
                 <div onClick={() => navigate('/officer/assigned-cases')} style={{ cursor: 'pointer' }}>
                     <StatCard 
                         title="Assigned" 
@@ -74,7 +73,7 @@ const OfficerDashboard = () => {
                     />
                 </div>
 
-                {/* ✅ FIXED: Updated path to '/officer/pending-review' */}
+      
                 <div onClick={() => navigate('/officer/pending-review')} style={{ cursor: 'pointer' }}>
                     <StatCard 
                         title="Pending" 

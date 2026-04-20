@@ -33,7 +33,7 @@ const Profile = () => {
             <div className="profile-card">
                 <div className="header-banner">
                     <div className="profile-avatar">
-                        <FaUser size={45} color="#2563eb" />
+                        <FaUser size={45} color="#1e3a8a" />
                     </div>
                 </div>
 

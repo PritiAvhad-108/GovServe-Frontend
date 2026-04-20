@@ -29,7 +29,7 @@ function ForgetPassword() {
 
     try {
       const response = await axios.post("https://localhost:7027/api/Auth/ForgotPassword", formData);
-      setStatusMessage(response.data); // "Password reset successfully"
+      setStatusMessage(response.data); 
       setErrors({});
     } catch (error) {
       if (error.response) {
@@ -85,7 +85,7 @@ function ForgetPassword() {
 
             <button type="submit" className="auth-btn">Reset Password</button>
 
-                        {statusMessage && (
+          {statusMessage && (
               <div 
                 className={`error-text ${statusMessage.includes("successfully") ? "text-success" : ""}`} 
                 style={{ 
@@ -98,7 +98,7 @@ function ForgetPassword() {
                   borderRadius: '6px'
                 }}
               >
-                {statusMessage}
+                    {statusMessage}
               </div>
             )}
           </form>
@@ -108,7 +108,6 @@ function ForgetPassword() {
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );

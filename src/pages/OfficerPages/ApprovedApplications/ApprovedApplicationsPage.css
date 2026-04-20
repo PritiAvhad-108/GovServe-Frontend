@@ -14,7 +14,7 @@
     margin-top: 0;
 }
 
-/* FIXED: Custom class name so Bootstrap leaves it alone */
+
 .custom-breadcrumb {
     font-size: 14px;
     color: #64748b;
@@ -93,9 +93,7 @@
     background-color: #1d4ed8;
 }
 
-/* --- NEW: Pagination Styles to fix the "Invisible Buttons" --- */
 
-/* --- NEW: Pagination Styles to fix the "Invisible Buttons" --- */
 
 .custom-pagination {
     display: flex;
@@ -107,10 +105,10 @@
     background-color: #ffffff;
 }
 
-/* Base button styling (Active State) */
+
 .page-nav-btn {
-    background-color: #ffffff; /* White background */
-    color: #3374de;            /* Dark text so it's visible */
+    background-color: #ffffff; 
+    color: #3374de;            
     border: 1px solid #cbd5e1;
     padding: 10px 20px;
     border-radius: 8px;
@@ -127,12 +125,12 @@
     background-color: #f1f5f9;
 }
 
-/* DISABLED State (Dark Gray) */
+
 .page-nav-btn:disabled {
-    opacity: 0.8; /* Increased opacity so it looks solid */
+    opacity: 0.8; 
     cursor: not-allowed;
-    background-color: #3e6fb3; /* Darker gray background */
-    color: #ffffff;            /* White text on dark gray */
+    background-color: #3e6fb3; 
+    color: #ffffff;            
     border-color: #94a3b8;
 }
 

@@ -20,11 +20,11 @@ export default function OfficerProfilePopup({ user, onClose }) {
         </button>
 
         <div className="avatar">
-          {/* Default to "O" for Officer if no name is provided */}
+          
           {user?.fullName?.charAt(0)?.toUpperCase() || "O"}
         </div>
 
-        {/* Updated fallback text to Officer */}
+        
         <h4>Hi, {user?.fullName || "Officer"}</h4>
 
         <div className="popup-actions">
@@ -32,7 +32,7 @@ export default function OfficerProfilePopup({ user, onClose }) {
             className="action-btn"
             onClick={() => {
               onClose();
-              // ✅ Updated path to point to the Officer Profile page
+             
               navigate("/officer/profile");
             }}
           >

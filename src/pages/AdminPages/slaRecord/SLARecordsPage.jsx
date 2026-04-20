@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Pagination from "../../../components/AdminComponents/common/Pagination";
 import SLARecordForm from "./SLARecordForm";
 import { useLocation, useNavigate } from "react-router-dom";
-
+ 
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -14,25 +14,25 @@ import {
   Tooltip,
   Legend
 } from "chart.js";
-
+ 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
+ 
 export default function SLARecordsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const isPendingView = location.state?.view === "pending";
-
+ 
   const [records, setRecords] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [pendingCount, setPendingCount] = useState(0);
-
+ 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [showForm, setShowForm] = useState(null); // ✅ controls create/edit modal
-
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-
+ 
   /* ===================== LOAD DATA ===================== */
   const loadAll = async () => {
     try {
@@ -43,7 +43,7 @@ export default function SLARecordsPage() {
       toast.error("Failed to load SLA records");
     }
   };
-
+ 
   const loadPendingCases = async () => {
     try {
       const res = await api.get("/SLARecords/pending-cases");
@@ -54,35 +54,35 @@ export default function SLARecordsPage() {
       toast.error("Failed to load pending SLA cases");
     }
   };
-
+ 
   useEffect(() => {
     isPendingView ? loadPendingCases() : loadAll();
   }, [isPendingView]);
-
+ 
   /* ===================== FILTER ===================== */
   useEffect(() => {
     if (isPendingView) return;
-
+ 
     let data = records;
-
+ 
     if (search.trim()) {
       data = data.filter(r =>
         r.caseID.toString().includes(search)
       );
     }
-
+ 
     if (statusFilter !== "ALL") {
       data = data.filter(r => r.status === statusFilter);
     }
-
+ 
     setFiltered(data);
     setCurrentPage(1);
   }, [search, statusFilter, records, isPendingView]);
-
+ 
   /* ===================== PIE CHART ===================== */
   const onTimeCount = records.filter(r => r.status === "OnTime").length;
   const breachedCount = records.filter(r => r.status === "Breached").length;
-
+ 
   const pieData = {
     labels: ["On Time", "Breached"],
     datasets: [
@@ -92,13 +92,13 @@ export default function SLARecordsPage() {
       }
     ]
   };
-
+ 
   /* ===================== PAGINATION ===================== */
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
-
+ 
   /* ===================== DELETE ===================== */
   const deleteRecord = async (id) => {
     if (!window.confirm("Delete SLA record?")) return;
@@ -110,11 +110,11 @@ export default function SLARecordsPage() {
       toast.error("Failed to delete SLA record");
     }
   };
-
+ 
   return (
     <div className="sla-container">
       <ToastContainer />
-
+ 
       {/* ===================== HEADER ===================== */}
       <div className="sla-header">
         <div>
@@ -129,7 +129,7 @@ export default function SLARecordsPage() {
               : "Monitor SLA compliance for all cases"}
           </p>
         </div>
-
+ 
         <div className="sla-count-card">
           <div className="icon-bg">
             <Timer size={28} color="#1e3a8a" />
@@ -140,7 +140,7 @@ export default function SLARecordsPage() {
           </div>
         </div>
       </div>
-
+ 
       {/* ===================== ADD BUTTON (PENDING VIEW) ===================== */}
       {isPendingView && (
         <div className="sla-table-actions">
@@ -152,7 +152,7 @@ export default function SLARecordsPage() {
           </button>
         </div>
       )}
-
+ 
       {/* ===================== PIE + FILTER ===================== */}
       {!isPendingView && (
         <>
@@ -162,7 +162,7 @@ export default function SLARecordsPage() {
               <Pie data={pieData} />
             </div>
           </div>
-
+ 
           <div className="filter-row">
             <input
               className="form-control"
@@ -170,7 +170,7 @@ export default function SLARecordsPage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
-
+ 
             <select
               className="form-control"
               value={statusFilter}
@@ -180,7 +180,7 @@ export default function SLARecordsPage() {
               <option value="OnTime">On Time</option>
               <option value="Breached">Breached</option>
             </select>
-
+ 
             <button
               className="btn btn-primary"
               onClick={() => setShowForm({})}
@@ -190,7 +190,7 @@ export default function SLARecordsPage() {
           </div>
         </>
       )}
-
+ 
       {/* ===================== TABLE ===================== */}
       <table className="table-white">
         <thead>
@@ -218,7 +218,7 @@ export default function SLARecordsPage() {
             )}
           </tr>
         </thead>
-
+ 
         <tbody>
           {currentData.length === 0 ? (
             <tr>
@@ -285,13 +285,13 @@ export default function SLARecordsPage() {
           )}
         </tbody>
       </table>
-
+ 
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-
+ 
       {/* ===================== CREATE / UPDATE MODAL ===================== */}
       {showForm && (
         <SLARecordForm

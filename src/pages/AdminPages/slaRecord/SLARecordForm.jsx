@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import { toast } from "react-toastify";
-
+ 
 export default function SLARecordForm({
   onClose,
   onSave,
@@ -11,7 +11,7 @@ export default function SLARecordForm({
   const [cases, setCases] = useState([]);
   const [stages, setStages] = useState([]);
   const [errors, setErrors] = useState({});
-
+ 
   /* ===========================
      FORM STATE (SAFE INIT)
   =========================== */
@@ -22,7 +22,7 @@ export default function SLARecordForm({
       ? editData.startDate.split("T")[0]
       : ""
   });
-
+ 
   /* ===========================
      LOAD CASES & STAGES
   =========================== */
@@ -30,7 +30,7 @@ export default function SLARecordForm({
     api.get("/Case/all").then(res => setCases(res.data));
     api.get("/WorkflowStages").then(res => setStages(res.data));
   }, []);
-
+ 
   /* ===========================
      VALIDATION
   =========================== */
@@ -42,14 +42,14 @@ export default function SLARecordForm({
     setErrors(e);
     return Object.keys(e).length === 0;
   };
-
+ 
   /* ===========================
      SUBMIT (CREATE / UPDATE)
   =========================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-
+ 
     try {
       if (editData?.slaRecordID) {
         // ✅ UPDATE
@@ -66,18 +66,18 @@ export default function SLARecordForm({
         });
         toast.success("SLA record created successfully");
       }
-
+ 
       onSave();
     } catch {
       toast.error("Failed to save SLA record");
     }
   };
-
+ 
   return (
     <div className="form-modal">
       <div className="modal-card">
         <h4>{editData?.slaRecordID ? "Edit SLA Record" : "Add SLA Record"}</h4>
-
+ 
         <form onSubmit={handleSubmit}>
           {/* ================= CASE ================= */}
           <label>Case</label>
@@ -96,17 +96,17 @@ export default function SLARecordForm({
               </option>
             ))}
           </select>
-
+ 
           {editData?.slaRecordID && (
             <small className="info-text">
               Case cannot be changed once an SLA record is created.
             </small>
           )}
-
+ 
           {errors.caseId && (
             <small className="error-text">{errors.caseId}</small>
           )}
-
+ 
           {/* ================= WORKFLOW STAGE ================= */}
           <label>Workflow Stage</label>
           <select
@@ -124,17 +124,17 @@ export default function SLARecordForm({
               </option>
             ))}
           </select>
-
+ 
           {editData?.slaRecordID && (
             <small className="info-text">
               Workflow stage cannot be modified after SLA creation.
             </small>
           )}
-
+ 
           {errors.stageId && (
             <small className="error-text">{errors.stageId}</small>
           )}
-
+ 
           {/* ================= START DATE ================= */}
           <label>Start Date</label>
           <input
@@ -145,18 +145,18 @@ export default function SLARecordForm({
               setForm({ ...form, startDate: e.target.value })
             }
           />
-
+ 
           {editData?.slaRecordID && (
             <small className="info-text">
               Changing the start date will automatically recalculate the SLA end
               date and compliance status.
             </small>
           )}
-
+ 
           {errors.startDate && (
             <small className="error-text">{errors.startDate}</small>
           )}
-
+ 
           {/* ================= ACTIONS ================= */}
           <div className="actions-row">
             <button
