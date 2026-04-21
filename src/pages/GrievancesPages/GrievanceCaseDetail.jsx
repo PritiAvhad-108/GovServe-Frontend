@@ -12,7 +12,7 @@ import {
 import "../../styles/GrievanceStyles/GrievanceCaseDetail.css";
 
 const GrievanceCaseDetail = () => {
-  const { id } = useParams();    // Application ID
+  const { id } = useParams();    
   const navigate = useNavigate();
 
   const [caseId, setCaseId] = useState(null);
@@ -214,11 +214,11 @@ if (id) {
       <div className="document-list">
         {documents.map((doc, index) => {
 
-          // ✅ Handle all possible backend keys
+          //  Handle all possible backend keys
           const filePath =
             doc.documentUrl || doc.uri || doc.URI || "";
 
-          // ✅ Normalize path
+          // Normalize path
           const cleanPath = filePath
             ? filePath.startsWith("/")
               ? filePath
@@ -246,7 +246,7 @@ if (id) {
               <button
                 className="doc-action-btn view-btn"
                 onClick={() => setSelectedDocUrl(fullUrl)}
-                //disabled={!fullUrl}
+            
               >
                 View
               </button>

@@ -1,8 +1,10 @@
-import axios from "axios"; 
+import axios from "axios";
+
 const api = axios.create({
   baseURL: "https://localhost:7027/api",
 });
- 
+
+//   Bearer token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("jwtToken");
@@ -13,6 +15,26 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+//  Axios RESPONSE interceptor 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    
+    if (error.response && error.response.data) {
+      return Promise.reject(error);
+    }
+
+    return Promise.reject({
+      response: {
+        data: "Unexpected error occurred",
+      },
+    });
+  }
+);
+
+/*  GRIEVANCE APIs*/
+
 export const getAllGrievances = () =>
   api.get("/Grievance/all");
  
@@ -30,8 +52,17 @@ export const rejectGrievance = (id, remarks) =>
  
 export const getCaseIdByApplicationId = (applicationId) =>
   api.get(`/Grievance/GetCaseIdByApplicationId/${applicationId}`);
+
+/* CASE APIs */
+
 export const getCaseDetailsByCaseId = (caseId) =>
   api.get(`/Case/case-details/${caseId}`);
+
+/* APPEAL APIs*/
+
+export const getAllAppeals = () =>
+  api.get("/Appeal/all");
+
 export const getSubmittedAppeals = () =>
   api.get("/Appeal/submitted");
  
@@ -55,10 +86,14 @@ export const rejectAppeal = (appealId, remarks) =>
     appealID: appealId,
     remarks,
   });
- 
+
+/*   NOTIFICATION APIs */
+
 export const getUserNotifications = (userId) =>
   api.get(`/Notification/user/${userId}`);
- 
+
+/*  DOCUMENT APIs */
+
 export const getDocumentsByApplicationId = (applicationId) =>
   api.get(`/CitizenDocument/GetDocumentsByApplicationId/${applicationId}`);
  
