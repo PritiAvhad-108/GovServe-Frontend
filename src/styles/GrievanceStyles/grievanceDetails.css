@@ -2,7 +2,7 @@
 .grievance-page-wrapper {
   display: flex;
   justify-content: center;
-  padding-top: 120px; /* navbar gap */
+  padding-top: 120px; 
   background-color: #f4f6fb;
 }
 
@@ -120,19 +120,12 @@
 
 .grievance-details-container {
   max-width: 900px;
-
-  /*  Center the card properly */
   margin: 90px auto 40px auto;
-
-  /*  Ensure it stays centered in content area */
   align-self: center;
-
   padding: 32px 36px;
   background-color: #ffffff;
-
   border-radius: 14px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-
   font-family: "Segoe UI", Tahoma, sans-serif;
 }
 

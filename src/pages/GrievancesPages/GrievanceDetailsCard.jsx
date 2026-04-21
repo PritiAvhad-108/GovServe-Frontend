@@ -11,7 +11,7 @@ import {
 } from "../../api/GrievanceApi";
 
 const GrievanceDetailsCard = () => {
-  const { id } = useParams(); // grievanceId from URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [grievance, setGrievance] = useState(null);
@@ -34,26 +34,61 @@ const GrievanceDetailsCard = () => {
   };
 
   const handleResolve = async () => {
-    if (!remarks.trim()) {
-      alert("Please enter remarks");
-      return;
-    }
-
+  if (grievance.status !== "Submitted") {
+    alert("Grievance already resolved or rejected");
+    return;
+  }
+  if (!remarks.trim()) {
+    alert("Please enter remarks");
+    return;
+  }
+  try {
     await resolveGrievance(id, remarks);
     alert("Grievance resolved successfully");
-    navigate("/");
-  };
+    
+    setGrievance(prev => ({
+      ...prev,
+      status: "Resolved",
+      remarks: remarks
+    }));
+  } 
+catch (error) {
+  console.warn("Resolve blocked:", error);
+}
+
+};
+ 
 
   const handleReject = async () => {
-    if (!remarks.trim()) {
-      alert("Please enter remarks");
-      return;
-    }
+  if (grievance.status !== "Submitted") {
+    alert("Grievance already resolved or rejected");
+    return;
+  }
 
+  if (!remarks.trim()) {
+    alert("Please enter remarks");
+    return;
+  }
+
+  try {
     await rejectGrievance(id, remarks);
+
     alert("Grievance rejected successfully");
-    navigate("/");
-  };
+
+  
+    setGrievance(prev => ({
+      ...prev,
+      status: "Rejected",
+      remarks: remarks
+    }));
+
+  } 
+catch (error) {
+  console.warn("Reject blocked:", error);
+}
+
+};
+
 
   if (loading) return <p className="loading">Loading...</p>;
   if (!grievance) return <p className="loading">No data found</p>;
@@ -76,13 +111,30 @@ const GrievanceDetailsCard = () => {
             {new Date(grievance.filedDate).toLocaleDateString()}
           </p>
 
-          <textarea
-            placeholder="Enter officer remarks"
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-            disabled={grievance.status !== "Submitted"}
-          />
+         <div className="remarks-section">
+  <div className="remarks-header">
+    Officer Remarks
+  </div>
 
+  <div className="remarks-body">
+    <label className="remarks-sub-label">
+      Remarks / Resolution Note
+    </label>
+
+    <textarea
+      placeholder="Enter official remarks or resolution notes here..."
+      value={remarks}
+      onChange={(e) => setRemarks(e.target.value)}
+      disabled={grievance.status !== "Submitted"}
+    />
+  </div>
+
+  <div className="remarks-footer">
+    <button className="view-case-btn">
+      View Case
+    </button>
+  </div>
+</div>
           <div className="action-buttons">
             <button
               className="resolve-btn"

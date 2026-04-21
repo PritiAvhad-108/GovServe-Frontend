@@ -1,6 +1,4 @@
-/* =========================
-   PROFILE POPUP
-========================= */
+/*  PROFILE POPUP */
 .profile-popup {
   position: absolute;
   top: 55px;
@@ -13,7 +11,7 @@
   z-index: 1000;
   text-align: center;
 }
- 
+
 /* Close icon */
 .close-btn {
   position: absolute;
@@ -25,11 +23,11 @@
   cursor: pointer;
   color: #374151;
 }
- 
+
 .close-btn:hover {
   color: #111827;
 }
- 
+
 /* Avatar */
 .avatar {
   width: 72px;
@@ -45,7 +43,7 @@
   margin: 12px auto 14px;
   box-shadow: 0 8px 20px rgba(30, 58, 138, 0.35);
 }
- 
+
 /* Greeting */
 .profile-popup h4 {
   font-size: 17px;
@@ -53,7 +51,7 @@
   margin-bottom: 20px;
   color: #111827;
 }
- 
+
 /* Actions */
 .popup-actions {
   display: flex;
@@ -63,7 +61,7 @@
   margin-bottom: 18px;
   border: 1px solid #d1d5db;
 }
- 
+
 .action-btn {
   flex: 1;
   background: transparent;
@@ -78,19 +76,19 @@
   cursor: pointer;
   color: #111827;
 }
- 
+
 .action-btn svg {
   color: #111827;
 }
- 
+
 .action-btn:first-child {
   border-right: 1px solid #e5e7eb;
 }
- 
+
 .action-btn:hover {
   background: #eef2f7;
 }
- 
+
 /* Footer */
 .popup-footer {
   font-size: 12px;
@@ -99,19 +97,17 @@
   justify-content: center;
   gap: 6px;
 }
- 
+
 .popup-footer span {
   cursor: pointer;
 }
- 
+
 .popup-footer span:hover {
   text-decoration: underline;
   color: #1e3a8a;
 }
- 
-/* =========================
-   LOGOUT CONFIRM MODAL
-========================= */
+
+/*   LOGOUT CONFIRM MODAL */
 .logout-overlay {
   position: fixed;
   inset: 0;
@@ -121,7 +117,7 @@
   justify-content: center;
   z-index: 9999;
 }
- 
+
 .logout-modal {
   background: #ffffff;
   padding: 24px;
@@ -130,25 +126,25 @@
   text-align: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
- 
+
 .logout-modal h4 {
   margin: 0 0 8px;
   font-size: 18px;
   color: #111827;
 }
- 
+
 .logout-modal p {
   font-size: 14px;
   color: #475569;
   margin-bottom: 20px;
 }
- 
+
 .logout-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 }
- 
+
 .cancel-btn {
   background: #e5e7eb;
   border: none;
@@ -156,7 +152,7 @@
   border-radius: 6px;
   cursor: pointer;
 }
- 
+
 .confirm-btn {
   background: #dc2626;
   color: white;
