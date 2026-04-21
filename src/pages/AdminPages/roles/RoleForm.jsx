@@ -2,28 +2,35 @@ import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import { toast } from "react-toastify";
 
-export default function RoleForm({ role = {}, onClose, onSave }) {
+export default function RoleForm({
+  role = {},             //  SAFE DEFAULT
+  onClose,
+  onSave,
+}) {
   const [roleName, setRoleName] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
+  //  LOAD ROLE DATA FOR EDIT
   useEffect(() => {
-    setRoleName(role.roleName || "");
+    setRoleName(role?.roleName ?? "");
     setError("");
   }, [role]);
 
-  /* VALIDATION */
+  //  VALIDATION
   const validate = () => {
-    if (!roleName.trim()) {
+    const name = roleName.trim();
+
+    if (!name) {
       return "Role name is required.";
     }
-    if (roleName.trim().length < 3) {
+    if (name.length < 3) {
       return "Role name must be at least 3 characters.";
     }
-    if (roleName.length > 50) {
+    if (name.length > 50) {
       return "Role name cannot exceed 50 characters.";
     }
-    if (!/^[A-Za-z ]+$/.test(roleName)) {
+    if (!/^[A-Za-z ]+$/.test(name)) {
       return "Role name must contain only letters and spaces.";
     }
     return "";
@@ -55,7 +62,15 @@ export default function RoleForm({ role = {}, onClose, onSave }) {
       onSave();
       onClose();
     } catch (err) {
-      if (err.response?.status === 409) {
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "";
+
+      if (
+        err.response?.status === 409 ||
+        message.toLowerCase().includes("already")
+      ) {
         setError("Role already exists.");
       } else {
         setError("Failed to save role.");
@@ -75,8 +90,12 @@ export default function RoleForm({ role = {}, onClose, onSave }) {
           <input
             className={`form-control ${error ? "is-invalid" : ""}`}
             value={roleName}
-            onChange={(e) => setRoleName(e.target.value)}
+            onChange={(e) => {
+              setRoleName(e.target.value);
+              setError(""); // clear error while typing
+            }}
             placeholder="Enter role name"
+            disabled={saving}
           />
 
           {error && <small className="error-text">{error}</small>}

@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import { toast } from "react-toastify";
 
-export default function WorkflowStageForm({ stage, onClose, onSave }) {
+export default function WorkflowStageForm({ stage = {}, onClose, onSave }) {
+  const isEdit = !!stage.stageID;
+
   const [services, setServices] = useState([]);
   const [roles, setRoles] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const [form, setForm] = useState({
     serviceID: stage.serviceID || "",
@@ -12,28 +15,37 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
     sequenceNumber: stage.sequenceNumber || ""
   });
 
+  /* Load dropdown data */
   useEffect(() => {
     api.get("/Services/active").then(res => setServices(res.data));
     api.get("/Roles").then(res => setRoles(res.data));
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  /* VALIDATION – INLINE LIKE SERVICE */
+  const validateForm = () => {
+    const newErrors = {};
 
-    if (!form.serviceID) {
-      toast.error("Please select a service");
-      return;
+    if (!form.serviceID && !isEdit) {
+      newErrors.serviceID = "Please select a service.";
     }
 
     if (!form.roleID) {
-      toast.error("Please select a role");
-      return;
+      newErrors.roleID = "Please select a role.";
     }
 
     if (!form.sequenceNumber || Number(form.sequenceNumber) <= 0) {
-      toast.error("Sequence number must be a positive number");
-      return;
+      newErrors.sequenceNumber =
+        "Sequence number must be a positive number.";
     }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  /* SUBMIT */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
 
     const payload = {
       serviceID: Number(form.serviceID),
@@ -42,95 +54,117 @@ export default function WorkflowStageForm({ stage, onClose, onSave }) {
     };
 
     try {
-      if (stage.stageID) {
+      if (isEdit) {
         await api.put(`/WorkflowStages/${stage.stageID}`, payload);
-        toast.success("Workflow stage updated");
+        toast.success("Workflow stage updated successfully");
       } else {
         await api.post("/WorkflowStages", payload);
-        toast.success("Workflow stage created");
+        toast.success("Workflow stage created successfully");
       }
 
       onSave();
       onClose();
-    } catch (err) {
-      toast.error(err.response?.data || "Failed to save workflow stage");
+    } catch {
+      //  SYSTEM ERROR → TOAST
+      toast.error("Failed to save workflow stage. Please try again.");
     }
   };
 
   return (
     <div className="form-modal">
       <div className="modal-card">
-        <h4>{stage.stageID ? "Edit Workflow Stage" : "Add Workflow Stage"}</h4>
+        <h4>{isEdit ? "Edit Workflow Stage" : "Add Workflow Stage"}</h4>
 
         <form onSubmit={handleSubmit}>
-          {/*  SERVICE */}
+          {/* SERVICE */}
           <label>Service</label>
-
-          {stage.stageID ? (
+          {isEdit ? (
             <>
-              {/*  EDIT MODE → SHOW SAVED SERVICE NAME */}
               <input
-                type="text"
-                className="form-control mb-1"
+                className="form-control"
                 value={stage.serviceName || ""}
                 disabled
               />
               <small className="text-muted">
-                Service cannot be changed once the workflow is created.
+                Service cannot be changed once created.
               </small>
             </>
           ) : (
             <>
-              {/*  CREATE MODE → SELECT SERVICE */}
               <select
-                className="form-control mb-2"
+                className={`form-control ${
+                  errors.serviceID ? "is-invalid" : ""
+                }`}
                 value={form.serviceID}
-                onChange={e =>
-                  setForm({ ...form, serviceID: e.target.value })
-                }
+                onChange={(e) => {
+                  setForm({ ...form, serviceID: e.target.value });
+                  setErrors({ ...errors, serviceID: "" });
+                }}
               >
                 <option value="">Select Service</option>
-                {services.map(s => (
+                {services.map((s) => (
                   <option key={s.serviceID} value={s.serviceID}>
                     {s.serviceName}
                   </option>
                 ))}
               </select>
+              {errors.serviceID && (
+                <small className="error-text">{errors.serviceID}</small>
+              )}
             </>
           )}
 
-          {/*  ROLE */}
+          {/* ROLE */}
           <label>Responsible Role</label>
           <select
-            className="form-control mb-2"
+            className={`form-control ${
+              errors.roleID ? "is-invalid" : ""
+            }`}
             value={form.roleID}
-            onChange={e => setForm({ ...form, roleID: e.target.value })}
+            onChange={(e) => {
+              setForm({ ...form, roleID: e.target.value });
+              setErrors({ ...errors, roleID: "" });
+            }}
           >
             <option value="">Select Role</option>
-            {roles.map(r => (
+            {roles.map((r) => (
               <option key={r.roleID} value={r.roleID}>
                 {r.roleName}
               </option>
             ))}
           </select>
+          {errors.roleID && (
+            <small className="error-text">{errors.roleID}</small>
+          )}
 
-          {/*  SEQUENCE */}
+          {/* SEQUENCE */}
           <label>Sequence Number</label>
           <input
             type="number"
-            className="form-control mb-3"
-            min="1"
+            className={`form-control ${
+              errors.sequenceNumber ? "is-invalid" : ""
+            }`}
             value={form.sequenceNumber}
-            onChange={e =>
-              setForm({ ...form, sequenceNumber: e.target.value })
-            }
+            onChange={(e) => {
+              setForm({ ...form, sequenceNumber: e.target.value });
+              setErrors({ ...errors, sequenceNumber: "" });
+            }}
           />
+          {errors.sequenceNumber && (
+            <small className="error-text">
+              {errors.sequenceNumber}
+            </small>
+          )}
 
           <div className="actions-row">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancel
             </button>
-            <button className="btn btn-primary" type="submit">
+            <button type="submit" className="btn btn-primary">
               Save
             </button>
           </div>

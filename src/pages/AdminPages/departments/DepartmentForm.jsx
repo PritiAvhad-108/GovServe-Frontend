@@ -2,23 +2,42 @@ import React, { useState } from "react";
 import api from "../../../api/api";
 import { toast } from "react-toastify";
 
-export default function DepartmentForm({ department, onClose, onSave }) {
+export default function DepartmentForm({
+  department = {},          
+  departments = [],         
+  onClose,
+  onSave,
+}) {
   const [errors, setErrors] = useState({});
 
+  //  SAFE INITIAL STATE (NO CRASH)
   const [form, setForm] = useState({
-    departmentName: department.departmentName || "",
-    description: department.description || "",
-    status: department.status || "Active",
+    departmentName: department?.departmentName ?? "",
+    description: department?.description ?? "",
+    status: department?.status ?? "Active",
   });
 
+  //  VALIDATION WITH DUPLICATE CHECK
   const validateForm = () => {
     const newErrors = {};
 
-    if (!form.departmentName.trim()) {
+    const name = form.departmentName.trim();
+
+    if (!name) {
       newErrors.departmentName = "Department name is required.";
-    } else if (form.departmentName.trim().length < 3) {
+    } else if (name.length < 3) {
       newErrors.departmentName =
         "Department name must contain at least 3 characters.";
+    } else {
+      const exists = departments.some(
+        (d) =>
+          d.departmentName.toLowerCase() === name.toLowerCase()
+      );
+
+      //  CHECK ONLY WHILE CREATING
+      if (!department.departmentID && exists) {
+        newErrors.departmentName = "Department name already exists.";
+      }
     }
 
     if (!form.status) {
@@ -48,11 +67,10 @@ export default function DepartmentForm({ department, onClose, onSave }) {
         toast.success("Department created successfully.");
       }
 
-      onSave();   // refresh list
-      onClose();  //  CLOSE MODAL AUTOMATICALLY
-
+      onSave();
+      onClose();
     } catch {
-      toast.error("Department with this name already exists.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -68,7 +86,6 @@ export default function DepartmentForm({ department, onClose, onSave }) {
           <label>Name</label>
           {department.departmentID ? (
             <input
-              type="text"
               className="form-control"
               value={department.departmentName}
               disabled
@@ -79,16 +96,19 @@ export default function DepartmentForm({ department, onClose, onSave }) {
                 errors.departmentName ? "is-invalid" : ""
               }`}
               value={form.departmentName}
-              onChange={(e) =>
-                setForm({ ...form, departmentName: e.target.value })
-              }
+              onChange={(e) => {
+                setForm({ ...form, departmentName: e.target.value });
+                setErrors({ ...errors, departmentName: "" });
+              }}
             />
           )}
+
           {department.departmentID && (
             <small className="text-muted">
               Department name cannot be changed once created.
             </small>
           )}
+
           {errors.departmentName && (
             <small className="error-text">{errors.departmentName}</small>
           )}
@@ -115,6 +135,7 @@ export default function DepartmentForm({ department, onClose, onSave }) {
             <option value="Active">Active</option>
             <option value="InActive">Inactive</option>
           </select>
+
           {errors.status && (
             <small className="error-text">{errors.status}</small>
           )}

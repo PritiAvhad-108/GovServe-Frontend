@@ -15,6 +15,7 @@ export default function RolesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  //  LOAD DATA
   const loadData = async () => {
     try {
       const res = await api.get("/Roles");
@@ -29,14 +30,16 @@ export default function RolesPage() {
     loadData();
   }, []);
 
+  //  SEARCH FILTER
   useEffect(() => {
-    const data = roles.filter(r =>
+    const data = roles.filter((r) =>
       r.roleName.toLowerCase().includes(search.toLowerCase())
     );
     setFiltered(data);
     setCurrentPage(1);
   }, [search, roles]);
 
+  //  PAGINATION
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
   const currentData = filtered.slice(indexFirst, indexLast);
@@ -46,11 +49,13 @@ export default function RolesPage() {
     <div className="roles-container">
       <ToastContainer position="top-center" />
 
-      {/*  HEADER */}
+      {/* HEADER */}
       <div className="roles-header">
         <div>
           <h2 className="page-title">Role Management</h2>
-          <p className="page-subtitle">Manage user roles and access levels</p>
+          <p className="page-subtitle">
+            Manage user roles and access levels
+          </p>
         </div>
 
         <div className="roles-stats-card">
@@ -64,24 +69,29 @@ export default function RolesPage() {
         </div>
       </div>
 
-      {/*  FILTER ROW */}
+      {/* FILTER ROW */}
       <div className="filter-row">
         <input
           className="form-control"
           placeholder="Search roles..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
 
         <button
           className="btn btn-primary create-btn"
-          onClick={() => setShowForm({})}
+          onClick={() =>
+            setShowForm({
+              roleID: null,
+              roleName: "",
+            })
+          }
         >
           <Plus size={18} /> Add Role
         </button>
       </div>
 
-      {/*  TABLE */}
+      {/* TABLE */}
       <table className="table-white">
         <thead>
           <tr>
@@ -99,12 +109,10 @@ export default function RolesPage() {
               </td>
             </tr>
           ) : (
-            currentData.map(role => (
+            currentData.map((role) => (
               <tr key={role.roleID}>
                 <td>{role.roleID}</td>
                 <td>{role.roleName}</td>
-
-                {/*  ACTIONS – matches CSS */}
                 <td className="actions-col">
                   <Pencil
                     size={18}
@@ -118,7 +126,12 @@ export default function RolesPage() {
                     title="Delete Role"
                     onClick={() => {
                       if (window.confirm("Delete this role?")) {
-                        api.delete(`/Roles/${role.roleID}`).then(loadData);
+                        api
+                          .delete(`/Roles/${role.roleID}`)
+                          .then(() => {
+                            toast.success("Role deleted");
+                            loadData();
+                          });
                       }
                     }}
                   />
@@ -129,7 +142,7 @@ export default function RolesPage() {
         </tbody>
       </table>
 
-      {/*  PAGINATION */}
+      {/* PAGINATION */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

@@ -60,7 +60,9 @@ export default function DepartmentsPage() {
       <div className="dept-header">
         <div>
           <h2 className="page-title">Department Management</h2>
-          <p className="page-subtitle">Manage all government departments.</p>
+          <p className="page-subtitle">
+            Manage all government departments.
+          </p>
         </div>
 
         <div className="dept-stats-card">
@@ -174,6 +176,7 @@ export default function DepartmentsPage() {
       {showForm && (
         <DepartmentForm
           department={showForm}
+          departments={departments}   
           onClose={() => setShowForm(null)}
           onSave={loadData}
         />

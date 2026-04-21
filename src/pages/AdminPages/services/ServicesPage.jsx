@@ -38,14 +38,14 @@ export default function ServicesPage() {
 
     if (search.trim()) {
       data = data.filter(
-        s =>
+        (s) =>
           s.serviceName.toLowerCase().includes(search.toLowerCase()) ||
           s.departmentName.toLowerCase().includes(search.toLowerCase())
       );
     }
 
     if (statusFilter !== "All") {
-      data = data.filter(s => s.status === statusFilter);
+      data = data.filter((s) => s.status === statusFilter);
     }
 
     setFiltered(data);
@@ -69,9 +69,7 @@ export default function ServicesPage() {
         </div>
 
         <div className="service-stats-card">
-          <div className="stats-icon">
-            <FolderKanban size={30} color="#1e3a8a" />
-          </div>
+          <FolderKanban size={30} color="#1e3a8a" />
           <div>
             <p className="stats-label">Total Services</p>
             <h3 className="stats-value">{services.length}</h3>
@@ -85,13 +83,13 @@ export default function ServicesPage() {
           className="form-control"
           placeholder="Search services or departments..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
 
         <select
           className="form-control"
           value={statusFilter}
-          onChange={e => setStatusFilter(e.target.value)}
+          onChange={(e) => setStatusFilter(e.target.value)}
         >
           <option value="All">All</option>
           <option value="Active">Active</option>
@@ -100,7 +98,16 @@ export default function ServicesPage() {
 
         <button
           className="btn btn-primary create-btn"
-          onClick={() => setShowForm({})}
+          onClick={() =>
+            setShowForm({
+              serviceID: null,
+              departmentID: "",
+              serviceName: "",
+              description: "",
+              slA_Days: "",
+              status: "Active",
+            })
+          }
         >
           <Plus size={18} /> Add Service
         </button>
@@ -128,7 +135,7 @@ export default function ServicesPage() {
               </td>
             </tr>
           ) : (
-            currentData.map(s => (
+            currentData.map((s) => (
               <tr key={s.serviceID}>
                 <td>{s.serviceID}</td>
                 <td>{s.departmentName}</td>
@@ -164,7 +171,9 @@ export default function ServicesPage() {
                     className="icon-delete"
                     onClick={() => {
                       if (window.confirm("Delete this service?")) {
-                        api.delete(`/Services/${s.serviceID}`).then(loadData);
+                        api
+                          .delete(`/Services/${s.serviceID}`)
+                          .then(loadData);
                       }
                     }}
                   />
@@ -178,12 +187,13 @@ export default function ServicesPage() {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={page => setCurrentPage(page)}
+        onPageChange={setCurrentPage}
       />
 
       {showForm && (
         <ServiceForm
           service={showForm}
+          services={services}   
           onClose={() => setShowForm(null)}
           onSave={loadData}
         />

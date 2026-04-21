@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import api from "../../../api/api";
 import { toast } from "react-toastify";
 
-export default function ServiceForm({ service = {}, onClose, onSave }) {
+export default function ServiceForm({
+  service = {},
+  services = [],     // ✅ all existing services
+  onClose,
+  onSave,
+}) {
   const isEdit = !!service.serviceID;
 
   const [departments, setDepartments] = useState([]);
@@ -16,7 +21,6 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     status: "Active",
   });
 
-  /*  Initialize form when editing */
   useEffect(() => {
     if (isEdit) {
       setForm({
@@ -29,19 +33,17 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     }
   }, [isEdit, service]);
 
-  /* Load departments ONLY for CREATE */
   useEffect(() => {
     if (!isEdit) {
       api
         .get("/Department/active")
-        .then(res => setDepartments(res.data))
+        .then((res) => setDepartments(res.data))
         .catch(() =>
-          toast.error("Unable to load departments. Please try again.")
+          toast.error("Unable to load departments.")
         );
     }
   }, [isEdit]);
 
-  /*  Validation */
   const validateForm = () => {
     const newErrors = {};
 
@@ -54,7 +56,18 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
         newErrors.serviceName = "Service name is required.";
       } else if (form.serviceName.trim().length < 3) {
         newErrors.serviceName =
-          "Service name must be at least 3 characters long.";
+          "Service name must be at least 3 characters.";
+      } else {
+        // ✅ DUPLICATE CHECK
+        const exists = services.some(
+          (s) =>
+            s.serviceName.toLowerCase() ===
+            form.serviceName.trim().toLowerCase()
+        );
+
+        if (exists) {
+          newErrors.serviceName = "Service name already exists.";
+        }
       }
     }
 
@@ -70,12 +83,10 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  /*  Submit */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    //  DO NOT send immutable fields on UPDATE
     const payload = isEdit
       ? {
           description: form.description.trim(),
@@ -104,8 +115,8 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
     } catch {
       toast.error(
         isEdit
-          ? "Unable to update service. Please try again."
-          : "Service with this name already exists."
+          ? "Unable to update service."
+          : "Unable to create service."
       );
     }
   };
@@ -116,8 +127,8 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
         <h4>{isEdit ? "Edit Service" : "Add Service"}</h4>
 
         <form onSubmit={handleSubmit}>
-          {/*  Department */}
-          {!isEdit ? (
+          {/* Department */}
+          {!isEdit && (
             <>
               <label>Department</label>
               <select
@@ -137,52 +148,42 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
                 ))}
               </select>
               {errors.departmentID && (
-                <small className="error-text">{errors.departmentID}</small>
+                <small className="error-text">
+                  {errors.departmentID}
+                </small>
               )}
             </>
-          ) : (
-            <div className="readonly-field">
-              <label>Department</label>
-              <div className="readonly-value">
-                {service.departmentName}
-              </div>
-              <small className="text-muted">
-                Department cannot be changed once the service is created.
-              </small>
-            </div>
           )}
 
-          {/*  Service Name */}
+          {/* Service Name */}
           <label>Service Name</label>
-          {isEdit ? (
-            <>
-              <input
-                className="form-control"
-                value={service.serviceName}
-                disabled
-              />
-              <small className="text-muted">
-                Service name cannot be changed once created.
-              </small>
-            </>
-          ) : (
+          {!isEdit ? (
             <>
               <input
                 className={`form-control ${
                   errors.serviceName ? "is-invalid" : ""
                 }`}
                 value={form.serviceName}
-                onChange={(e) =>
-                  setForm({ ...form, serviceName: e.target.value })
-                }
+                onChange={(e) => {
+                  setForm({ ...form, serviceName: e.target.value });
+                  setErrors({ ...errors, serviceName: "" });
+                }}
               />
               {errors.serviceName && (
-                <small className="error-text">{errors.serviceName}</small>
+                <small className="error-text">
+                  {errors.serviceName}
+                </small>
               )}
             </>
+          ) : (
+            <input
+              className="form-control"
+              value={service.serviceName}
+              disabled
+            />
           )}
 
-          {/*  Description */}
+          {/* Description */}
           <label>Description</label>
           <textarea
             className="form-control"
@@ -192,7 +193,7 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             }
           />
 
-          {/*  SLA Days */}
+          {/* SLA Days */}
           <label>SLA Days</label>
           <input
             type="number"
@@ -205,13 +206,17 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             }
           />
           {errors.slA_Days && (
-            <small className="error-text">{errors.slA_Days}</small>
+            <small className="error-text">
+              {errors.slA_Days}
+            </small>
           )}
 
-          {/*  Status */}
+          {/* Status */}
           <label>Status</label>
           <select
-            className={`form-control ${errors.status ? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.status ? "is-invalid" : ""
+            }`}
             value={form.status}
             onChange={(e) =>
               setForm({ ...form, status: e.target.value })
@@ -220,9 +225,6 @@ export default function ServiceForm({ service = {}, onClose, onSave }) {
             <option value="Active">Active</option>
             <option value="InActive">InActive</option>
           </select>
-          {errors.status && (
-            <small className="error-text">{errors.status}</small>
-          )}
 
           <div className="actions-row">
             <button
