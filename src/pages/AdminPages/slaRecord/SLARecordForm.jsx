@@ -6,7 +6,7 @@ export default function SLARecordForm({
   onClose,
   onSave,
   caseId,
-  editData // ✅ present only when editing
+  editData //  present only when editing
 }) {
   const [cases, setCases] = useState([]);
   const [stages, setStages] = useState([]);
@@ -52,13 +52,13 @@ export default function SLARecordForm({
  
     try {
       if (editData?.slaRecordID) {
-        // ✅ UPDATE
+        //  UPDATE
         await api.put(`/SLARecords/${editData.slaRecordID}`, {
           startDate: form.startDate
         });
         toast.success("SLA record updated successfully");
       } else {
-        // ✅ CREATE
+        //  CREATE
         await api.post("/SLARecords", {
           caseId: Number(form.caseId),
           stageId: Number(form.stageId),
