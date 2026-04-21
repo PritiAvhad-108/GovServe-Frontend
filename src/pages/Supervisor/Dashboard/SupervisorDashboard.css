@@ -109,3 +109,6 @@ tbody tr {
 .supervisor-search {
   margin-bottom: 16px;
 }
+.supervisor-dashboard-wrapper {
+  padding-bottom: 60px; 
+}

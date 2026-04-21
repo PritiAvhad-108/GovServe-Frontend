@@ -1,7 +1,9 @@
 
 
-.service-row-card.border-rejected {
+.service-row-card 
+.border-rejected {
     border-left: 4px solid #ef4444;
+    min-height: 30px;
 }
 
 
@@ -69,27 +71,6 @@
     color: #1e3a8a;
 }
 
-/* --- Edit Button (For Rejected Applications) --- */
-.edit-action-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #fee2e2;
-    color: #b91c1c;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.edit-action-btn:hover {
-    background: #fecaca;
-}
-
-
 
 .meta-separator {
     margin: 0 6px;
@@ -106,14 +87,13 @@
    SEARCH BAR
    ========================================== */
 .search-section {
-  position: sticky;  
-  top: 0;
-  z-index: 10;    
-  margin-top: 20px;   
-  margin-bottom: 15px;
-  width: 94%;
-  padding-left: 50px;
-  background-color: #f4f7fe; 
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #f4f7fe;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -126,6 +106,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     border: 1px solid #e2e8f0;
+    width: 95%;
 }
 
 .search-box-attractive input {

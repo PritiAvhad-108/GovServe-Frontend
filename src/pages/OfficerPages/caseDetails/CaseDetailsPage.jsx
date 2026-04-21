@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DocumentPreview from '../../../components/OfficerComponents/common/DocumentPreview';
-
+ 
 import Swal from 'sweetalert2';
 import { getCaseDetails, getDocumentsByApplicationId, approveCase, rejectCase, markCaseAsPending, approveDocument, rejectDocument } from '../../../api/officerApi';
 
 import './CaseDetails.css';
-
+ 
 const CaseDetailsPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-
+ 
     const [details, setDetails] = useState(null);
     const [documents, setDocuments] = useState([]);
     const [pageLoading, setPageLoading] = useState(true);
@@ -22,8 +22,8 @@ const CaseDetailsPage = () => {
         const fetchMainDetails = async () => {
             try {
                 setPageLoading(true);
-                const response = await getCaseDetails(id); 
-                setDetails(response.data || response); 
+                const response = await getCaseDetails(id);
+                setDetails(response.data || response);
             } catch (error) {
                 console.error("Failed to fetch case details:", error);
             } finally {
@@ -39,44 +39,45 @@ const CaseDetailsPage = () => {
         const fetchDocuments = async () => {
             try {
                 const response = await getDocumentsByApplicationId(applicationId);
-                setDocuments(response.data || []); 
+               
+                setDocuments(response.data || []);
             } catch (error) {
                 console.error("Failed to fetch documents", error);
             }
         };
-
+ 
         if (applicationId) {
             fetchDocuments();
         }
     }, [applicationId]);
-
+ 
     const handleApproveApplication = async () => {
         const result = await Swal.fire({
             title: "Approve Application?",
             text: "Are you sure you want to officially approve this application? This action will update the case status.",
             icon: "question",
             showCancelButton: true,
-            confirmButtonColor: "#2ecc71", 
+            confirmButtonColor: "#2ecc71",
             cancelButtonColor: "#6c757d",  
             confirmButtonText: "Yes, Approve it!",
             cancelButtonText: "Cancel"
         });
-
+ 
         if (!result.isConfirmed) return;
-
+ 
         try {
-            await approveCase(id); 
-            
+            await approveCase(id);
+           
             await Swal.fire({
                 title: "Success!",
                 text: "Application Approved Successfully! Notifications have been sent.",
                 icon: "success",
                 confirmButtonColor: "#1e3a8a",
-                timer: 2000, 
+                timer: 2000,
                 showConfirmButton: false
             });
-            
-            navigate('/officer/approved'); 
+           
+            navigate('/officer/approved');
         } catch (error) {
             console.error("Error approving application:", error);
             Swal.fire({
@@ -87,7 +88,6 @@ const CaseDetailsPage = () => {
             });
         }
     };
-
     const handleRejectApplication = async () => {
         const { value: reason, isConfirmed } = await Swal.fire({
             title: "Reject Application",
@@ -104,12 +104,12 @@ const CaseDetailsPage = () => {
                 if (!value) return "You need to write a reason!";
             }
         });
-
+ 
         if (!isConfirmed) return;
-
+ 
         try {
             await rejectCase(id, reason);
-            
+           
             await Swal.fire({
                 title: "Rejected!",
                 text: "Application Rejected Successfully!",
@@ -118,14 +118,14 @@ const CaseDetailsPage = () => {
                 timer: 2000,
                 showConfirmButton: false
             });
-            
-            navigate('/officer/rejected'); 
+           
+            navigate('/officer/rejected');
         } catch (error) {
             console.error("Error rejecting application:", error);
             Swal.fire("Error", "Failed to reject application.", "error");
         }
     };
-
+ 
     const handleStartVerification = async () => {
         try {
             await markCaseAsPending(id);
@@ -174,20 +174,20 @@ const CaseDetailsPage = () => {
             Swal.fire("Error", "Failed to update document status in the database.", "error");
         }
     };
-
+ 
     if (pageLoading) return <div className="p-10">Loading application details...</div>;
     if (!details) return <div className="p-10">Case details not found.</div>;
-
+ 
     return (
         <div className="application-page">
-
+ 
             <div className="app-header">
                 <button className="back-icon" onClick={() => navigate(-1)}>←</button>
                 <h2>Application Review</h2>
             </div>
-
+ 
             <div className="app-id">Application ID: {id}</div>
-
+ 
             {/* SERVICE OVERVIEW */}
             <div className="card">
                 <h3 className="card-title">Service Overview</h3>
@@ -216,7 +216,7 @@ const CaseDetailsPage = () => {
                     </div>
                 </div>
             </div>
-
+ 
             {/* CITIZEN DETAILS */}
             <div className="card">
                 <h3 className="card-title">Citizen Personal Details</h3>
@@ -239,13 +239,13 @@ const CaseDetailsPage = () => {
                     </div>
                 </div>
             </div>
-
+ 
             {/* DOCUMENTS SECTION */}
             <div className="card">
                 <h3 className="card-title">Uploaded Documents</h3>
-                
+               
                 <div className="verification-trigger-section" style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '20px' }}>
-                    <button 
+                    <button
                         className="verify-btn"
                         onClick={handleStartVerification}
                         style={{ backgroundColor: '#0ea5e9', color: 'white', padding: '6px 14px', fontSize: '13px', borderRadius: '6px', border: 'none', fontWeight: '600', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
@@ -256,7 +256,7 @@ const CaseDetailsPage = () => {
                         Clicking this will update the status to "Under Verification" and move it to your Pending Review list.
                     </p>
                 </div>
-
+ 
                 {documents.length > 0 ? (
                     <div className="document-section-layout">
                         <div className="document-list">
@@ -342,14 +342,15 @@ const CaseDetailsPage = () => {
                     <p className="no-doc">No documents uploaded.</p>
                 )}
             </div>
-
+ 
             <div className="action-buttons">
                 <button className="approve-btn" onClick={handleApproveApplication}>Approve</button>
                 <button className="reject-btn" onClick={handleRejectApplication}>Reject</button>
             </div>
-
+ 
         </div>
     );
 };
-
+ 
 export default CaseDetailsPage;
+ 

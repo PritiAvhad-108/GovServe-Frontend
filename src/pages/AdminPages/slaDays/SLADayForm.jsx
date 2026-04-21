@@ -17,7 +17,7 @@ export default function SLADayForm({ data = {}, onClose, onSave }) {
 
   useEffect(() => {
     if (!isEdit) {
-      api.get("/Services").then(res => setServices(res.data));
+      api.get("/Services/active").then(res => setServices(res.data));
     }
     api.get("/Roles").then(res => setRoles(res.data));
   }, [isEdit]);

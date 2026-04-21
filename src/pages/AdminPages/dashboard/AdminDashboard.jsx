@@ -107,7 +107,7 @@ export default function AdminDashboard() {
   ).length;
 
   return (
-    <div className="dashboard-container">
+    <div className="Admin-dashboard-container">
 
       <div className="dashboard-header">
         <div>

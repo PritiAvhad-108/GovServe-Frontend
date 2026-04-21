@@ -14,26 +14,22 @@ import RoleGuard from "./components/Guards/RoleGuard";
 import Citizenroutes from "./routes/Citizenroutes";
 import AdminRoutes from "./routes/Adminroutes";
 import Supervisorroutes from "./routes/Supervisorroutes";
-
 import OfficerRoutes from "./routes/Officerroutes";
 import GrievanceRoute from "./routes/GrievanceRoute";
 
+
  
 function App() {
-  const { isAuthenticated, userRole, loading } = useAuth();
+  const {userRole, loading } = useAuth();
  
   if (loading) return null;
  
-  // ✅ FIXED REDIRECT PATHS
+  // FIXED REDIRECT PATHS
   const getRedirectPath = () => {
     if (userRole === "Admin") return "/admin/dashboard";
     if (userRole === "Supervisor") return "/supervisor";
     if (userRole === "Officer") return "/officer";
-
     if (userRole === "Grievance Officer") return "/grievances";
-
-  
-
     return "/citizen";
   };
  
@@ -61,9 +57,11 @@ function App() {
         <Route
           path="/citizen/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Citizen"]}>
               <Citizenroutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
  
@@ -72,11 +70,12 @@ function App() {
         <Route
           path="/admin/*"
           element={
-             <AuthGuard>
+            <AuthGuard>
             <RoleGuard allowedRoles={["Admin"]}>
               <AdminRoutes />
             </RoleGuard>
             </AuthGuard>
+           
           }
         />
  
@@ -84,40 +83,37 @@ function App() {
         <Route
           path="/supervisor/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Supervisor"]}>
               <Supervisorroutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
          {/* OFFICER */}
-
-         {/* GRIEVANCE OFFICER */}
-
         <Route
           path="/officer/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Officer"]}>
               <OfficerRoutes />
             </RoleGuard>
+            </AuthGuard>
           }
         />
 
-
          {/* OFFICER */}
-
-         {/* GRIEVANCE OFFICER */}
-
         <Route
           path="/grievances/*"
           element={
+            <AuthGuard>
             <RoleGuard allowedRoles={["Grievance Officer"]}>
-
               <GrievanceRoute />
             </RoleGuard>
+            </AuthGuard>
           }
         />
  
-
  
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

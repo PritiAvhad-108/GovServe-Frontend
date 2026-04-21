@@ -159,11 +159,11 @@
 }
 
 .status-badge.unread {
-  background: #1e3a8a; /* Blue */
+  background: #1e3a8a;
   color: #ffffff;
 }
 
 .status-badge.read {
-  background: #258d4b; /* Light grey */
+  background: #258d4b; 
   color: #ffffff;
 }

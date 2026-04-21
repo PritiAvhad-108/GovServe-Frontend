@@ -16,7 +16,7 @@ export default function SupervisorProfilePopup({ user, onClose }) {
   const handleLogout = () => {
     logout();
     toast.success("Logout successful");
-    navigate("/");
+    navigate("/login");
   };
 
   return (

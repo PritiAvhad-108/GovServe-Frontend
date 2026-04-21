@@ -1,16 +1,9 @@
 import axios from "axios";
  
-/* ===============================
-   AXIOS INSTANCE
-=============================== */
 const API = axios.create({
   baseURL: "https://localhost:7027/api",
 });
  
-/* ===============================
-   REQUEST INTERCEPTOR
-   → ATTACH JWT TOKEN
-=============================== */
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("jwtToken");
@@ -24,9 +17,6 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
  
-/* ===============================
-   RESPONSE INTERCEPTOR
-=============================== */
 API.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -44,7 +34,7 @@ export const getDashboardStats = () => API.get("/Case/dashboard-stats");
 export const getApplications = () => API.get("/Application/all");
 export const getAllCases = () => API.get("/Case/all");
 export const getCaseDetails = (id) => API.get(`/Case/case-details/${id}`);
-export const getDepartments = () => API.get("/Department");
+export const getDepartments = () => API.get("/Department/active");
 export const getOfficers = (id) => API.get(`/Officer/by-department/${id}`);
 export const assignCase = (data) => API.post("/Case/assign", data);
 export const autoAssignCase = (data) => API.post("/Case", data);
@@ -61,5 +51,3 @@ export const autoEscalateCases = () =>API.post("/Escalation/auto-escalate");
 export const getAllUsers = () => { return API.get("/User/all");};
 export const getRoles = () => API.get("/Roles");
 export const getServices = () => API.get("/Services");
- 
- 

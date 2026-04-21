@@ -38,13 +38,8 @@ function LoginPage() {
       );
  
       const { token } = response.data;
-
  
-
-
-
-
-      // ✅ DECODE TOKEN FIRST
+      //  DECODE TOKEN FIRST
       const decodedToken = jwtDecode(token);
  
       const userId =
@@ -58,6 +53,9 @@ function LoginPage() {
         decodedToken.role;
 
 
+        
+ 
+      //  NOW UPDATE AUTH CONTEXT 
       login({
         token,
         roleName: userRoleFromToken,
@@ -77,11 +75,7 @@ function LoginPage() {
         else if (userRoleFromToken === "Citizen") navigate("/citizen");
         else if (userRoleFromToken === "Supervisor") navigate("/supervisor");
         else if (userRoleFromToken === "Officer") navigate("/officer");
- 
         else if (userRoleFromToken === "Grievance Officer") navigate("/grievances");
-
-        // else if(userRoleFromToken === "Grievance Officer") navigate("/grievances");
-
         else navigate("/");
       }, 1000);
  
@@ -98,7 +92,7 @@ function LoginPage() {
   return (
     <>
       <Navbar />
-      {/* ✅ ALREADY LOGGED IN BANNER */}
+      {/*  ALREADY LOGGED IN BANNER */}
       {isAuthenticated && (
         <div className="info-banner">
           You are already logged in.
@@ -112,9 +106,7 @@ function LoginPage() {
                 ? "/supervisor"
                 : userRole === "Officer"
                 ? "/officer"
-
-                : userRole === "Grievance Officer"
-
+                :userRole === "Grievance Officer"
                 ? "/grievances"
                 : "/"
             }

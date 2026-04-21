@@ -1,12 +1,12 @@
 /* ==========================================
-   1. MODULE SCOPING (Prevents Global Conflicts)
+   MODULE SCOPING (Prevents Global Conflicts)
    ========================================== */
 .cz-dashboard-scope {
   width: 100%;
 }
 
 /* ==========================================
-   2. CONTENT WRAPPER & HEADINGS
+   CONTENT WRAPPER & HEADINGS
    ========================================== */
 .cz-dashboard-scope .content-wrapper {
   max-width: 100%;
@@ -23,7 +23,7 @@
 }
 
 /* ==========================================
-   3. CARDS GRID SYSTEM
+   CARDS GRID SYSTEM
    ========================================== */
 .cz-dashboard-scope .cards {
   display: grid;
@@ -61,14 +61,14 @@
   background: #f9fbff;
 }
 
-/* Color Themes for Hover State */
+
 .cz-dashboard-scope .card.green:hover { border-color: #22c55e; box-shadow: 0 0 15px #22c55e66; }
 .cz-dashboard-scope .card.blue:hover { border-color: #1e3a8a; box-shadow: 0 0 15px #3b82f666; }
 .cz-dashboard-scope .card.orange:hover { border-color: #f59e0b; box-shadow: 0 0 15px #f59e0b66; }
 .cz-dashboard-scope .card.red:hover { border-color: #ef4444; box-shadow: 0 0 15px #ef444466; }
 
 /* ==========================================
-   4. ICON STYLING
+   ICON STYLING
    ========================================== */
 .cz-dashboard-scope .icon {
   display: flex;
@@ -93,7 +93,7 @@
 }
 
 /* ==========================================
-   5. CARD FOOTER SECTION
+    CARD FOOTER SECTION
    ========================================== */
 .cz-dashboard-scope .card-footer {
   position: absolute;
@@ -121,9 +121,7 @@
   flex: 1;
 }
 
-/* ==========================================
-   6. INTERACTIVE RIPPLE EFFECT
-   ========================================== */
+
 .cz-dashboard-scope .ripple {
   position: absolute;
   border-radius: 50%;

@@ -14,8 +14,8 @@ export default function ReportFilterForm({ onGenerate, loading }) {
 
   useEffect(() => {
     //  CORRECT ENDPOINTS
-    api.get("/Department").then(res => setDepartments(res.data));
-    api.get("/Services").then(res => setServices(res.data));
+    api.get("/Department/active").then(res => setDepartments(res.data));
+    api.get("/Services/active").then(res => setServices(res.data));
   }, []);
 
   const submit = (e) => {

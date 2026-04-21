@@ -163,18 +163,17 @@
   text-align: right;
 }
 
-/* Trash icon */
-.icon-delete {
-  color: #92400e;
+.icon-edit {
+  color: #2563eb;
   cursor: pointer;
+  margin-right: 10px;
+  transition: transform 0.1s ease, color 0.2s ease;
 }
 
-.icon-delete:hover {
-  color: #78350f;
+.icon-edit:hover {
+  transform: scale(1.1);
+  color: #1d4ed8
 }
-/* =============================
-   ACTION ICONS
-============================= */
 .icon-delete {
   color: #dc2626;
   cursor: pointer;
@@ -185,6 +184,15 @@
   transform: scale(1.1);
   color: #b91c1c;
 }
+.info-text {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #64748b; /* slate gray */
+  line-height: 1.4;
+}
+
+
 
 /* =============================
    PAGINATION CLEANUP

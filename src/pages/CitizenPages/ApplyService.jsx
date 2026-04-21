@@ -15,15 +15,15 @@ function ApplyServices() {
 
   const navigate = useNavigate();
   const servicesPerPage = 4; 
-  const BASE_URL = "https://localhost:7027/api/Services";
+ const BASE_URL = "https://localhost:7027/api/Services/active";
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/active`)
-      .then((res) => res.json())
-      .then((data) => setServices(data))
-      .catch((err) => console.error("Error fetching services:", err))
-      .finally(() => setLoading(false));
-  }, []);
+useEffect(() => {
+  fetch(BASE_URL)
+    .then((res) => res.json())
+    .then((data) => setServices(data))
+    .catch((err) => console.error(err))
+    .finally(() => setLoading(false));
+}, []);
 
   const filteredServices = services.filter((s) =>
     s.serviceName.toLowerCase().includes(search.toLowerCase())
@@ -46,7 +46,7 @@ function ApplyServices() {
 
   return (
     <div className="content-wrapper">
-      {/* Search Input Section */}
+ 
       <div className="search-section">
         <div className="search-box-attractive">
           <SearchIcon size={20} className="search-icon-color" />
@@ -65,7 +65,7 @@ function ApplyServices() {
       {loading ? (
         <div className="status-msg">Loading services, please wait...</div>
       ) : currentServices.length === 0 ? (
-        <div className="status-msg">No services found. 😕</div>
+        <div className="status-msg">No services found. </div>
       ) : (
         <>
           <div className="service-list-vertical">
@@ -110,17 +110,13 @@ function ApplyServices() {
               className="p-btn" 
               disabled={currentPage === 1} 
               onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              Previous
-            </button>
+            >Previous </button>
             <span className="p-info">Page {currentPage} of {totalPages}</span>
             <button 
               className="p-btn" 
               disabled={currentPage === totalPages} 
               onClick={() => setCurrentPage(currentPage + 1)}
-            >
-              Next
-            </button>
+            > Next</button>
           </div>
         </>
       )}

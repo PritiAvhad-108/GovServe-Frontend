@@ -1,19 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-  MdDashboard,
-  MdSecurity,
-  MdAccessTime,
-  MdApartment,
-  MdHomeRepairService,
-  MdFactCheck,
-  MdDescription,
-  MdDeviceHub,
-  MdErrorOutline,
-  MdBarChart,
-  MdPeople,
-  MdLogout
-} from "react-icons/md";
+import {MdDashboard,MdSecurity,MdAccessTime,MdApartment,MdHomeRepairService,MdFactCheck,MdDescription,MdDeviceHub,MdErrorOutline,MdBarChart,MdPeople,MdLogout} from "react-icons/md";
 import "./layout.css";
 import logo from "../../../assets/landing/logo.png";
 

@@ -10,7 +10,6 @@ const Cases = () => {
   const [cases, setCases] = useState([]);
   const [applications, setApplications] = useState([]);
   const [departments, setDepartments] = useState([]);
- 
   //  services & mapping
   const [services, setServices] = useState([]);
   const [serviceDeptMap, setServiceDeptMap] = useState({});
@@ -34,13 +33,13 @@ const Cases = () => {
   const loadData = async () => {
     const caseRes = await axios.get("https://localhost:7027/api/Case/all");
     const appRes = await getApplications();
-    const deptRes = await axios.get("https://localhost:7027/api/Department");
+    const deptRes = await axios.get("https://localhost:7027/api/Department/active");
  
-    //  fetch services
+    // NEW: fetch services
     const serviceRes = await axios.get("https://localhost:7027/api/Services");
-
-
-    
+ 
+ 
+   
  
     setCases(caseRes.data);
     setDepartments(deptRes.data);
@@ -76,7 +75,6 @@ const Cases = () => {
  
     setApplications(availableApplications);
   };
- 
   //  get selected service from application
   const getSelectedService = () => {
     const selectedApp = applications.find(
@@ -98,7 +96,6 @@ const Cases = () => {
       setAssignType("error");
       return;
     }
- 
     // validate department against service
     const selectedService = getSelectedService();
     const validDeptId = serviceDeptMap[selectedService]?.departmentId;

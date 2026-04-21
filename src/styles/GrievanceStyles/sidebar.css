@@ -3,7 +3,7 @@
   width: 240px;
   background-color: #e7f3f6;
   min-width: 240px;
-  height: calc(100vh - 70px);
+  height: calc(100vh-110px);
   border-right: 1px solid #e5e7eb;
   padding-top: 30px;
   overflow-y: auto;
