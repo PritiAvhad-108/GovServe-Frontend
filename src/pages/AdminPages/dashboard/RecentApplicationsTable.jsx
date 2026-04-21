@@ -45,7 +45,7 @@ export default function RecentApplicationsTable({ applications = [] }) {
                 <td>{app.applicationStatus}</td>
                 <td>
                   {app.submittedDate
-                    ? new Date(app.submittedDate).toLocaleDateString()
+                    ? new Date(app.submittedDate).toLocaleDateString()  
                     : "-"}
                 </td>
               </tr>

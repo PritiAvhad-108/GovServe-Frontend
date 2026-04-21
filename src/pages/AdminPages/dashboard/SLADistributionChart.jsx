@@ -8,6 +8,7 @@ import {
 } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 //data come from Parent component (AdminDashboard) as props onTime, breached
 export default function SLADistributionChart({ onTime, breached }) {
   //char configuration - labels, data, colors
