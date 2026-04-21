@@ -1,12 +1,12 @@
-// src/components/AdminComponents/layout/OfficerLayout/OfficerNavbar.jsx
+
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Logo
+
 import logo from "../../../assets/landing/logo.png";
 
-// Components
+
 import NotificationBell from "../../../pages/OfficerPages/notifications/OfficerNotifications";
 import OfficerProfilePopup from "../../../pages/OfficerPages/OfficerProfile/ProfilePopup";
 
@@ -30,7 +30,7 @@ const OfficerNavbar = () => {
         zIndex: 100,
       }}
     >
-      {/* LEFT SIDE LOGO */}
+      
       <div
         style={{
           display: "flex",
@@ -62,7 +62,7 @@ const OfficerNavbar = () => {
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
+     
       <div
         style={{
           display: "flex",
@@ -70,7 +70,7 @@ const OfficerNavbar = () => {
           gap: "20px",
         }}
       >
-        {/* 🔔 NOTIFICATION BELL (FORCED VISIBLE) */}
+        
         <div
           style={{
             color: "#ffffff",

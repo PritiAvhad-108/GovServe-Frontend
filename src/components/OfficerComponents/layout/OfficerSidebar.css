@@ -1,4 +1,4 @@
-/* Sidebar Container */
+
 .sidebar {
     width: 260px;
     background-color: #ffffff;
@@ -7,7 +7,7 @@
     flex-direction: column;
     flex-shrink: 0;
 
-    /* ✅ REMOVED: The negative margin that was pulling it up */
+   
     margin-top: 0; 
     
     height: 100%; 
@@ -18,7 +18,7 @@
 }
 
 .sidebar-brand {
-    /* ✅ CHANGED: Added 20px of padding to the top to push "Officer Panel" down */
+   
     padding: 20px 20px 20px 20px; 
     border-bottom: 1px solid #f3f4f6;
     display: flex;
@@ -32,7 +32,7 @@
     margin: 0 !important;
 }
 
-/* Menu Container */
+
 .sidebar-menu {
     padding: 15px 10px;
     display: flex;
@@ -41,7 +41,7 @@
     overflow-y: auto;
 }
 
-/* Individual Link */
+
 .nav-item {
     display: flex;
     align-items: center;
@@ -53,38 +53,38 @@
     transition: all 0.2s ease;
 }
 
-/* Icon */
+
 .sidebar-icon {
     font-size: 22px !important;
     flex-shrink: 0;
 }
 
-/* Label */
+
 .nav-label {
     font-size: 15px;
     font-weight: 500;
 }
 
-/* Hover */
+
 .nav-item:hover {
     background-color: #f3f4f6;
     color: #1a3a8a;
 }
 
-/* Active State */
+
 .nav-item.active {
     background: #bfdbfe;
-    color: #1a3a8a;               /* ✅ CHANGED: blue text */
+    color: #1a3a8a;               
     font-weight: 600;
     box-shadow: inset 3px 0 0 #1e3a8a;
 }
 
-/* ✅ CHANGED: icon color to blue */
+
 .nav-item.active .sidebar-icon {
     color: #1a3a8a;
 }
 
-/* ✅ ADDED: ensure hover stays blue even for active items */
+
 .nav-item.active:hover {
     color: #1a3a8a;
 }

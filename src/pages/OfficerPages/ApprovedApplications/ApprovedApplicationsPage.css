@@ -1,11 +1,11 @@
-/* Page background */
+
 .approved-container {
     padding: 32px;
     background-color: #f8fafc;
     min-height: 100vh;
 }
 
-/* Header */
+
 .page-title {
     font-size: 28px;
     font-weight: 700;

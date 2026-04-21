@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getCasesByStatus } from '../../../api/officerApi';
 import Pagination from "../../../components/AdminComponents/common/Pagination";
-import './CasesByStatus.css'; // MUST match your CSS file name
+import './CasesByStatus.css'; 
 
 const CasesByStatusPage = ({ statusTitle }) => {
     const [cases, setCases] = useState([]);
@@ -82,7 +82,7 @@ const CasesByStatusPage = ({ statusTitle }) => {
                                             }
                                         </td>
                                         
-                                        {/* ✅ UPDATED: Look inside the application object for the service */}
+                                        
                                         <td>{c.application?.service?.serviceName || c.application?.serviceName || 'General'}</td>
                                         
     
@@ -92,7 +92,7 @@ const CasesByStatusPage = ({ statusTitle }) => {
                                                 : 'N/A'}
                                         </td>
                                         <td>
-                                            {/* 🚨 CRITICAL FIX: Changed from "badge" to "status-pill" to block Bootstrap */}
+                                          
                                             <span className={`status-pill status-${c.status.toLowerCase()}`}>
                                                 {c.status}
                                             </span>

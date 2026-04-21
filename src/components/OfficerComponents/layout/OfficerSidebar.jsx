@@ -7,11 +7,11 @@ const OfficerSidebar = () => {
     { path: '/officer/dashboard', label: 'Dashboard', icon: 'dashboard' },
     { path: '/officer/assigned-cases', label: 'Assigned Cases', icon: 'assignment' },
     
-    // ✅ CRITICAL FIX: Changed from 'pending-cases' to 'pending-review' to match OfficerRoutes.jsx
+    
     { path: '/officer/pending-review', label: 'Pending Review', icon: 'hourglass_empty' },
     
-    // ✅ Updated these to drop the "-cases" so they perfectly match the Dashboard cards
-    { path: '/officer/resubmitted', label: 'Resubmitted', icon: 'history' },
+    
+    
     { path: '/officer/approved', label: 'Approved', icon: 'check_circle' },
     { path: '/officer/rejected', label: 'Rejected', icon: 'cancel' },
     

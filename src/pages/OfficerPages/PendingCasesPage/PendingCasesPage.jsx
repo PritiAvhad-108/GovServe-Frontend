@@ -40,7 +40,7 @@ const PendingCasesPage = () => {
     
                 </div>
 
-                {/* Card Table */}
+              
                 <div className="pending-card">
                     {loading ? (
                         <div className="loading-text">Loading pending cases...</div>

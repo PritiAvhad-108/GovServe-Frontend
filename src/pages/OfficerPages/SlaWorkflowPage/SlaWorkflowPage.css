@@ -7,7 +7,7 @@
     min-height: 100vh;
 }
 
-/* Container */
+
 .sla-workflow-container {
     padding: 28px;
     width: 100%;
@@ -39,7 +39,7 @@
     margin: 0;
 }
 
-/* The White Card */
+
 .sla-card {
     background-color: #ffffff;
     border: 1px solid #eaedf1;

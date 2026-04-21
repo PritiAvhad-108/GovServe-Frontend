@@ -33,7 +33,7 @@ const OfficerDashboard = () => {
                         pending: apiData.pendingVerificationCount || 0,
                         approved: apiData.approvedCount || 0,
                         rejected: apiData.rejectedCount || 0,
-                        resubmitted: apiData.resubmittedCount || 0
+                
                     });
                 }
             } catch (error) {
@@ -89,15 +89,6 @@ const OfficerDashboard = () => {
                         value={counts.approved} 
                         icon="✅" 
                         color="#2ecc71" 
-                    />
-                </div>
-
-                <div onClick={() => navigate('/officer/resubmitted')} style={{ cursor: 'pointer' }}>
-                    <StatCard 
-                        title="Resubmitted" 
-                        value={counts.resubmitted} 
-                        icon="🔄" 
-                        color="#9b59b6" 
                     />
                 </div>
 

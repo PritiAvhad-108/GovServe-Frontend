@@ -69,7 +69,7 @@ const OfficerProfile = () => {
                         </div>
                     </div>
 
-                    {/* ✅ Used FaBuilding for Department, which makes sense for an Officer */}
+                  
                     <div className="info-item">
                         <div className="icon-box"><FaBuilding /></div>
                         <div className="info-detail">

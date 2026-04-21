@@ -1,6 +1,6 @@
 import api from './api'; 
 
-// --- Case Management ---
+
 export const getAssignedCases = (officerId) => 
     api.get(`/Case/assigned/${officerId}`);
 
@@ -30,7 +30,7 @@ export const markCaseAsPending = async (caseId) => {
     return await api.put(`/Case/MarkPending/${caseId}`); 
 };
 
-// --- Dashboard & Notifications ---
+
 export const getOfficerDashboardCount = async (officerId) => {
     return await api.get(`/Case/dashboard/${officerId}`);
 };
@@ -46,9 +46,20 @@ export const getOfficerNotifications = (officerId) => {
 export const markAsRead = (notificationId) => 
     api.put(`/Notification/mark-read/${notificationId}`);
 
-// --- Document Management ---
+
 export const getDocumentsByApplicationId = async (applicationId) => {
     return await api.get(`/CitizenDocument/GetDocumentsByApplicationId/${applicationId}`);
 };
 
 
+
+export const approveDocument = async (documentId) => {
+    const response = await api.put(`/CitizenDocument/ApproveDocument/${documentId}?id=${documentId}`);
+    return response.data;
+};
+
+
+export const rejectDocument = async (documentId) => {
+    const response = await api.put(`/CitizenDocument/RejectDocument/${documentId}?id=${documentId}`);
+    return response.data;
+};

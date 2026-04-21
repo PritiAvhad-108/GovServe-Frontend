@@ -71,7 +71,7 @@ const NotificationBell = () => {
                                     className={`notification-card ${note.status?.toLowerCase() === 'unread' ? 'unread' : ''}`}
                                 >
                                     <div className="note-icon">
-                                        {/* Show different icons for Assignment vs General */}
+                                       
                                         {note.category === 'Assignment' ? '📌' : '🔔'}
                                     </div>
                                     <div className="note-content">
