@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCasesByStatus } from '../../../api/officerApi';
+import { getCasesByStatus } from '../../../api/officerapi';
 import './PendingCasesPage.css';
 
 const PendingCasesPage = () => {

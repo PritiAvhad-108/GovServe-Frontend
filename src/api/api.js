@@ -6,10 +6,10 @@ const API = axios.create({
  
 API.interceptors.request.use(
   (config) => {
-    // const token = localStorage.getItem("jwtToken");
+     const token = localStorage.getItem("jwtToken");
    
-const storedJWT = JSON.parse(localStorage.getItem("JWT"));
-const token = storedJWT?.jwtToken;
+// const storedJWT = JSON.parse(localStorage.getItem("jwtToken"));
+// const token = storedJWT?.jwtToken;
 
  
     if (token) {
